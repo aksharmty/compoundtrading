@@ -7,11 +7,10 @@ function loadHTML(id, file, callback) {
     });
 }
 
-loadHTML("header", "header.html");
 loadHTML("menu", "menu.html");
 loadHTML("sidebar", "sidebar.html", () => {
     const script = document.createElement('script');
-    script.src = '//aksharhanumandham.in/data/banners.js';
+    script.src = 'data/banners.js?v=' + new Date().getTime();
     document.body.appendChild(script);
 });
 loadHTML("footer", "footer.html");

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+     crossorigin="anonymous"></script>     
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='shortcut icon' href='logo.png' type='image/x-icon' />
+  <title>Compound Trading Course | Grow Your Profits</title>
+  <meta name="description" content="Join our Compound Trading Course to learn how to grow small profits into big profits with proven strategies. Register now with UPI payment and WhatsApp confirmation.">
+  <meta name="keywords" content="Compound Trading, Trading Course, Profits, Strategy, Compounding, Stock Market, Crypto Trading">
+  
+  <!-- Open Graph (for social sharing) -->
+  <meta property="og:title" content="Compound Trading Course | Grow Your Profits">
+  <meta property="og:description" content="Join our Compound Trading Course to learn how to grow small profits into big profits with proven strategies. Register now with UPI payment and WhatsApp confirmation.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="course.html"> 
+  <meta property="og:image" content="course.png">
+  <LINK href="0.css" rel="stylesheet" type="text/css">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS90E57647"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS90E57647');
+</script>
+  <style>
+    .qr {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .qr img {
+      max-width: 200px;
+    }
+    form {
+      background: #f1f1f1;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #27ae60;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #219150;
+    }
+  </style>
+</head>
+<body>
+ <div class="col-md-12" style="width:100%;">
+        <div id="menu"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+          <div class="left-panel">
+                    <div class="col-md-12">
+          <h1 style="text-align:center;">Compound Trading Course</h1>
+     <p>Learn how to grow small profits into BIG profits with compounding</p>
+   
+   <h2>About the Course</h2>   
+      <p>📘 In this course, you will learn:</p>
+      <ul>
+        <li>Step-by-step compounding strategy</li>
+        <li>Practical calculations & real-life examples</li>
+        <li>Tested methods from 6+ years of trading experience</li>
+      </ul>
+      <p>🗓 <strong>Every Saturday, 8 PM</strong></p>
+      <p>💰 <strong>Fee: ₹100</strong></p>
+      
+    <h2>Pay via UPI</h2>
+    <div class="qr">
+      <p>Scan this QR code to pay via UPI:</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9213816442@apl&pn=CompoundTradingCourse&am=100&cu=INR" alt="UPI QR Code">
+      <p><strong>UPI ID:</strong> 9213816442@apl</p>
+    </div>
+
+    <h2>Confirm Registration on WhatsApp</h2>
+    <form onsubmit="sendToWhatsApp(event)">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="text" id="txn" placeholder="Transaction ID / UTR" required>
+      <textarea id="msg" placeholder="Any Message (Optional)"></textarea>
+      <button type="submit">Send Confirmation on WhatsApp</button>
+    </form>
+  </div>
+
+  <script>
+    function sendToWhatsApp(e){
+      e.preventDefault();
+      let name = document.getElementById("name").value;
+      let txn = document.getElementById("txn").value;
+      let msg = document.getElementById("msg").value;
+
+      let text = `Hello, I have registered for Compound Trading Course.%0AName: ${name}%0ATransaction ID: ${txn}%0AMessage: ${msg}`;
+      let phone = "919213816442"; // Your WhatsApp number
+      let url = `https://wa.me/${phone}?text=${text}`;
+
+      window.open(url, "_blank");
+    }
+  </script>
+            <p>For More Details call to Raj Kumar at 9213816442</p>
+        </div> 
+        </div> 
+        <div class="right-panel0">
+            <div id="sidebar"></div>
+        </div>
+    </div>
+    </div>
+    <div class="footer">
+        <div id="footer"></div>
+    </div>
+    <button class="top-button" onclick="scrollToTop()">Back to Top</button>
+
+    <div id="footer"></div>
+
+    <script>
+        // Toggle menu visibility on smaller screens
+     function toggleMenu() {
+       const menu = document.querySelector('.menu');
+       menu.classList.toggle('show');
+     }
+     // Scroll to top function
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'  // Smooth scroll effect
+      });
+    }
+
+    // Show or hide the "Back to Top" button based on scroll position
+    window.onscroll = function() {
+      var topButton = document.querySelector('.top-button');
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        topButton.style.display = "block";  // Show button
+      } else {
+        topButton.style.display = "none";  // Hide button
+      }
+    };
+   
+    // Function to load external HTML into a specific element
+    function loadHTML(elementId, file) {
+      fetch(file)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById(elementId).innerHTML = data;
+        })
+        .catch(error => {
+          console.error('Error loading ' + file + ':', error);
+        });
+    }
+
+    
+    </script>
+    <script src="js/loader.js"></script>
+</body>
+</html>

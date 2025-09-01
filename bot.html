@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+   crossorigin="anonymous"></script>     
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+  <title>Compounding Trading Bot – Auto Growth Strategy</title>
+  <meta name="description" content="Automated Compounding Trading Bot with fixed strategy. Annual subscription ₹5000. Pay via UPI and confirm instantly on WhatsApp.">
+  <meta name="keywords" content="trading bot, compounding strategy, auto trading, crypto bot, stock trading bot, UPI payment bot">
+  <meta name="author" content="adquash">
+  <link href="0.css" rel="stylesheet" type="text/css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS90E57647"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QS90E57647');
+  </script>
+
+  <style>    
+    h1, h2 { color: #1a73e8; }
+    .qr-box { text-align: center; margin: 20px 0; }
+    .qr-box canvas, .qr-box img { max-width: 220px; margin: 10px auto; display: block; }
+    form { background: #f1f1f1; padding: 15px; border-radius: 8px; margin-top: 20px; }
+    input, textarea, button { width: 100%; padding: 10px; margin: 6px 0; border-radius: 6px; border: 1px solid #ccc; }
+    button { background: #1a73e8; color: white; border: none; cursor: pointer; font-size: 16px; }
+    button:hover { background: #1557b0; }
+    .faq { margin-top: 30px; }
+    .faq-item { border-bottom: 1px solid #ddd; padding: 10px 0; cursor: pointer; }
+    .faq-answer { display: none; padding: 5px 0; }
+    .top-button { display:none; position:fixed; bottom:20px; right:20px; padding:10px 15px; border:none; border-radius:5px; background:#1a73e8; color:#fff; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <div class="col-md-12" style="width:100%;">
+    <div id="menu"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="left-panel">
+        <h1>Compounding Trading Bot</h1>
+        <p>Auto Growth Strategy with Compounding Power</p>
+
+        <h2>About Strategy</h2>
+        <p>
+          Our Trading Bot is powered by <b>Compounding Growth Strategy</b>.  
+          Small profits are reinvested into the next trade, enabling exponential growth over time.  
+          Formula: <i>Profit from each trade → added to capital → leads to long-term wealth building.</i>
+        </p>
+
+        <h2>Pay Subscription (₹5000/year)</h2>
+        <div class="qr-wrap">
+          <div id="qr" aria-hidden></div>
+          <div class="small">UPI Payment — ₹5000 (scan or tap)</div>
+          <div style="display:flex;gap:8px;margin-top:6px;width:100%">
+            <button class="primary" id="upiIntentBtn">Open UPI App (Mobile)</button>
+            <button class="ghost" id="copyUpiBtn">Copy UPI ID</button>
+          </div>
+          <div class="small" id="upiText" style="margin-top:6px">UPI: <strong id="vpaText">YOUR_UPI_ID</strong></div>
+        </div>
+
+        <!-- registration form -->
+        <form id="regForm">
+          <input id="fullname" type="text" placeholder="Full Name" required />
+          <input id="phone" type="tel" placeholder="Mobile (10 digits)" pattern="[0-9]{10}" required />
+          <input id="city" type="text" placeholder="City (optional)" />
+          <textarea id="note" placeholder="Message / Question (optional)" rows="2"></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button type="submit" class="primary">Register & Notify via WhatsApp</button>
+            <button type="button" class="ghost" id="openWa">Chat on WhatsApp</button>
+          </div>
+        </form>
+
+        <section class="faq">
+          <h2>FAQs</h2>
+          <div class="faq-item">
+            <b>1. How does the Compounding Bot work?</b>
+            <div class="faq-answer">The bot reinvests every profit into the next trade, creating exponential growth.</div>
+          </div>
+          <div class="faq-item">
+            <b>2. What is the subscription fee?</b>
+            <div class="faq-answer">The annual subscription fee is ₹5000 only.</div>
+          </div>
+          <div class="faq-item">
+            <b>3. How do I confirm my payment?</b>
+            <div class="faq-answer">After paying via UPI, submit your details using the WhatsApp confirmation form.</div>
+          </div>
+        </section>
+
+        <div style="margin-top:10px;color:#777;font-size:14px;">
+          ⚠️ Educational purpose only. No profit guarantee. Trading involves risk.
+        </div>
+
+        <div style="margin-top:15px;text-align:right">
+          <div style="font-weight:700">Contact</div>
+          <div class="small">WhatsApp: 
+            <a href="https://wa.me/919213816442" target="_blank" style="color:#1a73e8;text-decoration:none">+91 9213816442</a>
+          </div>
+        </div>
+      </div>
+    
+
+    <div class="right-panel0">
+      <div id="sidebar"></div>
+    </div>
+  
+ </div>
+      </div>
+  <div class="footer">
+    <div id="footer"></div>
+  </div>
+
+  <button class="top-button" onclick="scrollToTop()">Back to Top</button> 
+
+  <!-- QR generation library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+
+  <script>
+    (function(){
+      const UPI_VPA = '9213816442@apl';
+      const PAYEE_NAME = 'Raj Kumar';
+      const AMOUNT = '5000.00';
+      const CURRENCY = 'INR';
+      const NOTE = 'Compounding Trading Bot Subscription';
+      const WHATSAPP_NUM = '919213816442';
+
+      document.getElementById('vpaText').textContent = UPI_VPA;
+
+      const upiPayload = `upi://pay?pa=${encodeURIComponent(UPI_VPA)}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${encodeURIComponent(AMOUNT)}&cu=${encodeURIComponent(CURRENCY)}&tn=${encodeURIComponent(NOTE)}`;
+
+      const qrContainer = document.getElementById('qr');
+      QRCode.toCanvas(upiPayload, { width: 200, margin: 1 }, function (err, canvas) {
+        if (err) {
+          qrContainer.textContent = 'QR unavailable';
+          return;
+        }
+        canvas.style.maxWidth = '200px';
+        qrContainer.appendChild(canvas);
+      });
+
+      document.getElementById('upiIntentBtn').addEventListener('click', function(){
+        window.location.href = upiPayload;
+      });
+
+      document.getElementById('copyUpiBtn').addEventListener('click', function(){
+        navigator.clipboard.writeText(UPI_VPA).then(()=>{
+          alert('UPI ID copied: ' + UPI_VPA);
+        }).catch(()=>{
+          prompt('Copy UPI ID manually:', UPI_VPA);
+        });
+      });
+
+      document.getElementById('openWa').addEventListener('click', function(){
+        window.open('https://wa.me/' + WHATSAPP_NUM, '_blank');
+      });
+
+      document.getElementById('regForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        const name = document.getElementById('fullname').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const city = document.getElementById('city').value.trim() || '-';
+        const note = document.getElementById('note').value.trim() || '-';
+
+        if(!name || !/^[0-9]{10}$/.test(phone)){
+          alert('Please enter a valid name and 10-digit mobile number.');
+          return;
+        }
+
+        const message =
+`✨ Compounding Trading Bot Registration ✨
+👤 Name: ${name}
+📞 Mobile: ${phone}
+🏙 City: ${city}
+📝 Note: ${note}
+💰 Fee: ₹${AMOUNT}
+🔖 UPI ID: ${UPI_VPA}
+🕗 Session: Saturday 8 PM
+
+(I have paid / will pay — please confirm and share the join link.)`;
+
+        const waUrl = 'https://wa.me/' + WHATSAPP_NUM + '?text=' + encodeURIComponent(message);
+        document.getElementById('modalText').textContent = 'Opening WhatsApp — please send the message to confirm payment.';
+        document.getElementById('modal').style.display = 'flex';
+        window.open(waUrl, '_blank');
+        setTimeout(()=>{ document.getElementById('modal').style.display='none'; }, 3500);
+      });
+
+      window.closeModal = function(){ document.getElementById('modal').style.display='none'; };
+    })();
+
+    // Scroll to top
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    window.onscroll = function() {
+      var topButton = document.querySelector('.top-button');
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        topButton.style.display = "block";
+      } else {
+        topButton.style.display = "none";
+      }
+    };
+  </script>
+
+  <script src="js/loader.js"></script>
+</body>
+</html>

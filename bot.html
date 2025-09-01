@@ -12,15 +12,6 @@
   <meta name="author" content="adquash">
   <link href="0.css" rel="stylesheet" type="text/css">
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS90E57647"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-QS90E57647');
-  </script>
-
   <style>    
     h1, h2 { color: #1a73e8; }
     .qr-box { text-align: center; margin: 20px 0; }
@@ -31,14 +22,12 @@
     button:hover { background: #1557b0; }
     .faq { margin-top: 30px; }
     .faq-item { border-bottom: 1px solid #ddd; padding: 10px 0; cursor: pointer; }
-    .faq-answer { display: none; padding: 5px 0; }
-    .top-button { display:none; position:fixed; bottom:20px; right:20px; padding:10px 15px; border:none; border-radius:5px; background:#1a73e8; color:#fff; cursor:pointer; }
+    .faq-answer { display: none; padding: 5px 0; color:#444; }
+    .top-button { display:none; position:fixed; bottom:20px; right:20px; padding:10px 15px; border:none; border-radius:5px; background:#1a73e8; color:#fff; cursor:pointer; z-index:999; }
   </style>
 </head>
 <body>
-  <div class="col-md-12" style="width:100%;">
-    <div id="menu"></div>
-  </div>
+  <div class="col-md-12" style="width:100%;"><div id="menu"></div></div>
 
   <div class="row">
     <div class="col-md-12">
@@ -103,17 +92,10 @@
           </div>
         </div>
       </div>
-    
-
-    <div class="right-panel0">
-      <div id="sidebar"></div>
     </div>
-  
- </div>
-      </div>
-  <div class="footer">
-    <div id="footer"></div>
   </div>
+
+  <div class="footer"><div id="footer"></div></div>
 
   <button class="top-button" onclick="scrollToTop()">Back to Top</button> 
 
@@ -148,17 +130,15 @@
       });
 
       document.getElementById('copyUpiBtn').addEventListener('click', function(){
-        navigator.clipboard.writeText(UPI_VPA).then(()=>{
-          alert('UPI ID copied: ' + UPI_VPA);
-        }).catch(()=>{
-          prompt('Copy UPI ID manually:', UPI_VPA);
-        });
+        navigator.clipboard.writeText(UPI_VPA).then(()=>{ alert('UPI ID copied: ' + UPI_VPA); })
+        .catch(()=>{ prompt('Copy UPI ID manually:', UPI_VPA); });
       });
 
       document.getElementById('openWa').addEventListener('click', function(){
         window.open('https://wa.me/' + WHATSAPP_NUM, '_blank');
       });
 
+      // Form submit
       document.getElementById('regForm').addEventListener('submit', function(e){
         e.preventDefault();
         const name = document.getElementById('fullname').value.trim();
@@ -184,19 +164,21 @@
 (I have paid / will pay — please confirm and share the join link.)`;
 
         const waUrl = 'https://wa.me/' + WHATSAPP_NUM + '?text=' + encodeURIComponent(message);
-        document.getElementById('modalText').textContent = 'Opening WhatsApp — please send the message to confirm payment.';
-        document.getElementById('modal').style.display = 'flex';
         window.open(waUrl, '_blank');
-        setTimeout(()=>{ document.getElementById('modal').style.display='none'; }, 3500);
       });
 
-      window.closeModal = function(){ document.getElementById('modal').style.display='none'; };
+      // FAQ toggle
+      document.querySelectorAll('.faq-item').forEach(item=>{
+        item.addEventListener('click', ()=>{
+          const ans = item.querySelector('.faq-answer');
+          ans.style.display = (ans.style.display === 'block') ? 'none' : 'block';
+        });
+      });
+
     })();
 
     // Scroll to top
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
     window.onscroll = function() {
       var topButton = document.querySelector('.top-button');
       if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
@@ -206,7 +188,5 @@
       }
     };
   </script>
-
-  <script src="js/loader.js"></script>
 </body>
 </html>

@@ -8,30 +8,10 @@
     <link rel='shortcut icon' href='logo.png' type='image/x-icon' />
   <title>Online EMI Calculator — Free Loan Calculator</title>
   <meta name="description" content="Free EMI Calculator to calculate monthly loan EMI, total payment, and interest. Simple online tool for home, car, and personal loans. Works offline and can be hosted on GitHub Pages." />
-  <meta name="keywords" content="EMI Calculator, Loan EMI, Loan Interest, Personal Loan, Home Loan, Car Loan, GitHub Pages" />
+  <meta name="keywords" content="EMI Calculator, Loan EMI, Loan Interest, Personal Loan, Home Loan, Car Loan,Gold Loan" />
   <meta name="author" content="Adquash" />
   <LINK href="0.css" rel="stylesheet" type="text/css">
-  <style>
-    .card{width:100%;max-width:920px;background:var(--card);border-radius:12px;box-shadow:0 8px 30px rgba(37,99,235,0.08);padding:20px}
-    h1{margin:0 0 8px;font-size:20px}
-    p.lead{margin:0 0 18px;color:#374151}
-    .grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
-    .form{padding:10px}
-    label{display:block;font-size:13px;color:#374151;margin-bottom:6px}
-    input[type="number"], input[type="text"], select{width:100%;padding:10px;border:1px solid #e6eef8;border-radius:8px;font-size:15px}
-    .row{display:flex;gap:10px}
-    .btn{background:var(--accent);color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600}
-    .btn.secondary{background:#e6eef8;color:var(--accent)}
-    .results{background:#f8fafc;padding:14px;border-radius:10px}
-    .results .value{font-size:20px;font-weight:700;color:#0f172a}
-    table{width:100%;border-collapse:collapse;margin-top:10px}
-    th,td{padding:8px;border-bottom:1px solid #eef2f7;text-align:right;font-size:13px}
-    th{background:transparent;text-align:left;color:#374151}
-   .foot{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
-    .small{font-size:12px;color:#475569}
-    @media (max-width:880px){.grid{grid-template-columns:1fr;}.card{padding:16px}}
-  </style>
- 
+  
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS90E57647"></script>
 <script>
@@ -62,73 +42,71 @@
 </script>
 </center>
     </div>
-                    <div class="col-md-12">
-  <div class="card" role="main">
+                    <div class="col-md-12">  
     <h1 style="text-align:center;">EMI Calculator</h1>
-    <p class="lead">Calculate monthly EMI, total payment and interest. Ready to host on GitHub Pages — save this file as <code>index.html</code>.</p>
+    <p style="text-align:center;">Calculate monthly EMI, total payment and interest. <br></p>
 
-    <div class="grid">
-      <div class="form">
-        <div style="margin-bottom:12px">
+     <h2>Just fill given form and submit.</h2>
+        <div class="col-md-12" style="margin-bottom:12px">
           <label for="principal">Loan Amount (₹)</label>
-          <input id="principal" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 500000" value="1000000">
+          <input id="principal" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 500000" value="1000000" style="width:100%;padding:10px;border:1px solid #000;border-radius:8px;font-size:15px;">
         </div>
 
-        <div style="margin-bottom:12px">
+        <div class="col-md-12" style="margin-bottom:12px">
           <label for="rate">Annual Interest Rate (%)</label>
-          <input id="rate" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 7.5" value="8.5">
+          <input id="rate" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 7.5" value="8.5" style="width:100%;padding:10px;border:1px solid #000;border-radius:8px;font-size:15px;">
         </div>
 
-        <div style="margin-bottom:12px">
+        <div class="row">
+        <div class="col-md-6" style="margin-bottom:12px">
           <label for="tenure">Tenure</label>
-          <div class="row">
-            <input id="tenure" type="number" inputmode="decimal" min="0" step="1" placeholder="e.g. 240" value="240">
-            <select id="tenureUnit" aria-label="Tenure unit">
+          
+            <input id="tenure" type="number" inputmode="decimal" min="0" step="1" placeholder="e.g. 240" value="240" style="width:100%;padding:10px;border:1px solid #000;border-radius:8px;font-size:15px;">
+            </div>
+            <div class="col-md-6" style="margin-bottom:12px"><label for="tenure">Tenure type</label>
+            <select id="tenureUnit" aria-label="Tenure unit" style="width:100%;padding:10px;border:1px solid #000;border-radius:8px;font-size:15px;">
               <option value="months">Months</option>
               <option value="years">Years</option>
             </select>
+            </div>
           </div>
         </div>
-
+<div class="col-md-12">
         <div class="row" style="margin-top:8px">
-          <button id="calcBtn" class="btn">Calculate EMI</button>
-          <button id="resetBtn" class="btn secondary">Reset</button>
+          <button id="calcBtn" class="btn btn-blue">Calculate EMI</button>
+          <button id="resetBtn" class="btn btn-brown">Reset</button>
         </div>
 
-        <div class="foot small">
-          <div>Formula: <em>EMI = P × r × (1+r)<sup>n</sup> / ((1+r)<sup>n</sup> − 1)</em></div>
-        </div>
-      </div>
+        
+          <div style="font-size:12px;color:#475569">Formula: <em>EMI = P × r × (1+r)<sup>n</sup> / ((1+r)<sup>n</sup> − 1)</em></div>
+        
+      
 
-      <aside>
-        <div class="results">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div class="small">Monthly EMI</div>
+      <div class="col-md-12">
+        <div class="results">          
+              <div class="col-md-6">Monthly EMI
               <div id="emi" class="value">₹ 0.00</div>
             </div>
-            <div style="text-align:right">
-              <div class="small">Total Payment</div>
+           
+              <div class="col-md-6">Total Payment
               <div id="totalPayment" class="value">₹ 0.00</div>
-            </div>
-          </div>
-
-          <div style="margin-top:12px;display:flex;justify-content:space-between">
-            <div>
-              <div class="small">Total Interest</div>
+            </div> 
+                 
+              <div class="col-md-6">Total Interest
               <div id="totalInterest" class="value">₹ 0.00</div>
             </div>
-            <div>
-              <div class="small">Periods (n)</div>
+           
+              <div class="col-md-6">Periods (n):
               <div id="periods" class="value">0</div>
             </div>
-          </div>
+           </div>
+          
 
-          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-            <button id="showSchedule" class="btn secondary">Show Amortization</button>
-            <button id="downloadCSV" class="btn secondary">Download CSV</button>
-            <button id="copyBtn" class="btn secondary">Copy EMI</button>
-          </div>
+          
+            <div class="col-md-4"><button id="showSchedule" class="btn btn-green">Show Amortization</button></div>
+            <div class="col-md-4"><button id="downloadCSV" class="btn btn-blue">Download CSV</button></div>
+            <div class="col-md-4"><button id="copyBtn" class="btn btn-brown">Copy EMI</button></div>
+          
         </div>
 
         <div id="scheduleWrap" style="margin-top:12px;display:none">
@@ -140,13 +118,13 @@
               </thead>
               <tbody></tbody>
             </table>
-          </div>
+         
         </div>
-      </aside>
-    </div>
-
-   </div> 
-        </div> 
+      </div>
+    
+<br><br><br><br>
+   </div> </div>
+       
         <div class="right-panel0">
             <div id="sidebar"></div>
         </div>

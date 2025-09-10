@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+     crossorigin="anonymous"></script>     
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='shortcut icon' href='logo.png' type='image/x-icon' />
+  <title>Online EMI Calculator — Free Loan Calculator</title>
+  <meta name="description" content="Free EMI Calculator to calculate monthly loan EMI, total payment, and interest. Simple online tool for home, car, and personal loans. Works offline and can be hosted on GitHub Pages." />
+  <meta name="keywords" content="EMI Calculator, Loan EMI, Loan Interest, Personal Loan, Home Loan, Car Loan, GitHub Pages" />
+  <meta name="author" content="Adquash" />
+  <LINK href="0.css" rel="stylesheet" type="text/css">
+  <style>
+    :root{--accent:#2563eb;--bg:#f7fbff;--card:#ffffff}
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#eef6ff);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{width:100%;max-width:920px;background:var(--card);border-radius:12px;box-shadow:0 8px 30px rgba(37,99,235,0.08);padding:20px}
+    h1{margin:0 0 8px;font-size:20px}
+    p.lead{margin:0 0 18px;color:#374151}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    .form{padding:10px}
+    label{display:block;font-size:13px;color:#374151;margin-bottom:6px}
+    input[type="number"], input[type="text"], select{width:100%;padding:10px;border:1px solid #e6eef8;border-radius:8px;font-size:15px}
+    .row{display:flex;gap:10px}
+    .btn{background:var(--accent);color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+    .btn.secondary{background:#e6eef8;color:var(--accent)}
+    .results{background:#f8fafc;padding:14px;border-radius:10px}
+    .results .value{font-size:20px;font-weight:700;color:#0f172a}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:8px;border-bottom:1px solid #eef2f7;text-align:right;font-size:13px}
+    th{background:transparent;text-align:left;color:#374151}
+    .foot{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+    .small{font-size:12px;color:#475569}
+    @media (max-width:880px){.grid{grid-template-columns:1fr;}.card{padding:16px}}
+  </style>
+ 
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS90E57647"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS90E57647');
+</script>
+</head>
+<body>
+  <div class="col-md-12" style="width:100%;">
+        <div id="menu"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+          <div class="left-panel">
+              <div class="col-md-12" style="width:100%;">
+        <center><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+     crossorigin="anonymous"></script>
+<!-- sakhiadheader -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px;max-height:100px;"
+     data-ad-client="ca-pub-4305348743992957"
+     data-ad-slot="1924539816"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</center>
+    </div>
+                    <div class="col-md-12">
+  <div class="card" role="main">
+    <h1 style="text-align:center;">EMI Calculator</h1>
+    <p class="lead">Calculate monthly EMI, total payment and interest. Ready to host on GitHub Pages — save this file as <code>index.html</code>.</p>
+
+    <div class="grid">
+      <div class="form">
+        <div style="margin-bottom:12px">
+          <label for="principal">Loan Amount (₹)</label>
+          <input id="principal" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 500000" value="1000000">
+        </div>
+
+        <div style="margin-bottom:12px">
+          <label for="rate">Annual Interest Rate (%)</label>
+          <input id="rate" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 7.5" value="8.5">
+        </div>
+
+        <div style="margin-bottom:12px">
+          <label for="tenure">Tenure</label>
+          <div class="row">
+            <input id="tenure" type="number" inputmode="decimal" min="0" step="1" placeholder="e.g. 240" value="240">
+            <select id="tenureUnit" aria-label="Tenure unit">
+              <option value="months">Months</option>
+              <option value="years">Years</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:8px">
+          <button id="calcBtn" class="btn">Calculate EMI</button>
+          <button id="resetBtn" class="btn secondary">Reset</button>
+        </div>
+
+        <div class="foot small">
+          <div>Formula: <em>EMI = P × r × (1+r)<sup>n</sup> / ((1+r)<sup>n</sup> − 1)</em></div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="results">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="small">Monthly EMI</div>
+              <div id="emi" class="value">₹ 0.00</div>
+            </div>
+            <div style="text-align:right">
+              <div class="small">Total Payment</div>
+              <div id="totalPayment" class="value">₹ 0.00</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;display:flex;justify-content:space-between">
+            <div>
+              <div class="small">Total Interest</div>
+              <div id="totalInterest" class="value">₹ 0.00</div>
+            </div>
+            <div>
+              <div class="small">Periods (n)</div>
+              <div id="periods" class="value">0</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+            <button id="showSchedule" class="btn secondary">Show Amortization</button>
+            <button id="downloadCSV" class="btn secondary">Download CSV</button>
+            <button id="copyBtn" class="btn secondary">Copy EMI</button>
+          </div>
+        </div>
+
+        <div id="scheduleWrap" style="margin-top:12px;display:none">
+          <h3 style="margin:10px 0 6px">Amortization Schedule</h3>
+          <div style="max-height:280px;overflow:auto;border-radius:8px;border:1px solid #eef2f7;padding:8px">
+            <table id="scheduleTable">
+              <thead>
+                <tr><th>Period</th><th>EMI</th><th>Principal</th><th>Interest</th><th>Balance</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+   </div> 
+        </div> 
+        <div class="right-panel0">
+            <div id="sidebar"></div>
+        </div>
+    </div>
+    </div>
+    <div class="footer">
+        <div id="footer"></div>
+    </div>
+    <button class="top-button" onclick="scrollToTop()">Back to Top</button>
+
+    <div id="footer"></div>
+
+    <script>
+        // Toggle menu visibility on smaller screens
+     function toggleMenu() {
+       const menu = document.querySelector('.menu');
+       menu.classList.toggle('show');
+     }
+     // Scroll to top function
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'  // Smooth scroll effect
+      });
+    }
+
+    // Show or hide the "Back to Top" button based on scroll position
+    window.onscroll = function() {
+      var topButton = document.querySelector('.top-button');
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        topButton.style.display = "block";  // Show button
+      } else {
+        topButton.style.display = "none";  // Hide button
+      }
+    };
+   
+    // Function to load external HTML into a specific element
+    function loadHTML(elementId, file) {
+      fetch(file)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById(elementId).innerHTML = data;
+        })
+        .catch(error => {
+          console.error('Error loading ' + file + ':', error);
+        });
+    }
+
+    
+    </script>
+    <script src="js/loader.js"></script>
+</body>
+</html>
+      
+  <script>
+    // Utility: format rupee with commas and 2 decimals
+    function formatMoney(num){
+      if(!isFinite(num)) return '₹ 0.00';
+      return '₹ ' + Number(num).toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+
+    const principalEl = document.getElementById('principal');
+    const rateEl = document.getElementById('rate');
+    const tenureEl = document.getElementById('tenure');
+    const tenureUnitEl = document.getElementById('tenureUnit');
+
+    const emiEl = document.getElementById('emi');
+    const totalPaymentEl = document.getElementById('totalPayment');
+    const totalInterestEl = document.getElementById('totalInterest');
+    const periodsEl = document.getElementById('periods');
+
+    const calcBtn = document.getElementById('calcBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const showScheduleBtn = document.getElementById('showSchedule');
+    const scheduleWrap = document.getElementById('scheduleWrap');
+    const scheduleTableBody = document.querySelector('#scheduleTable tbody');
+    const downloadCSV = document.getElementById('downloadCSV');
+    const copyBtn = document.getElementById('copyBtn');
+
+    function calculate(){
+      const P = parseFloat(principalEl.value) || 0;
+      const annualRate = parseFloat(rateEl.value) || 0;
+      let n = parseInt(tenureEl.value) || 0;
+      const unit = tenureUnitEl.value;
+      if(unit === 'years') n = n * 12;
+
+      if(P <= 0 || n <= 0){
+        alert('Please enter valid loan amount and tenure.');
+        return null;
+      }
+
+      const r = annualRate / 12 / 100; // monthly rate
+
+      let emi = 0;
+      if(r === 0){
+        emi = P / n;
+      } else {
+        const x = Math.pow(1 + r, n);
+        emi = P * r * x / (x - 1);
+      }
+
+      const totalPayment = emi * n;
+      const totalInterest = totalPayment - P;
+
+      return {P, annualRate, n, r, emi, totalPayment, totalInterest};
+    }
+
+    function render(){
+      const res = calculate();
+      if(!res) return;
+      emiEl.textContent = formatMoney(res.emi);
+      totalPaymentEl.textContent = formatMoney(res.totalPayment);
+      totalInterestEl.textContent = formatMoney(res.totalInterest);
+      periodsEl.textContent = res.n;
+      // hide schedule by default
+      scheduleWrap.style.display = 'none';
+    }
+
+    function buildSchedule(res){
+      const rows = [];
+      let balance = res.P;
+      for(let i=1;i<=res.n;i++){
+        const interest = balance * res.r;
+        const principalPaid = res.emi - interest;
+        balance = Math.max(0, balance - principalPaid);
+        rows.push({period:i, emi:res.emi, principal:principalPaid, interest, balance});
+      }
+      return rows;
+    }
+
+    calcBtn.addEventListener('click', function(e){ e.preventDefault(); render(); });
+    resetBtn.addEventListener('click', function(e){ e.preventDefault(); principalEl.value=''; rateEl.value=''; tenureEl.value=''; tenureUnitEl.value='months'; emiEl.textContent='₹ 0.00'; totalPaymentEl.textContent='₹ 0.00'; totalInterestEl.textContent='₹ 0.00'; periodsEl.textContent='0'; scheduleWrap.style.display='none'; scheduleTableBody.innerHTML=''; });
+
+    showScheduleBtn.addEventListener('click', function(){
+      const res = calculate();
+      if(!res) return;
+      const rows = buildSchedule(res);
+      scheduleTableBody.innerHTML = '';
+      rows.forEach(r=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td style=\"text-align:left\">${r.period}</td><td>${formatMoney(r.emi)}</td><td>${formatMoney(r.principal)}</td><td>${formatMoney(r.interest)}</td><td>${formatMoney(r.balance)}</td>`;
+        scheduleTableBody.appendChild(tr);
+      });
+      scheduleWrap.style.display = 'block';
+      scheduleWrap.scrollIntoView({behavior:'smooth'});
+    });
+
+    downloadCSV.addEventListener('click', function(){
+      const res = calculate();
+      if(!res) return;
+      const rows = buildSchedule(res);
+      const header = ['Period','EMI','Principal Paid','Interest Paid','Balance'];
+      const csv = [header.join(',')].concat(rows.map(r=>[r.period, r.emi.toFixed(2), r.principal.toFixed(2), r.interest.toFixed(2), r.balance.toFixed(2)].join(','))).join('\n');
+      const blob = new Blob([csv], {type:'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'amortization.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    copyBtn.addEventListener('click', function(){
+      const res = calculate();
+      if(!res) return;
+      const text = `EMI: ${formatMoney(res.emi)} | Tenure: ${res.n} periods | Total Interest: ${formatMoney(res.totalInterest)}`;
+      navigator.clipboard?.writeText(text).then(()=>{ alert('Copied to clipboard'); }).catch(()=>{ prompt('Copy this text', text); });
+    });
+
+    // auto render initial values
+    render();
+  </script>

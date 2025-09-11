@@ -66,7 +66,31 @@ No Stoploss, Never sell in loss like a shopkeeper<br>
           <h2>Course Details :</h2>
  <p><strong>Duration : 30 Minutes (One-time Session)</strong></p>
  <p><strong>Mode : Online (Live)</strong></p>                       
- <p><strong>Schedule: Single Day, Evening 7 PM</strong></p>
+ <p><strong>Schedule: <p id="webinarDate"></p>
+
+<script>
+function getNextSaturday() {
+    const today = new Date();
+    const day = today.getDay(); // 0=Sunday, 6=Saturday
+    let nextSaturday = new Date(today);
+
+    if (day === 6) {
+        // Aaj Saturday hai → aaj ka date hi dikhaye
+        return today;
+    } else {
+        // Aaj Saturday nahi hai → next Saturday ka date nikalo
+        const daysToAdd = (6 - day + 7) % 7;
+        nextSaturday.setDate(today.getDate() + daysToAdd);
+        return nextSaturday;
+    }
+}
+
+const sat = getNextSaturday();
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+document.getElementById("webinarDate").innerText =
+    "📅 Webinar Date: " + sat.toLocaleDateString('en-IN', options);
+</script>
+<!-- Single Day -->, Evening 7 PM</strong></p>
  <p>💰 <strong>Fee: ₹100</strong></p>
  <p>Language:Hindi</p>
  <p><a target="_blank" class="btn btn-blue" href="https://docs.google.com/forms/d/e/1FAIpQLSfwWlaNhNVmd9wGe6jyV2f07qBdc7VAW2s5d-xk6yEjk7hrmg/viewform">Registar Form</a></p>                       

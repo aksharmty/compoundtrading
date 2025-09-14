@@ -52,9 +52,78 @@
               <img src="bot.png" width="100%" alt="Create Trading system for Spot Trading with Shopkeeper Strategy">
               <p><b>Price : ₹9999 per year</b></p>
               <p><b>Price : $150 per year</b></p>
+                        <hr>
                         <p>If you don’t know the Shopkeeper Strategy, don’t worry.
 You can learn the complete method step by step in our eCourse (PDF format) for just $5. 
-                        <form action="https://legacy.coinpayments.net/index.php" method="post">
+                        </p>
+
+  <!-- CoinPayments (left column) -->
+  <div class="col-md-4 text-center mb-3">
+    <form action="https://legacy.coinpayments.net/index.php" method="post">
+      <input type="hidden" name="cmd" value="_pay_simple">
+      <input type="hidden" name="reset" value="1">
+      <!-- replace with your actual merchant ID -->
+      <input type="hidden" name="merchant" value="80fac8e50744f81c50912a923c7a05b2">
+      <input type="hidden" name="item_name" value="Shopkeeper Strategy eCourse (PDF)">
+      <input type="hidden" name="item_desc" value="Shopkeeper Strategy eCourse (PDF)">
+      <input type="hidden" name="currency" value="USD">
+      <input type="hidden" name="amountf" value="5.00">
+      <input type="hidden" name="want_shipping" value="0">
+      <!-- IMPORTANT: put a direct downloadable link here (not the Drive preview page) -->
+      <input type="hidden" name="success_url" value="https://drive.google.com/file/d/15lh_noPxeKwilbULpN4iHx7Ly2x3B8zj/view?usp=sharing">
+      <input type="hidden" name="cancel_url" value="https://compoundtrading.adquash.com/bot.html">
+      <button type="submit" class="btn btn-outline-dark">
+        <img src="https://legacy.coinpayments.net/images/pub/buynow-grey.png"
+             alt="Buy Now with CoinPayments" style="height:28px; vertical-align:middle;">
+        <span style="margin-left:8px;">Buy with Crypto — $5</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- PayPal (center column) -->
+  <div class="col-md-4 text-center mb-3">
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+      <input type="hidden" name="cmd" value="_xclick">
+      <!-- REPLACE with your PayPal business email -->
+      <input type="hidden" name="business" value="sakhihosting@gmail.com">
+      <input type="hidden" name="item_name" value="Shopkeeper Strategy eCourse (PDF)">
+      <input type="hidden" name="amount" value="5.00">
+      <input type="hidden" name="currency_code" value="USD">
+      <!-- IMPORTANT: set these to real pages -->
+      <input type="hidden" name="return" value="https://drive.google.com/file/d/15lh_noPxeKwilbULpN4iHx7Ly2x3B8zj/view?usp=sharing">
+      <input type="hidden" name="cancel_return" value="https://compoundtrading.adquash.com/bot.html">
+      <button type="submit" class="btn btn-primary">
+        <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png"
+             alt="PayPal" style="height:22px; vertical-align:middle;">
+        <span style="margin-left:8px;">Buy Now for $5 (PayPal)</span>
+      </button>
+    </form>
+    <div class="small mt-2 text-muted">PayPal opens in a new tab</div>
+  </div>
+
+  <!-- UPI (right column) -->
+  <div class="col-md-4 text-center mb-3">
+    <div class="mb-2"><strong>For India (UPI)</strong></div>
+
+    <!-- UPI intent link (works on Android phones with UPI apps) -->
+    <a href="upi://pay?pa=9213816442@apl&pn=Akshar%20Hanuman%20Dham&tn=Shopkeeper%20Strategy%20eCourse&am=150.00&cu=INR"
+       class="btn btn-success d-inline-block mb-2">Pay ₹150 via UPI</a>
+
+    <!-- Copyable UPI text for users who want manual transfer -->
+    <div class="mt-2">
+      <div class="small">Or send to UPI ID:</div>
+      <div style="font-weight:600; font-size:14px; margin-top:4px;">9213816442@apl</div>
+      <div class="small text-muted mt-1">Message/Note: Shopkeeper Strategy eCourse</div>
+    </div>
+
+    <!-- Optional: QR code (you can generate and replace src with an actual QR image) -->
+    <!-- <div class="mt-2"><img src="/path/to/upi-qrcode.png" alt="UPI QR" style="width:120px;"></div> -->
+  </div>
+<!-- Recommended: a small paragraph that explains delivery and support -->
+<p class="mt-3 small text-muted">
+  After payment you will be redirected to the PDF download page. If you face any issues, contact support at <a href="mailto:you@yourdomain.com">you@yourdomain.com</a>.
+</p> <hr>
+      <!-- form action="https://legacy.coinpayments.net/index.php" method="post">
  <input type="hidden" name="cmd" value="_pay_simple">
  <input type="hidden" name="reset" value="1">
  <input type="hidden" name="merchant" value="80fac8e50744f81c50912a923c7a05b2">
@@ -66,8 +135,8 @@ You can learn the complete method step by step in our eCourse (PDF format) for j
  <input type="hidden" name="success_url" value="https://drive.google.com/file/d/15lh_noPxeKwilbULpN4iHx7Ly2x3B8zj/view?usp=sharing">
  <input type="hidden" name="cancel_url" value="https://compoundtrading.adquash.com/bot.html">
  <input type="image" src="https://legacy.coinpayments.net/images/pub/buynow-grey.png" alt="Buy Now with CoinPayments.net">
-</form>
-                    </p>
+                    </form -->
+                   
 
          <p>
            We develop trading system for spot trading with our Shopkeeper strategy.<br>

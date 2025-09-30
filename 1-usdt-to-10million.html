@@ -50,12 +50,49 @@
                     <div class="col-md-12">
           <h1 style="text-align:center;">1 USDT to 10 Million USDT compounding table</h1>
  
-  <iframe 
+ <div id="table-container">Loading table...</div>
+
+  <!-- PapaParse CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  <script>
+    // CSV file ka RAW link yahan daalein:
+    const csvFile = "https://raw.githubusercontent.com/aksharmty/compoundtrading/main/compound_trade_simulation_10cr.csv";
+
+    Papa.parse(csvFile, {
+      download: true,
+      header: true, // Agar first row headers hai to true karein
+      complete: function(results) {
+        const data = results.data;
+        let table = "<table><thead><tr>";
+
+        // Headers
+        Object.keys(data[0]).forEach(header => {
+          table += `<th>${header}</th>`;
+        });
+        table += "</tr></thead><tbody>";
+
+        // Rows
+        data.forEach(row => {
+          if (Object.values(row).some(val => val.trim() !== "")) { // Empty row skip karega
+            table += "<tr>";
+            Object.values(row).forEach(cell => {
+              table += `<td>${cell}</td>`;
+            });
+            table += "</tr>";
+          }
+        });
+
+        table += "</tbody></table>";
+        document.getElementById("table-container").innerHTML = table;
+      }
+    });
+  </script>
+                        <!-- iframe 
     src="https://view.officeapps.live.com/op/embed.aspx?src=https://raw.githubusercontent.com/aksharmty/compoundtrading/main/compound_trade_simulation_10cr.xlsx" 
     width="100%" 
     height="600" 
     frameborder="0">
-  </iframe>
+                    </iframe -->
 </body>
 </html>
 </div> 

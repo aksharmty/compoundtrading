@@ -5,7 +5,7 @@ const banners = [
     expiry: '2100-01-01T23:59:59'
   },
     {
-         img: 'https://m.media-amazon.com/images/I/51iCgqihd8L._UF1000,1000_QL80_FMwebp_.jpg',
+         img: 'https://m.media-amazon.com/images/I/51iCgqihd8L._SY425_.jpg',
          link: 'https://www.amazon.in/dp/B0FQ6GFLLT?tag=rajkumar06322-21',
          expiry: '2100-01-01T23:59:59'
       },
@@ -14,6 +14,11 @@ const banners = [
          link: 'https://www.amazon.in/dp/B0FRYBPLZW?tag=rajkumar06322-21',
          expiry: '2100-01-01T23:59:59'
       },
+   {
+      img: 'https://m.media-amazon.com/images/I/61WaJ4E9D1L._SY425_.jpg',
+      link: 'https://www.amazon.in/dp/B0FTMQZWP5?tag=rajkumar06322-21',
+    expiry: '2100-01-01T23:59:59'
+  },
   
  {
       img: 'https://aksharmty.github.io/aksharhanumandham/ads/adquash.png',

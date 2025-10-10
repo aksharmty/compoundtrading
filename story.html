@@ -112,6 +112,7 @@
         ⚠️ <strong>Disclaimer:</strong> This story is for educational demonstration only. Trading involves risk.
         Past performance does not guarantee future results. Always learn before you trade.
       </p>          </div> 
+          </div>
         <div class="right-panel0">
             <div id="sidebar"></div>
         </div>
@@ -163,71 +164,5 @@
     
     </script>
     <script src="//compoundtrading.adquash.com/js/loader.js"></script>
-</body>
-</html>
- <!-- Modal -->
-    <div id="modal">
-      <div id="modalContent">
-        <div id="modalText">Processing...</div>
-        <button onclick="closeModal()">Close</button>
-      </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
-    <script>
-    (function(){
-      const UPI_VPA = '9213816442@apl';
-      const PAYEE_NAME = 'Raj Kumar';
-      const AMOUNT = '2000.00';
-      const CURRENCY = 'INR';
-      const NOTE = 'Shopkeeper strategy in Trading online Course';
-      const WHATSAPP_NUM = '919213816442';
-
-      document.getElementById('vpaText').textContent = UPI_VPA;
-      const upiPayload = `upi://pay?pa=${encodeURIComponent(UPI_VPA)}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${encodeURIComponent(AMOUNT)}&cu=${encodeURIComponent(CURRENCY)}&tn=${encodeURIComponent(NOTE)}`;
-
-      QRCode.toCanvas(document.getElementById('qrCanvas'), upiPayload, { width: 200, margin: 1 }, function (err) {
-        if(err) document.getElementById('qrCanvas').textContent = 'QR Error';
-      });
-
-      document.getElementById('upiIntentBtn').addEventListener('click', ()=>{ window.location.href = upiPayload; });
-      document.getElementById('copyUpiBtn').addEventListener('click', ()=>{
-        navigator.clipboard.writeText(UPI_VPA).then(()=>alert('UPI ID copied: ' + UPI_VPA));
-      });
-      document.getElementById('openWa').addEventListener('click', ()=>{ window.open('https://wa.me/' + WHATSAPP_NUM, '_blank'); });
-
-      document.getElementById('regForm').addEventListener('submit', function(e){
-        e.preventDefault();
-        const name = document.getElementById('fullname').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const city = document.getElementById('city').value.trim() || '-';
-        const note = document.getElementById('note').value.trim() || '-';
-
-        if(!name || !/^[0-9]{10}$/.test(phone)){
-          alert('कृपया अपना सही नाम और 10-digit मोबाइल नंबर भरें।');
-          return;
-        }
-
-        const message =
-`✨ Compound strategy in spot Trading online Course ✨
-👤 Name: ${name}
-📞 Mobile: ${phone}
-🏙 City: ${city}
-📝 Note: ${note}
-💰 Fee: ₹${AMOUNT}
-🔖 UPI ID: ${UPI_VPA}
-
-(मैंने payment कर दिया / करूँगा — कृपया payment confirm होने पर joining link भेज दें.)`;
-
-        const waUrl = 'https://wa.me/' + WHATSAPP_NUM + '?text=' + encodeURIComponent(message);
-        document.getElementById('modalText').textContent = 'Opening WhatsApp — कृपया संदेश भेजें।';
-        document.getElementById('modal').style.display = 'flex';
-        window.open(waUrl, '_blank');
-        setTimeout(()=>{ document.getElementById('modal').style.display='none'; }, 4000);
-      });
-
-      window.closeModal = function(){ document.getElementById('modal').style.display='none'; };
-    })();
-    </script>
 </body>
 </html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+     crossorigin="anonymous"></script>     
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='shortcut icon' href='logo.png' type='image/x-icon' />
+  <title>DCA Down Calculator</title>
+  <meta name="description" content="DCA calculator">
+  <meta name="keywords" content="Compound Trading, Compounding Strategy, Trading Bot, Automated Trading, Profit Growth, Trading Education,dca calculator">
+  <LINK href="0.css" rel="stylesheet" type="text/css">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    .box { border: 1px solid #ccc; padding: 20px; border-radius: 10px; }
+    input { width: 100%; padding: 10px; margin: 8px 0; }
+    button { padding: 12px 20px; font-size: 16px; cursor: pointer; }
+    .output { margin-top: 20px; padding: 15px; background: #f7f7f7; border-radius: 10px; }
+  </style>
+</head>
+<body>
+  <div class="col-md-12" style="width:100%;">
+        <div id="menu"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+          <div class="left-panel">
+              <div class="col-md-12" style="width:100%;">
+        <center><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+     crossorigin="anonymous"></script>
+<!-- sakhiadheader -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px;max-height:100px;"
+     data-ad-client="ca-pub-4305348743992957"
+     data-ad-slot="1924539816"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</center>
+    </div>
+                    <div class="col-md-12">
+  <h1 style="text-align:center;">DCA Price Drop Calculator</h1>
+  <div class="box">
+    <label>Last Buy Gap (%)</label>
+    <input type="number" id="gap" value="1" step="0.1">
+
+    <label>Last Buy Amount Increase (%)</label>
+    <input type="number" id="inc" value="1" step="0.1">
+
+    <label>Total Capital</label>
+    <input type="number" id="capital" value="100000">
+
+    <label>First Buy (% of Capital)</label>
+    <input type="number" id="first" value="1" step="0.1">
+
+    <button onclick="calc()">Calculate</button>
+
+    <div id="result" class="output"></div>
+  </div>
+
+  <script>
+    function calc() {
+      let gap = parseFloat(document.getElementById('gap').value) / 100;
+      let inc = parseFloat(document.getElementById('inc').value) / 100;
+      let capital = parseFloat(document.getElementById('capital').value);
+      let firstPct = parseFloat(document.getElementById('first').value) / 100;
+
+      let firstBuy = capital * firstPct;
+      let used = 0;
+      let buys = 0;
+      let buyAmount = firstBuy;
+      let price = 1;
+
+      while (used + buyAmount <= capital) {
+        used += buyAmount;
+        buys++;
+        buyAmount = buyAmount * (1 + inc);
+        price = price * (1 - gap);
+      }
+
+      let totalDown = (1 - price) * 100;
+
+      document.getElementById('result').innerHTML = `
+        <b>Total Buys:</b> ${buys}<br>
+        <b>Total Down Covered:</b> ${totalDown.toFixed(2)}%<br>
+        <b>Capital Used:</b> ₹${used.toFixed(2)}
+      `;
+    }
+  </script>
+</div> 
+        <div class="right-panel0">
+            <div id="sidebar"></div>
+        </div>
+    </div>
+    </div>
+    <div class="footer">
+        <div id="footer"></div>
+    </div>
+    <button class="top-button" onclick="scrollToTop()">Back to Top</button>
+
+    <div id="footer"></div>
+
+    <script>
+        // Toggle menu visibility on smaller screens
+     function toggleMenu() {
+       const menu = document.querySelector('.menu');
+       menu.classList.toggle('show');
+     }
+     // Scroll to top function
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'  // Smooth scroll effect
+      });
+    }
+
+    // Show or hide the "Back to Top" button based on scroll position
+    window.onscroll = function() {
+      var topButton = document.querySelector('.top-button');
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        topButton.style.display = "block";  // Show button
+      } else {
+        topButton.style.display = "none";  // Hide button
+      }
+    };
+   
+    // Function to load external HTML into a specific element
+    function loadHTML(elementId, file) {
+      fetch(file)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById(elementId).innerHTML = data;
+        })
+        .catch(error => {
+          console.error('Error loading ' + file + ':', error);
+        });
+    }
+
+    
+    </script>
+    <script src="js/loader.js"></script>
+</body>
+</html>

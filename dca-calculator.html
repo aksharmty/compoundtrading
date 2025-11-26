@@ -33,100 +33,166 @@
     </div>
                     <div class="col-md-12">
   <h1 style="text-align:center;">DCA Price Drop Calculator</h1>
-  <style>
-    .box { border: 1px solid #ccc; padding: 20px; border-radius: 10px; }
-    input { width: 100%; padding: 10px; margin: 8px 0; }
-    button { padding: 12px 20px; font-size: 16px; cursor: pointer; }
+   <style>
+   .box { border: 1px solid #ccc; padding: 20px; border-radius: 10px; }
+    input[type="number"] { width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box; }
+    label { font-weight: 600; display:block; margin-top:10px }
+    .row { display:flex; gap:10px; }
+    .col { flex:1 }
+    button { padding: 10px 16px; font-size: 16px; cursor: pointer; margin-top: 12px }
     .output { margin-top: 20px; padding: 15px; background: #f7f7f7; border-radius: 10px; }
+    table { width:100%; border-collapse: collapse; margin-top:12px }
+    table th, table td { border:1px solid #ddd; padding:6px 8px; text-align:right }
+    table th { background:#f0f0f0; text-align:center }
+    .small { font-size:0.9em; color:#555 }
+    .controls { display:flex; gap:10px; align-items:center }
+    .mono { font-family: monospace }
   </style>
-                      <div class="box">
-    <label>Last Buy Gap (%)</label>
-    <input type="number" id="gap" value="1" step="0.1">
+</head>
+<body>
+  <h2>DCA Price Drop Calculator</h2>
+  <div class="box">
+    <div class="row">
+      <div class="col">
+        <label>Last Buy Gap (%)</label>
+        <input type="number" id="gap" value="1" step="0.1" min="0">
+      </div>
+      <div class="col">
+        <label>Buy Amount Increase (%)</label>
+        <input type="number" id="inc" value="1" step="0.1" min="0">
+      </div>
+    </div>
 
-    <label>Last Buy Amount Increase (%)</label>
-    <input type="number" id="inc" value="1" step="0.1">
+    <div class="row">
+      <div class="col">
+        <label>Total Capital (₹)</label>
+        <input type="number" id="capital" value="100000" step="any" min="0">
+      </div>
+      <div class="col">
+        <label>First Buy (% of Capital)</label>
+        <input type="number" id="first" value="1" step="0.1" min="0">
+      </div>
+    </div>
 
-    <label>Total Capital</label>
-    <input type="number" id="capital" value="100000">
-
-    <label>First Buy (% of Capital)</label>
-    <input type="number" id="first" value="1" step="0.1">
-
-    <button onclick="calc()">Calculate</button>
+    <div class="controls">
+      <button id="calcBtn">Calculate</button>
+      <button id="exportCsvBtn">Export CSV</button>
+    </div>
 
     <div id="result" class="output"></div>
   </div>
 
   <script>
-    function calc() {
-      let gap = parseFloat(document.getElementById('gap').value) / 100;
-      let inc = parseFloat(document.getElementById('inc').value) / 100;
-      let capital = parseFloat(document.getElementById('capital').value);
-      let firstPct = parseFloat(document.getElementById('first').value) / 100;
+    // store last run data for CSV export
+    let lastRun = { steps: [], buyAmounts: [], prices: [], cumulative: [], capital: 0 };
 
-      let firstBuy = capital * firstPct;
+    function calc() {
+      // read inputs
+      const gap = parseFloat(document.getElementById('gap').value) / 100;
+      const inc = parseFloat(document.getElementById('inc').value) / 100;
+      const capital = parseFloat(document.getElementById('capital').value);
+      const firstPct = parseFloat(document.getElementById('first').value) / 100;
+
+      if (!isFinite(gap) || !isFinite(inc) || !isFinite(capital) || !isFinite(firstPct) || capital <= 0 || firstPct <= 0) {
+        document.getElementById('result').innerHTML = '<span class="small">Please enter valid positive numbers (capital &amp; first buy % must be &gt; 0).</span>';
+        lastRun = { steps: [], buyAmounts: [], prices: [], cumulative: [], capital: 0 };
+        return;
+      }
+
+      // Simulation arrays
+      const buyAmounts = [];
+      const prices = [];
+      const cumulative = [];
+
       let used = 0;
-      let buys = 0;
-      let buyAmount = firstBuy;
-      let price = 1;
+      let buyAmount = capital * firstPct;
+      let price = 1; // relative to start
+      let step = 0;
 
       while (used + buyAmount <= capital) {
         used += buyAmount;
-        buys++;
-        buyAmount = buyAmount * (1 + inc);
+        step += 1;
+        // price after this step
         price = price * (1 - gap);
+        buyAmounts.push(buyAmount);
+        prices.push(price);
+        cumulative.push(used);
+        // next buy amount increases
+        buyAmount = buyAmount * (1 + inc);
+        // safety guard
+        if (step > 1000000) break;
       }
 
-      let totalDown = (1 - price) * 100;
+      const totalDownPct = (1 - price) * 100;
 
-      document.getElementById('result').innerHTML = `
-        <b>Total Buys:</b> ${buys}<br>
-        <b>Total Down Covered:</b> ${totalDown.toFixed(2)}%<br>
-        <b>Capital Used:</b> ₹${used.toFixed(2)}
+      // Save for export
+      lastRun = { steps: Array.from({length: step}, (_,i)=>i+1), buyAmounts: buyAmounts.slice(), prices: prices.slice(), cumulative: cumulative.slice(), capital };
+
+      // Build output HTML
+      let html = `
+        <div><b>Total Buys:</b> ${step}</div>
+        <div><b>Total Down Covered:</b> ${totalDownPct.toFixed(2)}%</div>
+        <div><b>Capital Used:</b> ₹${used.toFixed(2)}</div>
       `;
+
+      if (step === 0) {
+        html += `<div class="small">No buys could be made with given inputs.</div>`;
+      } else {
+        html += `
+          <div style="overflow:auto; max-height:420px; margin-top:10px">
+            <table>
+              <thead>
+                <tr>
+                  <th>Step</th>
+                  <th>Price (relative)</th>
+                  <th>Buy Amount (₹)</th>
+                  <th>Cumulative Invested (₹)</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        for (let i = 0; i < step; i++) {
+          html += `<tr>` +
+                  `<td style='text-align:center'>${i+1}</td>` +
+                  `<td class='mono'>${prices[i].toFixed(6)}</td>` +
+                  `<td>${buyAmounts[i].toFixed(2)}</td>` +
+                  `<td>${cumulative[i].toFixed(2)}</td>` +
+                  `</tr>`;
+        }
+
+        html += `</tbody></table></div>`;
+      }
+
+      document.getElementById('result').innerHTML = html;
     }
+
+    function exportCsv() {
+      if (!lastRun || !lastRun.steps || lastRun.steps.length === 0) {
+        alert('No data to export. Run Calculate first.');
+        return;
+      }
+      let csv = 'Step,Price,BuyAmount,CumulativeInvested\n';
+      for (let i = 0; i < lastRun.steps.length; i++) {
+        csv += `${lastRun.steps[i]},${lastRun.prices[i].toFixed(6)},${lastRun.buyAmounts[i].toFixed(2)},${lastRun.cumulative[i].toFixed(2)}\n`;
+      }
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'dca_prices.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', calc);
+    document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
+
+    // run once on load to show defaults
+    window.addEventListener('load', calc);
   </script>
-  <hr style="hieght:1px;">
-   <script>                   
-                      // Add table + chart
-let tableHTML = `<table border='1' cellpadding='5' style='margin-top:15px;width:100%;border-collapse:collapse'>
-<tr><th>Step</th><th>Price</th></tr>`;
-
-
-let prices = [];
-let simPrice = 1;
-for (let i = 1; i <= buys; i++) {
-simPrice *= (1 - gap);
-prices.push(simPrice);
-tableHTML += `<tr><td>${i}</td><td>${simPrice.toFixed(4)}</td></tr>`;
-}
-tableHTML += `</table>`;
-
-
-document.getElementById('result').innerHTML += tableHTML;
-
-
-// Chart
-const ctx = document.getElementById('chart').getContext('2d');
-new Chart(ctx, {
-type: 'line',
-data: {
-labels: prices.map((_, i) => i+1),
-datasets: [{
-label: 'Price vs Buy Step',
-data: prices,
-borderWidth: 2
-}]
-}
-});
-}
-</script>
-
-
-<canvas id="chart" style="margin-top:20px;width:100%;height:300px"></canvas>
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </div> </div>
         <div class="right-panel0">
             <div id="sidebar"></div>

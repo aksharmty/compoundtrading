@@ -37,8 +37,6 @@
    .box { border: 1px solid #ccc; padding: 20px; border-radius: 10px; }
     input[type="number"] { width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box; }
     label { font-weight: 600; display:block; margin-top:10px }
-    .row { display:flex; gap:10px; }
-    .col { flex:1 }
     button { padding: 10px 16px; font-size: 16px; cursor: pointer; margin-top: 12px }
     .output { margin-top: 20px; padding: 15px; background: #f7f7f7; border-radius: 10px; }
     table { width:100%; border-collapse: collapse; margin-top:12px }
@@ -48,11 +46,7 @@
     .controls { display:flex; gap:10px; align-items:center }
     .mono { font-family: monospace }
   </style>
-</head>
-<body>
-  <h2>DCA Price Drop Calculator</h2>
   <div class="box">
-    <div class="row">
       <div class="col">
         <label>Last Buy Gap (%)</label>
         <input type="number" id="gap" value="1" step="0.1" min="0">
@@ -61,10 +55,8 @@
         <label>Buy Amount Increase (%)</label>
         <input type="number" id="inc" value="1" step="0.1" min="0">
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
+    
+       <div class="col">
         <label>Total Capital (₹)</label>
         <input type="number" id="capital" value="100000" step="any" min="0">
       </div>
@@ -72,8 +64,7 @@
         <label>First Buy (% of Capital)</label>
         <input type="number" id="first" value="1" step="0.1" min="0">
       </div>
-    </div>
-
+    
     <div class="controls">
       <button id="calcBtn">Calculate</button>
       <button id="exportCsvBtn">Export CSV</button>

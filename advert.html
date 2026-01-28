@@ -4,9 +4,17 @@
   <meta charset="UTF-8">
   <title>Redirecting...</title>
   <script>
+    // URLs list
+    var urls = [
+      "https://adquash.com/article0.php?str=" + Date.now(),
+      "https://simplephpcoding.blogspot.com/,
+      "https://forexwithcandlestick.blogspot.com
+    ];
+
     // Redirect after 1 second
-    setTimeout(function() {
-      window.location.href = "https://adquash.com/article0.php?str=" + Date.now();
+    setTimeout(function () {
+      var randomUrl = urls[Math.floor(Math.random() * urls.length)];
+      window.location.href = randomUrl;
     }, 1000);
   </script>
 </head>

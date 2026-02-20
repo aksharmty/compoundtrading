@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+     crossorigin="anonymous"></script>     
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='shortcut icon' href='logo.png' type='image/x-icon' />
+    <title>Minimum Sell Target Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #020617);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #111827;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: none;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 8px;
+            background: #22c55e;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .result {
+            margin-top: 20px;
+            background: #020617;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #9ca3af;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="col-md-12" style="width:100%;">
+        <div id="menu"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+          <div class="left-panel">
+              <div class="col-md-12" style="width:100%;">
+        <center><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+     crossorigin="anonymous"></script>
+<!-- sakhiadheader -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px;max-height:100px;"
+     data-ad-client="ca-pub-4305348743992957"
+     data-ad-slot="1924539816"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</center>
+    </div>
+                    <div class="col-md-12">
+          <h1 style="text-align:center;">📈 Minimum Sell Target Calculator</h1>
+
+        <form id="calcForm">
+
+            <label>Buy Amount (₹)</label> <input type="number" id="buy" value="4000" required>
+
+            <label>Brokerage % (One Side)</label> <input type="number" id="broker" value="0.261" step="0.001">
+
+            <label>GST %</label> <input type="number" id="gst" value="18">
+
+            <label>Other Charges ₹ (One Side)</label> <input type="number" id="other" value="20">
+
+            <label>DP Charge ₹ (Sell)</label> <input type="number" id="dp" value="24">
+
+            <label>Desired Net Profit %</label> <input type="number" id="profit" value="1" step="0.1">
+
+            <button type="submit">Calculate Sell Target</button>
+
+        </form>
+
+        <div class="result" id="result"></div>
+
+        <div class="footer">
+            Compounding Friendly Calculator • Adjust values as needed
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById("calcForm").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+let buy = parseFloat(document.getElementById('buy').value);
+let broker = parseFloat(document.getElementById('broker').value)/100;
+let gst = parseFloat(document.getElementById('gst').value)/100;
+let other = parseFloat(document.getElementById('other').value);
+let dp = parseFloat(document.getElementById('dp').value);
+let profit = parseFloat(document.getElementById('profit').value)/100;
+
+
+// Brokerage
+let brokerageBuy = buy * broker;
+let brokerageSell = buy * broker;
+
+// GST
+let gstBuy = brokerageBuy * gst;
+let gstSell = brokerageSell * gst;
+
+// Other charges
+let otherBuy = other + (other * gst);
+let otherSell = other + (other * gst);
+
+// Total charges
+let totalCharges = brokerageBuy + brokerageSell +
+                   gstBuy + gstSell +
+                   otherBuy + otherSell +
+                   dp;
+
+// Target sell value
+let targetValue = buy * (1 + profit) + totalCharges;
+
+// Sell %
+let sellPercent = ((targetValue - buy) / buy) * 100;
+
+
+// Output
+let html = `
+<b>Minimum Sell Target %:</b> ${sellPercent.toFixed(3)} % <br><br>
+<b>Required Sell Amount:</b> ₹ ${targetValue.toFixed(2)} <br><br>
+<b>Total Estimated Charges:</b> ₹ ${totalCharges.toFixed(2)} <br><br>
+<b>Next Capital After Trade:</b> ₹ ${(buy * (1+profit)).toFixed(2)}
+`;
+
+let box = document.getElementById('result');
+box.style.display = 'block';
+box.innerHTML = html;
+
+});
+
+    </script>
+
+</div> 
+        </div> 
+        <div class="right-panel0">
+            <div id="sidebar"></div>
+        </div>
+    </div>
+    </div>
+    <div class="footer">
+        <div id="footer"></div>
+    </div>
+    <button class="top-button" onclick="scrollToTop()">Back to Top</button>
+
+    <div id="footer"></div>
+
+    <script>
+        // Toggle menu visibility on smaller screens
+     function toggleMenu() {
+       const menu = document.querySelector('.menu');
+       menu.classList.toggle('show');
+     }
+     // Scroll to top function
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'  // Smooth scroll effect
+      });
+    }
+
+    // Show or hide the "Back to Top" button based on scroll position
+    window.onscroll = function() {
+      var topButton = document.querySelector('.top-button');
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        topButton.style.display = "block";  // Show button
+      } else {
+        topButton.style.display = "none";  // Hide button
+      }
+    };
+   
+    // Function to load external HTML into a specific element
+    function loadHTML(elementId, file) {
+      fetch(file)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById(elementId).innerHTML = data;
+        })
+        .catch(error => {
+          console.error('Error loading ' + file + ':', error);
+        });
+    }
+
+    
+    </script>
+    <script src="js/loader.js"></script>
+</body>
+</html>

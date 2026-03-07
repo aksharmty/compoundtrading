@@ -19,6 +19,11 @@ const banners = [
       link: 'https://www.amazon.in/dp/B0FTMQZWP5?tag=rajkumar0fbe-21',
     expiry: '2100-01-01T23:59:59'
   },
+  {
+      img: 'https://m.media-amazon.com/images/I/61vK3w0pmuL._SL1500_.jpg',
+      link: 'https://www.amazon.in/dp/B0GRB3SXQP?tag=rajkumar0fbe-21',
+    expiry: '2100-01-01T12:00:00'
+  },
  {
       img: 'https://aksharmty.github.io/aksharhanumandham/ads/manifest.jpeg',
       link: 'https://approveme.adquash.com',

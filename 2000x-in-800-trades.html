@@ -39,7 +39,7 @@ body{font-family:Arial;margin:0;background:#f5f5f5;color:#111}
 <h1>🚀 2000x+ Growth in 800 Trades</h1>
 <p>Powered by Compounding + Auto Trading Bot</p>
     <img src="2000x-in-800-trades.jpg" alt="2000x in 800 Trading Strategy bot" style="max-width:100%;margin-top:20px;border-radius:10px;">
-<div class="timer" id="countdown"></div>
+<div class="timer" id="countdown">.</div>
 <a href="https://wa.me/919213816442?text=Hi%20I%20want%20to%20start%202000x%20auto%20trading%20bot" class="btn">Start Now on WhatsApp</a>
 </div>
 
@@ -104,20 +104,38 @@ body{font-family:Arial;margin:0;background:#f5f5f5;color:#111}
 </div>
 
 <script>
-var endDate = new Date();
-endDate.setDate(endDate.getDate() + 15);
+var endDate = localStorage.getItem("offer_end");
+
+if(!endDate){
+    var d = new Date();
+    d.setDate(d.getDate() + 15);
+    endDate = d.getTime();
+    localStorage.setItem("offer_end", endDate);
+}else{
+    endDate = parseInt(endDate);
+}
 
 function updateTimer(){
     var now = new Date().getTime();
     var distance = endDate - now;
+
+    if(distance <= 0){
+        document.getElementById("countdown").innerHTML = "⏳ Offer Expired";
+        return;
+    }
+
     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    document.getElementById("countdown").innerHTML = "⏳ Offer Ends In: " + days + "d " + hours + "h " + minutes + "m";
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").innerHTML =
+        "⏳ Offer Ends In: " + days + "d " + hours + "h " + minutes + "m " + seconds + "s";
 }
+
+updateTimer();
 setInterval(updateTimer, 1000);
 </script>
-
 <!-- FAQ Schema (JSON-LD for SEO) -->
 <script type="application/ld+json">
 {

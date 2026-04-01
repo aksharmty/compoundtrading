@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+     crossorigin="anonymous"></script>   
+<meta charset="utf-8">
+<link rel='shortcut icon' href='logo.png' type='image/x-icon' />
+ <LINK href="0.css" rel="stylesheet" type="text/css">
+<!--link rel="canonical" href="https://adquash.com/about.php" -->
+<title>SIP Trading Calculator (Growth Graph Enhanced)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body{font-family:Arial;background:#0f172a;color:#fff;margin:0}
+.container{max-width:900px;margin:auto;padding:20px;background:#0f172a;color:#fff;}
+.card{background:#1e293b;padding:20px;border-radius:10px;margin-top:20px}
+label{display:block;margin-top:10px;color:#cbd5f5}
+input,button{width:100%;padding:12px;margin:5px 0;border-radius:5px;border:none}
+button{background:#22c55e;color:#000;font-weight:bold;cursor:pointer}
+.result{background:#111827;padding:15px;border-radius:10px;margin-top:20px}
+</style>
+</head>
+<body>
+ <div class="col-md-12" style="width:100%;">
+        <div id="menu"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+          <div class="left-panel">
+              <div class="col-md-12" style="width:100%;">
+        <center><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+     crossorigin="anonymous"></script>
+<!-- sakhiadheader -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px;max-height:100px;"
+     data-ad-client="ca-pub-4305348743992957"
+     data-ad-slot="1924539816"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</center>
+    </div>
+<div class="col-md-12">
+<div class="container">
+
+<h1>💰 SIP Trading Calculator</h1>
+<div class="card">
+<p style="color:#cbd5f5;line-height:1.6;">
+This calculator helps you estimate how your monthly investment (SIP) can grow using a compounding trading strategy. 
+It considers your monthly contribution, trading frequency, profit percentage, and trading fees to project how long it may take to reach your target fund.
+</p>
+
+<label>Monthly Investment (₹)</label>
+<input type="number" id="monthly" value="5000">
+
+<label>Target Amount (₹)</label>
+<input type="number" id="target" value="10000000">
+
+<label>Trades per Week</label>
+<input type="number" id="trades_week" value="1">
+
+<label>Profit per Trade (%)</label>
+<input type="number" id="profit" value="1">
+
+<label>Fee per Trade (%)</label>
+<input type="number" id="fee" value="0.2">
+
+<button onclick="calculate(this)">Calculate</button>
+</div>
+
+<div id="result"></div>
+<canvas id="chart"></canvas>
+
+</div>
+
+<script>
+let chart;
+
+function calculate(btn){
+
+    btn.innerText = "Calculating...";
+
+    setTimeout(()=>{
+
+        let monthly = parseFloat(document.getElementById('monthly').value);
+        let target = parseFloat(document.getElementById('target').value);
+        let trades_week = parseFloat(document.getElementById('trades_week').value);
+        let profit_per = parseFloat(document.getElementById('profit').value)/100;
+        let fee = parseFloat(document.getElementById('fee').value)/100;
+
+        let balance = 0;
+        let invested = 0;
+        let trades = 0;
+        let months = 0;
+
+        let balance_data=[];
+        let invested_data=[];
+
+        while(balance < target){
+            months++;
+
+            balance += monthly;
+            invested += monthly;
+
+            let monthly_trades = trades_week * 4.33;
+
+            for(let i=0;i<monthly_trades;i++){
+                let net = profit_per - fee;
+                let profit = balance * net;
+
+                balance += profit;
+                trades++;
+
+                if(balance >= target) break;
+            }
+
+            balance_data.push(balance);
+            invested_data.push(invested);
+        }
+
+        document.getElementById('result').innerHTML = `
+        <div class='result'>
+        <b>Trades:</b> ${trades}<br>
+        <b>Months:</b> ${months}<br>
+        <b>Invested:</b> ₹${invested.toFixed(0)}<br>
+        <b>Final:</b> ₹${balance.toFixed(0)}
+        </div>`;
+
+        if(chart) chart.destroy();
+
+        chart = new Chart(document.getElementById('chart'),{
+            type:'line',
+            data:{
+                labels:balance_data.map((_,i)=>"M"+(i+1)),
+                datasets:[
+                    {
+                        label:'Fund Growth (₹)',
+                        data:balance_data
+                    },
+                    {
+                        label:'Total Invested (₹)',
+                        data:invested_data
+                    }
+                ]
+            }
+        });
+
+        btn.innerText = "Calculate";
+
+    },300);
+}
+</script>
+
+</div> </div>
+        <div class="right-panel0">
+            <div id="sidebar"></div>
+        </div>
+    </div></div>
+    <div class="footer">
+        <div id="footer"></div>
+    </div>
+    <button class="top-button" onclick="scrollToTop()">Back to Top</button>
+
+    <div id="footer"></div>
+
+    <script>
+        // Toggle menu visibility on smaller screens
+     function toggleMenu() {
+       const menu = document.querySelector('.menu');
+       menu.classList.toggle('show');
+     }
+     // Scroll to top function
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'  // Smooth scroll effect
+      });
+    }
+
+    // Show or hide the "Back to Top" button based on scroll position
+    window.onscroll = function() {
+      var topButton = document.querySelector('.top-button');
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        topButton.style.display = "block";  // Show button
+      } else {
+        topButton.style.display = "none";  // Hide button
+      }
+    };
+   
+    // Function to load external HTML into a specific element
+    function loadHTML(elementId, file) {
+      fetch(file)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById(elementId).innerHTML = data;
+        })
+        .catch(error => {
+          console.error('Error loading ' + file + ':', error);
+        });
+    }
+
+    
+    </script>
+    <script src="js/loader.js"></script>
+</body>
+</html>

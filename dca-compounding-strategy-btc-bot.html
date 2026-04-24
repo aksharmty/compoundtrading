@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DCA Crypto Bot Strategy | BTC/USDT Compounding System India</title>
+
+<meta name="description" content="Automated DCA crypto trading bot strategy for BTC/USDT. Learn compounding system to grow capital consistently. Beginner to advanced guide.">
+<meta name="keywords" content="DCA bot, crypto bot, BTC USDT strategy, compounding trading, automated trading India">
+<meta name="author" content="Adquash Trading">
+
+<style>
+body{
+    font-family: Arial;
+    background:#0f172a;
+    color:#fff;
+    margin:0;
+}
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+h1{ color:#22c55e; }
+h2{ color:#38bdf8; margin-top:30px; }
+
+.card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:10px;
+    margin-top:15px;
+}
+
+.highlight{
+    color:#22c55e;
+    font-weight:bold;
+}
+
+.btn{
+    display:inline-block;
+    padding:12px 20px;
+    margin-top:10px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.whatsapp{ background:#25D366; color:#000; }
+.pdf{ background:#f59e0b; color:#000; }
+.kucoin{ background:#facc15; color:#000; }
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+td,th{
+    border:1px solid #334155;
+    padding:8px;
+    text-align:center;
+}
+</style>
+
+<script>
+function downloadPDF(){
+    window.print();
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>DCA Crypto Bot Strategy for BTC/USDT (India)</h1>
+
+<div class="card">
+<p class="highlight">🎯 Fully Automated Crypto Growth System</p>
+<p>Grow your capital using <b>DCA + compounding + automation</b></p>
+
+<a href="https://wa.me/919213816442" class="btn whatsapp">📲 Get Bot on WhatsApp</a>
+<a href="#" onclick="downloadPDF()" class="btn pdf">📄 Download as PDF</a>
+
+<br>
+
+<a href="https://www.kucoin.com/r/af/r8Y9LBX" target="_blank" class="btn kucoin">
+🚀 Join KuCoin & Start Trading
+</a>
+</div>
+
+<h2>💡 Why BTC/USDT?</h2>
+<div class="card">
+<p>✔️ High liquidity<br>✔️ Stable<br>✔️ Beginner friendly</p>
+
+<p><b>👉 Start trading on KuCoin:</b></p>
+<a href="https://www.kucoin.com/r/af/r8Y9LBX" target="_blank">
+https://www.kucoin.com/r/af/r8Y9LBX
+</a>
+</div>
+
+<h2>⚠️ Manual DCA Problem</h2>
+<div class="card">
+<p>❌ Miss entries<br>❌ Emotional trading<br>❌ No consistency</p>
+</div>
+
+<h2>🤖 Automated Bot Solution</h2>
+<div class="card">
+<p>✔️ Auto Buy on dips<br>✔️ Auto Sell on profit<br>✔️ Works 24x7</p>
+</div>
+
+<h2>⚙️ Strategy Setup</h2>
+<div class="card">
+<p><b>First Buy:</b> ₹100<br>
+<b>Next Buy:</b> every 2.5% drop<br>
+<b>Increase:</b> +1%</p>
+</div>
+
+<h2>📉 Buy Structure</h2>
+<div class="card">
+<table>
+<tr><th>Buy</th><th>Drop</th><th>Amount</th></tr>
+<tr><td>1</td><td>-</td><td>₹100</td></tr>
+<tr><td>2</td><td>-2.5%</td><td>₹101</td></tr>
+<tr><td>10</td><td>-2.5%</td><td>₹110</td></tr>
+<tr><td>50</td><td>-2.5%</td><td>₹164</td></tr>
+</table>
+</div>
+
+<h2>💰 Sell Strategy</h2>
+<div class="card">
+<p><b>Simple:</b> +2% exit</p>
+<p><b>Smart:</b><br>
++1% → 25%<br>
++2% → 50%<br>
++3% → exit</p>
+</div>
+
+<h2>📈 Growth Visualization</h2>
+<div class="card">
+<canvas id="growthChart"></canvas>
+<p class="highlight">👉 Power of compounding</p>
+</div>
+
+<h2>📲 Get Bot</h2>
+<div class="card">
+<p class="highlight">💡 Bot works only with KuCoin account</p>
+
+<a href="https://www.kucoin.com/r/af/r8Y9LBX" target="_blank" class="btn kucoin">
+Create Free KuCoin Account
+</a>
+
+<br>
+
+<a href="https://wa.me/919213816442" class="btn whatsapp">
+Start Bot Setup
+</a>
+</div>
+
+<h2>⚠️ Disclaimer</h2>
+<div class="card">
+<p>Market risk exists. No guaranteed returns.<br>Start small.</p>
+</div>
+
+</div>
+
+<script>
+let ctx = document.getElementById('growthChart').getContext('2d');
+
+let data = [];
+let capital = 50000;
+
+for(let i=1;i<=24;i++){
+    capital *= 1.08;
+    data.push(Math.round(capital));
+}
+
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: Array.from({length:24}, (_,i)=>"M"+(i+1)),
+        datasets: [{
+            label: 'Growth ₹',
+            data: data,
+            fill: true,
+            tension: 0.3
+        }]
+    }
+});
+</script>
+
+</body>
+</html>

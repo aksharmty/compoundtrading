@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='shortcut icon' href='logo.png' type='image/x-icon' />
+<title>Crypto Target & Compounding Calculator</title>
+
+<style>
+body {background:#0d0d0d;color:white;font-family:Arial;padding:20px;max-width:1000px;margin:auto;}
+input,select {padding:8px;margin:5px;width:110px;}
+.box {margin-top:20px;padding:15px;border:1px solid #333;border-radius:10px;}
+button {padding:10px;background:#00c853;border:none;color:white;cursor:pointer;}
+h1,h2,h3 {color:#00e676;}
+canvas {background:#111;border-radius:10px;}
+</style>
+  <LINK href="0.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+ <div class="col-md-12" style="width:100%;">
+    <div id="menu"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="left-panel">
+
+        <!-- Ads Header -->
+        <div class="col-md-12" style="width:100%;">
+          <center>
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:728px;height:90px;max-height:100px;"
+                 data-ad-client="ca-pub-4305348743992957"
+                 data-ad-slot="1924539816"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          </center>
+        </div>
+
+        <!-- Title -->
+        <div class="col-md-12" style="width:100%;">
+<h1>🚀 Crypto Target + Compounding Calculator</h1>
+
+Mode:
+<select id="mode" style="width:130px;">
+<option value="crypto">Crypto → Crypto</option>
+<option value="inr">INR → Crypto</option>
+</select><br>
+<table>
+<tr><td>Buy Fee (%):</td><td> <input id="bf" value="0.2"><br></td></tr>
+<tr><td>Sell Fee (%):</td><td> <input id="sf" value="0.2"><br></td></tr>
+<tr><td>TDS Buy (%):</td><td> <input id="tb" value="1"><br></td></tr>
+<tr><td>TDS Sell (%):</td><td> <input id="ts" value="1"><br></td></tr>
+<tr><td>Profit (%):</td><td> <input id="profit" value="1"><br></td></tr>
+<tr><td>Buy Price:</td><td> <input id="buyPrice" value="100"><br></td></tr>
+</table>
+
+<div class="box">
+<h3>📈 Result</h3>
+Target %: <b id="targetPercent"></b><br>
+Sell Price: <b id="sellPrice"></b><br>
+Net Profit: <b id="profitFinal"></b>
+
+<hr>
+
+<h3>💸 Breakdown</h3>
+
+<b>BUY SIDE</b><br>
+Buy Fee: <span id="buyFee"></span><br>
+TDS Buy: <span id="tdsBuy"></span><br>
+Total Buy Cost: <b id="totalBuy"></b><br>
+
+<br>
+
+<b>SELL SIDE</b><br>
+Sell Fee: <span id="sellFee"></span><br>
+TDS Sell: <span id="tdsSell"></span><br>
+Net Receive: <b id="netSell"></b><br>
+
+</div>
+
+<div class="box">
+<h3>📊 Compounding Simulator</h3>
+Trades: <input id="trades" value="50">
+<button onclick="simulate()">Run Simulation</button>
+
+<canvas id="chart" width="700" height="350"></canvas>
+<p>Final Capital: <b id="finalCap"></b></p>
+</div>
+
+<div class="box">
+<h3>💰 TDS Recovery</h3>
+Total TDS: <b id="tdsTotal"></b><br>
+Estimated Claim (~25%): <b id="tdsClaim"></b>
+</div>
+
+<h2>📘 Strategy Guide</h2>
+<p>
+Use average-out + compounding strategy to grow capital steadily. Maintain target ~<b id="targetPercent1"></b>% 
+to cover TDS and fees. Reinvest profits instead of withdrawing.
+</p>
+
+<h3>⚠️ Disclaimer</h3>
+<p>Crypto trading involves risk. This tool is for educational use only.</p>
+
+<script>
+
+let bfEl=bf,sfEl=sf,tbEl=tb,tsEl=ts,profitEl=profit,buyEl=buyPrice,modeEl=mode,tradesEl=trades;
+
+function calc(){
+
+let bf = bfEl.value/100;
+let sf = sfEl.value/100;
+let tb = tbEl.value/100;
+let ts = tsEl.value/100;
+let profit = profitEl.value/100;
+let buy = parseFloat(buyEl.value)||0;
+
+if(modeEl.value==="inr") tb=0;
+
+// target
+let m=((1+bf+tb)*(1+profit))/(1-sf-ts);
+let sell=buy*m;
+
+// breakdown
+let buyFeeVal = buy*bf;
+let tdsBuyVal = buy*tb;
+let totalBuyCost = buy + buyFeeVal + tdsBuyVal;
+
+let sellFeeVal = sell*sf;
+let tdsSellVal = sell*ts;
+let netSellVal = sell - sellFeeVal - tdsSellVal;
+
+let netProfit = netSellVal - totalBuyCost;
+
+// output
+targetPercent.innerText=((m-1)*100).toFixed(3)+"%"; targetPercent1.innerText=((m-1)*100).toFixed(3)+"%";
+sellPrice.innerText=sell.toFixed(4);
+profitFinal.innerText=netProfit.toFixed(4);
+
+buyFee.innerText=buyFeeVal.toFixed(4);
+tdsBuy.innerText=tdsBuyVal.toFixed(4);
+totalBuy.innerText=totalBuyCost.toFixed(4);
+
+sellFee.innerText=sellFeeVal.toFixed(4);
+tdsSell.innerText=tdsSellVal.toFixed(4);
+netSell.innerText=netSellVal.toFixed(4);
+
+// auto graph
+simulate(true);
+}
+
+function simulate(){
+
+let trades=parseInt(tradesEl.value)||0;
+let capital=parseFloat(buyEl.value)||0;
+
+let bf = bfEl.value/100;
+let sf = sfEl.value/100;
+let tb = tbEl.value/100;
+let ts = tsEl.value/100;
+let profit = profitEl.value/100;
+
+if(modeEl.value==="inr") tb=0;
+
+let data=[];
+let tdsTotalVal=0;
+
+for(let i=0;i<trades;i++){
+
+let m=((1+bf+tb)*(1+profit))/(1-sf-ts);
+let sell=capital*m;
+
+let tds=(capital*tb)+(sell*ts);
+tdsTotalVal+=tds;
+
+capital=sell*(1-sf-ts);
+
+data.push(parseFloat(capital.toFixed(2)));
+}
+
+drawChart(data);
+
+finalCap.innerText=capital.toFixed(2);
+tdsTotal.innerText=tdsTotalVal.toFixed(2);
+tdsClaim.innerText=(tdsTotalVal*0.25).toFixed(2);
+}
+
+function drawChart(data){
+
+let c=document.getElementById("chart");
+let ctx=c.getContext("2d");
+
+ctx.clearRect(0,0,c.width,c.height);
+
+let max=Math.max(...data);
+let min=Math.min(...data);
+if(max===min) max+=1;
+
+let padding=40;
+let w=c.width-padding*2;
+let h=c.height-padding*2;
+
+ctx.strokeStyle="#00e676";
+ctx.beginPath();
+
+data.forEach((v,i)=>{
+let x=padding+(i/(data.length-1))*w;
+let y=padding+h-((v-min)/(max-min))*h;
+
+if(i===0) ctx.moveTo(x,y);
+else ctx.lineTo(x,y);
+});
+
+ctx.stroke();
+}
+
+
+// auto update (except trades)
+document.querySelectorAll("input,select").forEach(el=>{
+if(el.id!=="trades"){
+el.addEventListener("input",calc);
+}
+});
+
+calc();
+simulate();
+
+</script>
+</div> </div>
+<div class="right-panel0">
+            <div id="sidebar"></div>
+        </div>
+        </div>
+  </div>
+  <div class="footer">
+    <div id="footer"></div>
+  </div>
+</body>
+</html>
+<script src="js/loader.js"></script>

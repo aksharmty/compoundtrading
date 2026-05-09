@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Tax & Growth Calculator</title>
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-5">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <h1 class="text-2xl font-bold text-center mb-6 text-blue-600">Crypto Trade & TDS Calculator</h1>
+        
+        <!-- Input Section -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 bg-blue-50 p-4 rounded-lg">
+            <div>
+                <label class="block text-sm font-semibold">Buy Price (INR/USDT)</label>
+                <input type="number" id="buyPrice" value="100" oninput="calculate()" class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold">Buy Fee (%)</label>
+                <input type="number" id="buyFee" value="0.1" oninput="calculate()" class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold">Buy TDS (%)</label>
+                <input type="number" id="buyTds" value="1" oninput="calculate()" class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold">Sell Fee (%)</label>
+                <input type="number" id="sellFee" value="0.1" oninput="calculate()" class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold">Sell TDS (%)</label>
+                <input type="number" id="sellTds" value="1" oninput="calculate()" class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold">Tax (30% VDA + 4% Cess)</label>
+                <input type="text" value="31.2%" disabled class="w-full p-2 border rounded bg-gray-200">
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-blue-600 text-white">
+                        <th class="p-2 border">Sell Price</th>
+                        <th class="p-2 border">Gross Profit</th>
+                        <th class="p-2 border">Total TDS Paid</th>
+                        <th class="p-2 border">Tax (31.2%)</th>
+                        <th class="p-2 border text-green-200">TDS Refund</th>
+                        <th class="p-2 border">Acc. Growth</th>
+                    </tr>
+                </thead>
+                <tbody id="resultTable">
+                    <!-- Rows will be injected here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
+            const buyFeePct = parseFloat(document.getElementById('buyFee').value) / 100;
+            const buyTdsPct = parseFloat(document.getElementById('buyTds').value) / 100;
+            const sellFeePct = parseFloat(document.getElementById('sellFee').value) / 100;
+            const sellTdsPct = parseFloat(document.getElementById('sellTds').value) / 100;
+            const taxRate = 0.312;
+
+            const tbody = document.getElementById('resultTable');
+            tbody.innerHTML = '';
+
+            // Generate 10 rows starting from Buy Price + 0.5% increments
+            for (let i = 1; i <= 10; i++) {
+                let sellPrice = buyPrice * (1 + (i * 0.005)); // 0.5%, 1.0%, 1.5%...
+                
+                let buyFeeAmt = buyPrice * buyFeePct;
+                let buyTdsAmt = buyPrice * buyTdsPct;
+                let sellFeeAmt = sellPrice * sellFeePct;
+                let sellTdsAmt = sellPrice * sellTdsPct;
+
+                let profit = sellPrice - buyPrice;
+                let taxLiability = profit > 0 ? profit * taxRate : 0;
+                let totalTdsPaid = buyTdsAmt + sellTdsAmt;
+                
+                let tdsRefund = totalTdsPaid > taxLiability ? totalTdsPaid - taxLiability : 0;
+                let extraTax = taxLiability > totalTdsPaid ? taxLiability - totalTdsPaid : 0;
+
+                // Net Growth = (Sell - Buy - All Fees - Tax Liability)
+                let netInHand = sellPrice - buyFeeAmt - sellFeeAmt - taxLiability;
+                let initialCapital = buyPrice; 
+                let growth = ((netInHand - initialCapital) / initialCapital) * 100;
+
+                let row = `
+                    <tr class="hover:bg-gray-50 border-b">
+                        <td class="p-2 border font-bold text-blue-700">₹${sellPrice.toFixed(2)}</td>
+                        <td class="p-2 border">₹${profit.toFixed(2)}</td>
+                        <td class="p-2 border text-orange-600">₹${totalTdsPaid.toFixed(2)}</td>
+                        <td class="p-2 border">₹${taxLiability.toFixed(2)}</td>
+                        <td class="p-2 border text-green-600 font-semibold">₹${tdsRefund.toFixed(2)}</td>
+                        <td class="p-2 border font-bold ${growth >= 0 ? 'text-green-600' : 'text-red-600'}">
+                            ${growth.toFixed(2)}%
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            }
+        }
+
+        // Initial calculation
+        calculate();
+    </script>
+</body>
+</html>

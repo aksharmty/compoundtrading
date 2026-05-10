@@ -1,114 +1,354 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Tax & Growth Calculator</title>
-    <script src="https://tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Target & Tax Calculator</title>
+<LINK href="0.css" rel="stylesheet" type="text/css">
+<style>
+h1{
+    text-align:center;
+}
+.box{
+    background:#1a1d24;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+label{
+    display:block;
+    margin-top:10px;
+}
+input{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border-radius:8px;
+    border:none;
+    background:#2b303b;
+    color:#fff;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+th,td{
+    border:1px solid #333;
+    padding:10px;
+    text-align:center;
+}
+th{
+    background:#232833;
+}
+.green{
+    color:#00ff99;
+}
+.red{
+    color:#ff5c5c;
+}
+.orange{
+    color:#ffb347;
+}
+.result{
+    font-size:18px;
+    line-height:1.7;
+}
+</style>
 </head>
-<body class="bg-gray-100 p-5">
-    <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
-        <h1 class="text-2xl font-bold text-center mb-6 text-blue-600">Crypto Trade & TDS Calculator</h1>
-        
-        <!-- Input Section -->
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 bg-blue-50 p-4 rounded-lg">
-            <div>
-                <label class="block text-sm font-semibold">Buy Price (INR/USDT)</label>
-                <input type="number" id="buyPrice" value="100" oninput="calculate()" class="w-full p-2 border rounded">
-            </div>
-            <div>
-                <label class="block text-sm font-semibold">Buy Fee (%)</label>
-                <input type="number" id="buyFee" value="0.1" oninput="calculate()" class="w-full p-2 border rounded">
-            </div>
-            <div>
-                <label class="block text-sm font-semibold">Buy TDS (%)</label>
-                <input type="number" id="buyTds" value="1" oninput="calculate()" class="w-full p-2 border rounded">
-            </div>
-            <div>
-                <label class="block text-sm font-semibold">Sell Fee (%)</label>
-                <input type="number" id="sellFee" value="0.1" oninput="calculate()" class="w-full p-2 border rounded">
-            </div>
-            <div>
-                <label class="block text-sm font-semibold">Sell TDS (%)</label>
-                <input type="number" id="sellTds" value="1" oninput="calculate()" class="w-full p-2 border rounded">
-            </div>
-            <div>
-                <label class="block text-sm font-semibold">Tax (30% VDA + 4% Cess)</label>
-                <input type="text" value="31.2%" disabled class="w-full p-2 border rounded bg-gray-200">
-            </div>
-        </div>
-
-        <!-- Table Section -->
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="bg-blue-600 text-white">
-                        <th class="p-2 border">Sell Price</th>
-                        <th class="p-2 border">Gross Profit</th>
-                        <th class="p-2 border">Total TDS Paid</th>
-                        <th class="p-2 border">Tax (31.2%)</th>
-                        <th class="p-2 border text-green-200">TDS Refund</th>
-                        <th class="p-2 border">Acc. Growth</th>
-                    </tr>
-                </thead>
-                <tbody id="resultTable">
-                    <!-- Rows will be injected here -->
-                </tbody>
-            </table>
-        </div>
+<body>
+<div class="col-md-12" style="width:100%;">
+        <div id="menu"></div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+          <div class="left-panel">
+              <div class="col-md-12" style="width:100%;">
+        <center><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+     crossorigin="anonymous"></script>
+<!-- sakhiadheader -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px;max-height:100px;"
+     data-ad-client="ca-pub-4305348743992957"
+     data-ad-slot="1924539816"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</center>
+    </div>
+                    <div class="col-md-12">
+<h1>Crypto Target & Tax Calculator</h1>
 
-    <script>
-        function calculate() {
-            const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
-            const buyFeePct = parseFloat(document.getElementById('buyFee').value) / 100;
-            const buyTdsPct = parseFloat(document.getElementById('buyTds').value) / 100;
-            const sellFeePct = parseFloat(document.getElementById('sellFee').value) / 100;
-            const sellTdsPct = parseFloat(document.getElementById('sellTds').value) / 100;
-            const taxRate = 0.312;
+<div class="box">
 
-            const tbody = document.getElementById('resultTable');
-            tbody.innerHTML = '';
+<label>Buy Amount (₹)</label>
+<input type="number" id="buyAmount" value="100">
 
-            // Generate 10 rows starting from Buy Price + 0.5% increments
-            for (let i = 1; i <= 10; i++) {
-                let sellPrice = buyPrice * (1 + (i * 0.005)); // 0.5%, 1.0%, 1.5%...
-                
-                let buyFeeAmt = buyPrice * buyFeePct;
-                let buyTdsAmt = buyPrice * buyTdsPct;
-                let sellFeeAmt = sellPrice * sellFeePct;
-                let sellTdsAmt = sellPrice * sellTdsPct;
+<label>Buy Fee %</label>
+<input type="number" id="buyFee" value="0.1" step="0.01">
 
-                let profit = sellPrice - buyPrice;
-                let taxLiability = profit > 0 ? profit * taxRate : 0;
-                let totalTdsPaid = buyTdsAmt + sellTdsAmt;
-                
-                let tdsRefund = totalTdsPaid > taxLiability ? totalTdsPaid - taxLiability : 0;
-                let extraTax = taxLiability > totalTdsPaid ? taxLiability - totalTdsPaid : 0;
+<label>Buy TDS %</label>
+<input type="number" id="buyTDS" value="1" step="0.01">
 
-                // Net Growth = (Sell - Buy - All Fees - Tax Liability)
-                let netInHand = sellPrice - buyFeeAmt - sellFeeAmt - taxLiability;
-                let initialCapital = buyPrice; 
-                let growth = ((netInHand - initialCapital) / initialCapital) * 100;
+<label>Sell Fee %</label>
+<input type="number" id="sellFee" value="0.1" step="0.01">
 
-                let row = `
-                    <tr class="hover:bg-gray-50 border-b">
-                        <td class="p-2 border font-bold text-blue-700">₹${sellPrice.toFixed(2)}</td>
-                        <td class="p-2 border">₹${profit.toFixed(2)}</td>
-                        <td class="p-2 border text-orange-600">₹${totalTdsPaid.toFixed(2)}</td>
-                        <td class="p-2 border">₹${taxLiability.toFixed(2)}</td>
-                        <td class="p-2 border text-green-600 font-semibold">₹${tdsRefund.toFixed(2)}</td>
-                        <td class="p-2 border font-bold ${growth >= 0 ? 'text-green-600' : 'text-red-600'}">
-                            ${growth.toFixed(2)}%
-                        </td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
-            }
+<label>Sell TDS %</label>
+<input type="number" id="sellTDS" value="1" step="0.01">
+
+<label>Crypto Tax %</label>
+<input type="number" id="taxRate" value="31.2" step="0.1">
+
+<label>Target Profit %</label>
+<input type="number" id="target" value="3" step="0.1">
+
+<div class="result" id="summary"></div>
+
+</div>
+
+<div class="box">
+<h2>Main Result</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+</div>
+
+<div class="box">
+<h2>Safe No Extra Tax Range</h2>
+
+<table>
+<thead>
+<tr>
+<th>Target %</th>
+<th>Immediate +/-</th>
+<th>Immediate Account</th>
+<th>Total TDS</th>
+<th>Year-End Tax</th>
+<th>Extra Tax</th>
+<th>TDS Refund</th>
+</tr>
+</thead>
+
+<tbody id="rangeTable"></tbody>
+
+</table>
+</div>
+
+<script>
+
+function calc(){
+
+    let buyAmount = parseFloat(document.getElementById("buyAmount").value);
+
+    let buyFee = parseFloat(document.getElementById("buyFee").value)/100;
+    let buyTDS = parseFloat(document.getElementById("buyTDS").value)/100;
+
+    let sellFee = parseFloat(document.getElementById("sellFee").value)/100;
+    let sellTDS = parseFloat(document.getElementById("sellTDS").value)/100;
+
+    let taxRate = parseFloat(document.getElementById("taxRate").value)/100;
+
+    let target = parseFloat(document.getElementById("target").value)/100;
+
+    // exact break-even
+    let breakeven =
+        ((1 + buyFee + buyTDS) / (1 - sellFee - sellTDS) - 1) * 100;
+
+    // max no extra tax point
+    // total tax <= total tds
+    // profit * taxRate <= buyTDS + sellTDS*(1+profit)
+
+    let approxMaxNoTax =
+        ((buyTDS + sellTDS) / taxRate) * 100;
+
+    let suggested = breakeven + 0.5;
+
+    document.getElementById("summary").innerHTML = `
+        Exact Break-even:
+        <span class="green">${breakeven.toFixed(3)}%</span>
+
+        <br>
+
+        Suggested Safe Target:
+        <span class="green">${suggested.toFixed(2)}%</span>
+
+        <br>
+
+        Max Range With
+        <span class="orange">0 Extra Tax Payable</span>:
+        <span class="orange">
+            ~${approxMaxNoTax.toFixed(2)}%
+        </span>
+    `;
+
+    // main target result
+
+    let sellAmount = buyAmount * (1 + target);
+
+    let buyFeeAmt = buyAmount * buyFee;
+    let buyTDSAmt = buyAmount * buyTDS;
+
+    let sellFeeAmt = sellAmount * sellFee;
+    let sellTDSAmt = sellAmount * sellTDS;
+
+    let totalTDS = buyTDSAmt + sellTDSAmt;
+
+    let immediateAccount =
+        sellAmount
+        - sellFeeAmt
+        - sellTDSAmt
+        - buyFeeAmt
+        - buyTDSAmt;
+
+    let accountChange = immediateAccount - buyAmount;
+
+    let grossProfit = sellAmount - buyAmount;
+
+    let totalTax = grossProfit * taxRate;
+
+    let extraTax = Math.max(0, totalTax - totalTDS);
+
+    let refund = Math.max(0, totalTDS - totalTax);
+
+    document.getElementById("tableBody").innerHTML = `
+        <tr>
+            <td>Immediate +/-</td>
+            <td class="${accountChange>=0?'green':'red'}">
+                ₹${accountChange.toFixed(3)}
+            </td>
+        </tr>
+
+        <tr>
+            <td>Immediate Account</td>
+            <td>₹${immediateAccount.toFixed(3)}</td>
+        </tr>
+
+        <tr>
+            <td>Total TDS</td>
+            <td>₹${totalTDS.toFixed(3)}</td>
+        </tr>
+
+        <tr>
+            <td>Year-End Tax</td>
+            <td>₹${totalTax.toFixed(3)}</td>
+        </tr>
+
+        <tr>
+            <td>Extra Tax Payable</td>
+            <td class="red">
+                ₹${extraTax.toFixed(3)}
+            </td>
+        </tr>
+
+        <tr>
+            <td>TDS Refund</td>
+            <td class="green">
+                ₹${refund.toFixed(3)}
+            </td>
+        </tr>
+    `;
+
+    // RANGE TABLE
+
+    let rangeHTML = "";
+
+    for(let p=2; p<=approxMaxNoTax; p+=0.25){
+
+        let t = p/100;
+
+        let sAmt = buyAmount * (1+t);
+
+        let sFee = sAmt * sellFee;
+        let sTDS = sAmt * sellTDS;
+
+        let totalTDS2 = buyTDSAmt + sTDS;
+
+        let imm =
+            sAmt
+            - sFee
+            - sTDS
+            - buyFeeAmt
+            - buyTDSAmt;
+
+        let diff = imm - buyAmount;
+
+        let gp = sAmt - buyAmount;
+
+        let tax = gp * taxRate;
+
+        let ex = Math.max(0, tax-totalTDS2);
+
+        let ref = Math.max(0, totalTDS2-tax);
+
+        if(ex <= 0){
+
+            rangeHTML += `
+            <tr>
+
+                <td>${p.toFixed(2)}%</td>
+
+                <td class="${diff>=0?'green':'red'}">
+                    ₹${diff.toFixed(3)}
+                </td>
+
+                <td>
+                    ₹${imm.toFixed(3)}
+                </td>
+
+                <td>
+                    ₹${totalTDS2.toFixed(3)}
+                </td>
+
+                <td>
+                    ₹${tax.toFixed(3)}
+                </td>
+
+                <td class="green">
+                    ₹0
+                </td>
+
+                <td class="green">
+                    ₹${ref.toFixed(3)}
+                </td>
+
+            </tr>
+            `;
         }
 
-        // Initial calculation
-        calculate();
-    </script>
+    }
+
+    document.getElementById("rangeTable").innerHTML = rangeHTML;
+
+}
+
+document.querySelectorAll("input").forEach(el=>{
+    el.addEventListener("input",calc);
+});
+
+calc();
+
+</script>
+
+</div> 
+        </div> 
+        <div class="right-panel0">
+            <div id="sidebar"></div>
+        </div>
+    </div>
+    </div>
+    <div class="footer">
+        <div id="footer"></div>
+    </div>
+    <button class="top-button" onclick="scrollToTop()">Back to Top</button>
+
+    <div id="footer"></div>
+ <script src="js/loader.js"></script>                        
+
 </body>
 </html>

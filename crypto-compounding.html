@@ -1,0 +1,390 @@
+<center><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+     crossorigin="anonymous"></script>
+<!-- sakhiadheader -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px;max-height:100px;"
+     data-ad-client="ca-pub-4305348743992957"
+     data-ad-slot="1924539816"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</center>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel='shortcut icon' href='logo.png' type='image/x-icon' />
+<title>Crypto Compounding Goal Calculator</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    background:#ffffff;
+    color:#111;
+    margin:auto;
+    padding:20px;
+    max-width:1400px;
+}
+
+h1,h2{
+    text-align:center;
+}
+
+.box{
+    background:#f0f0f0;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    box-sizing:border-box;
+}
+
+button{
+    padding:12px 20px;
+    background:#007F73;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+    background:#fff;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:8px;
+    text-align:center;
+}
+
+th{
+    background:#e5e5e5;
+}
+
+.green{
+    color:#007F73;
+    font-weight:bold;
+}
+
+.red{
+    color:#d63031;
+    font-weight:bold;
+}
+
+.orange{
+    color:#e67e22;
+    font-weight:bold;
+}
+
+.summary{
+    line-height:1.8;
+    font-size:18px;
+}
+
+@media(max-width:768px){
+
+    body{
+        padding:10px;
+    }
+
+    table{
+        font-size:12px;
+    }
+
+    th,td{
+        padding:5px;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<h1>Crypto Compounding Goal Calculator</h1>
+
+<div class="box">
+
+<div class="grid">
+
+<div>
+<label>First Buy Amount (₹)</label>
+<input type="number" id="firstBuy" value="50">
+</div>
+
+<div>
+<label>Goal Amount (₹)</label>
+<input type="number" id="goalAmount" value="10000000">
+</div>
+
+<div>
+<label>Buy Fee %</label>
+<input type="number" id="buyFee" value="0.472" step="0.001">
+</div>
+
+<div>
+<label>Sell Fee %</label>
+<input type="number" id="sellFee" value="0.472" step="0.001">
+</div>
+
+<div>
+<label>Buy TDS %</label>
+<input type="number" id="buyTDS" value="0" step="0.01">
+</div>
+
+<div>
+<label>Sell TDS %</label>
+<input type="number" id="sellTDS" value="1" step="0.01">
+</div>
+
+<div>
+<label>Crypto Tax %</label>
+<input type="number" id="taxRate" value="31.2" step="0.1">
+</div>
+
+<div>
+<label>Target Profit %</label>
+<select id="targetSelect"></select>
+</div>
+
+</div>
+
+<button onclick="calc()">Calculate</button>
+
+<div class="summary" id="summary"></div>
+
+</div>
+
+<div class="box">
+<h2>Compounding Table</h2>
+
+<table>
+<thead>
+<tr>
+<th>Cycle</th>
+<th>Start Amount</th>
+<th>Target %</th>
+<th>Immediate +/-</th>
+<th>Immediate +/- %</th>
+<th>End Amount</th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+</div>
+
+<script>
+
+function loadTargets(){
+
+    let buyTDS = parseFloat(document.getElementById('buyTDS').value)/100;
+    let sellTDS = parseFloat(document.getElementById('sellTDS').value)/100;
+    let taxRate = parseFloat(document.getElementById('taxRate').value)/100;
+
+    // approx max no extra tax
+    let maxRange = ((buyTDS + sellTDS) / taxRate) * 100;
+
+    // minimum practical target
+    let buyFee = parseFloat(document.getElementById('buyFee').value);
+    let sellFee = parseFloat(document.getElementById('sellFee').value);
+
+    let practicalMin = (buyFee + sellFee + (sellTDS*100));
+
+    let select = document.getElementById('targetSelect');
+
+    select.innerHTML = '';
+
+    for(let p=practicalMin; p<=maxRange; p+=0.25){
+
+        let option = document.createElement('option');
+        option.value = p.toFixed(2);
+        option.text = p.toFixed(2) + '%';
+
+        if(Math.abs(p-2.5)<0.1){
+            option.selected = true;
+        }
+
+        select.appendChild(option);
+    }
+
+}
+
+function calc(){
+
+    let firstBuy = parseFloat(document.getElementById('firstBuy').value);
+    let goalAmount = parseFloat(document.getElementById('goalAmount').value);
+
+    let buyFee = parseFloat(document.getElementById('buyFee').value)/100;
+    let sellFee = parseFloat(document.getElementById('sellFee').value)/100;
+
+    let buyTDS = parseFloat(document.getElementById('buyTDS').value)/100;
+    let sellTDS = parseFloat(document.getElementById('sellTDS').value)/100;
+
+    let taxRate = parseFloat(document.getElementById('taxRate').value)/100;
+
+    let target = parseFloat(document.getElementById('targetSelect').value)/100;
+
+    let cycle = 0;
+
+    let amount = firstBuy;
+
+    let html = '';
+
+    while(amount < goalAmount && cycle < 10000){
+
+        cycle++;
+
+        let startAmount = amount;
+
+        let sellAmount = startAmount * (1 + target);
+
+        let buyFeeAmt = startAmount * buyFee;
+        let buyTDSAmt = startAmount * buyTDS;
+
+        let sellFeeAmt = sellAmount * sellFee;
+        let sellTDSAmt = sellAmount * sellTDS;
+
+        let grossProfit = sellAmount - startAmount;
+
+        let totalTax = grossProfit * taxRate;
+
+        let totalTDS = buyTDSAmt + sellTDSAmt;
+
+        let refund = Math.max(0,totalTDS-totalTax);
+
+        let immediateAccount =
+            sellAmount
+            - sellFeeAmt
+            - sellTDSAmt
+            - buyFeeAmt
+            - buyTDSAmt;
+
+        let finalAmount = immediateAccount + refund;
+
+        let diff = finalAmount - startAmount;
+
+        let diffPercent = (diff/startAmount)*100;
+
+        html += `
+        <tr>
+            <td>${cycle}</td>
+            <td>₹${startAmount.toFixed(2)}</td>
+            <td>${(target*100).toFixed(2)}%</td>
+            <td class="${diff>=0?'green':'red'}">
+                ${diff>=0?'+':''}₹${diff.toFixed(2)}
+            </td>
+            <td class="${diff>=0?'green':'red'}">
+                ${diff>=0?'+':''}${diffPercent.toFixed(3)}%
+            </td>
+            <td>₹${finalAmount.toFixed(2)}</td>
+        </tr>
+        `;
+
+        amount = finalAmount;
+
+        if(cycle>2000){
+            break;
+        }
+
+    }
+
+    document.getElementById('tableBody').innerHTML = html;
+
+    let totalGrowth = ((amount-firstBuy)/firstBuy)*100;
+
+    document.getElementById('summary').innerHTML = `
+
+    <b>Total Cycles Needed:</b>
+    <span class="green">${cycle}</span>
+
+    <br>
+
+    <b>Selected Target:</b>
+    <span class="orange">${(target*100).toFixed(2)}%</span>
+
+    <br>
+
+    <b>Final Amount:</b>
+    <span class="green">₹${amount.toFixed(2)}</span>
+
+    <br>
+
+    <b>Total Growth:</b>
+    <span class="green">${totalGrowth.toFixed(2)}%</span>
+
+    `;
+
+}
+
+['buyFee','sellFee','buyTDS','sellTDS','taxRate']
+.forEach(id=>{
+
+    document.getElementById(id)
+    .addEventListener('input',loadTargets);
+
+});
+
+loadTargets();
+calc();
+
+// auto recalculate on all inputs/select changes
+
+document
+.querySelectorAll('input, select')
+.forEach(el=>{
+
+    el.addEventListener('input',()=>{
+
+        if(el.id !== 'targetSelect'){
+            loadTargets();
+        }
+
+        calc();
+
+    });
+
+    el.addEventListener('change',()=>{
+
+        if(el.id !== 'targetSelect'){
+            loadTargets();
+        }
+
+        calc();
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>

@@ -6,60 +6,100 @@
 <title>Crypto Target & Tax Calculator</title>
 <LINK href="0.css" rel="stylesheet" type="text/css">
 <style>
+
 body{
     background:#ffffff;
     font-family:Arial;
     margin:auto;
     padding:20px;
+    color:#111;
 }
+
 h1{
     text-align:center;
+    margin-bottom:25px;
 }
+
 .box{
-    background:f0f0f0;
-    padding:15px;
-    border-radius:10px;
+    background:#f0f0f0;
+    padding:20px;
+    border-radius:12px;
     margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
+
 label{
     display:block;
-    margin-top:10px;
+    margin-top:12px;
+    font-weight:bold;
 }
+
 input{
     width:100%;
     padding:10px;
     margin-top:5px;
     border-radius:8px;
-    border:none;
-    background:#2b303b;
-    color:#fff;
+    border:1px solid #ccc;
+    background:#ffffff;
+    color:#111;
+    box-sizing:border-box;
 }
+
 table{
     width:100%;
     border-collapse:collapse;
     margin-top:20px;
+    background:#fff;
 }
+
 th,td{
-    border:1px solid #333;
+    border:1px solid #d0d0d0;
     padding:10px;
     text-align:center;
 }
+
 th{
-    background:#f0f0f0;
+    background:#e5e5e5;
 }
+
 .green{
     color:#007F73;
+    font-weight:bold;
 }
+
 .red{
-    color:#ff5c5c;
+    color:#d63031;
+    font-weight:bold;
 }
+
 .orange{
-    color:#ffb347;
+    color:#e67e22;
+    font-weight:bold;
 }
+
 .result{
     font-size:18px;
-    line-height:1.7;
+    line-height:1.8;
+    margin-top:20px;
 }
+
+@media(max-width:768px){
+
+    body{
+        padding:10px;
+    }
+
+    th,td{
+        font-size:12px;
+        padding:6px;
+    }
+
+    .result{
+        font-size:16px;
+    }
+
+}
+
 </style>
 </head>
 <body>
@@ -113,37 +153,49 @@ th{
 </div>
 
 <div class="box">
+
 <h2>Main Result</h2>
+
 <table>
+
 <thead>
 <tr>
 <th>Item</th>
 <th>Value</th>
 </tr>
 </thead>
+
 <tbody id="tableBody"></tbody>
+
 </table>
+
 </div>
 
 <div class="box">
+
 <h2>Safe No Extra Tax Range</h2>
 
 <table>
+
 <thead>
+
 <tr>
 <th>Target %</th>
 <th>Immediate +/-</th>
+<th>Immediate +/- %</th>
 <th>Immediate Account</th>
 <th>Total TDS</th>
 <th>Year-End Tax</th>
 <th>Extra Tax</th>
 <th>TDS Refund</th>
 </tr>
+
 </thead>
 
 <tbody id="rangeTable"></tbody>
 
 </table>
+
 </div>
 
 <script>
@@ -162,13 +214,12 @@ function calc(){
 
     let target = parseFloat(document.getElementById("target").value)/100;
 
-    // exact break-even
+    // Break-even %
+
     let breakeven =
         ((1 + buyFee + buyTDS) / (1 - sellFee - sellTDS) - 1) * 100;
 
-    // max no extra tax point
-    // total tax <= total tds
-    // profit * taxRate <= buyTDS + sellTDS*(1+profit)
+    // Max No Extra Tax %
 
     let approxMaxNoTax =
         ((buyTDS + sellTDS) / taxRate) * 100;
@@ -176,6 +227,7 @@ function calc(){
     let suggested = breakeven + 0.5;
 
     document.getElementById("summary").innerHTML = `
+
         Exact Break-even:
         <span class="green">${breakeven.toFixed(3)}%</span>
 
@@ -188,12 +240,14 @@ function calc(){
 
         Max Range With
         <span class="orange">0 Extra Tax Payable</span>:
+
         <span class="orange">
             ~${approxMaxNoTax.toFixed(2)}%
         </span>
+
     `;
 
-    // main target result
+    // MAIN RESULT
 
     let sellAmount = buyAmount * (1 + target);
 
@@ -214,6 +268,9 @@ function calc(){
 
     let accountChange = immediateAccount - buyAmount;
 
+    let immediatePercent =
+        (accountChange / buyAmount) * 100;
+
     let grossProfit = sellAmount - buyAmount;
 
     let totalTax = grossProfit * taxRate;
@@ -223,6 +280,7 @@ function calc(){
     let refund = Math.max(0, totalTDS - totalTax);
 
     document.getElementById("tableBody").innerHTML = `
+
         <tr>
             <td>Immediate +/-</td>
             <td class="${accountChange>=0?'green':'red'}">
@@ -232,17 +290,30 @@ function calc(){
 
         <tr>
             <td>Immediate Account</td>
-            <td>₹${immediateAccount.toFixed(3)}</td>
+            <td>
+                ₹${immediateAccount.toFixed(3)}
+            </td>
+        </tr>
+
+        <tr>
+            <td>Immediate Account +/- ₹</td>
+            <td class="${accountChange>=0?'green':'red'}">
+                ${accountChange>=0?'+':''}₹${accountChange.toFixed(3)}
+            </td>
         </tr>
 
         <tr>
             <td>Total TDS</td>
-            <td>₹${totalTDS.toFixed(3)}</td>
+            <td>
+                ₹${totalTDS.toFixed(3)}
+            </td>
         </tr>
 
         <tr>
             <td>Year-End Tax</td>
-            <td>₹${totalTax.toFixed(3)}</td>
+            <td>
+                ₹${totalTax.toFixed(3)}
+            </td>
         </tr>
 
         <tr>
@@ -258,6 +329,7 @@ function calc(){
                 ₹${refund.toFixed(3)}
             </td>
         </tr>
+
     `;
 
     // RANGE TABLE
@@ -284,6 +356,9 @@ function calc(){
 
         let diff = imm - buyAmount;
 
+        let diffPercent =
+            (diff / buyAmount) * 100;
+
         let gp = sAmt - buyAmount;
 
         let tax = gp * taxRate;
@@ -295,12 +370,17 @@ function calc(){
         if(ex <= 0){
 
             rangeHTML += `
+
             <tr>
 
                 <td>${p.toFixed(2)}%</td>
 
                 <td class="${diff>=0?'green':'red'}">
                     ₹${diff.toFixed(3)}
+                </td>
+
+                <td class="${diffPercent>=0?'green':'red'}">
+                    ${diffPercent>=0?'+':''}${diffPercent.toFixed(3)}%
                 </td>
 
                 <td>
@@ -324,6 +404,7 @@ function calc(){
                 </td>
 
             </tr>
+
             `;
         }
 
@@ -340,7 +421,6 @@ document.querySelectorAll("input").forEach(el=>{
 calc();
 
 </script>
-
 </div> 
         </div> 
         <div class="right-panel0">

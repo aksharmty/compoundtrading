@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Required Fund Calculator</title>
+<style>
+body{
+    background:#0d1117;
+    color:#fff;
+    font-family:Arial,sans-serif;
+    margin:0;
+    padding:20px;
+}
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+.card{
+    background:#161b22;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    border:1px solid #30363d;
+}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+}
+label{
+    font-size:14px;
+    display:block;
+    margin-bottom:5px;
+}
+input{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #30363d;
+    background:#0d1117;
+    color:white;
+    box-sizing:border-box;
+}
+.summary{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-top:20px;
+}
+.box{
+    background:#0d1117;
+    padding:15px;
+    border-radius:10px;
+    border:1px solid #30363d;
+    text-align:center;
+}
+.box h3{
+    margin:0;
+    font-size:14px;
+    color:#8b949e;
+}
+.box p{
+    margin-top:10px;
+    font-size:22px;
+    font-weight:bold;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+    font-size:14px;
+}
+th,td{
+    border:1px solid #30363d;
+    padding:8px;
+    text-align:center;
+}
+th{
+    background:#21262d;
+    position:sticky;
+    top:0;
+}
+tr:nth-child(even){
+    background:#11161d;
+}
+.table-wrap{
+    overflow:auto;
+    max-height:600px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Required Fund Calculator</h1>
+
+<div class="card">
+<div class="grid">
+
+<div>
+<label>First Buy (USDT)</label>
+<input type="number" id="firstBuy" value="1" step="0.01">
+</div>
+
+<div>
+<label>Buy Increase %</label>
+<input type="number" id="increase" value="1" step="0.01">
+</div>
+
+<div>
+<label>Buy Every Drop %</label>
+<input type="number" id="drop" value="2.5" step="0.1">
+</div>
+
+<div>
+<label>Crash Coverage %</label>
+<input type="number" id="crash" value="90" step="1">
+</div>
+
+<div>
+<label>Trading Fee %</label>
+<input type="number" id="fee" value="0.1" step="0.01">
+</div>
+
+<div>
+<label>TDS %</label>
+<input type="number" id="tds" value="1" step="0.01">
+</div>
+
+<div>
+<label>Other Fee %</label>
+<input type="number" id="otherFee" value="0" step="0.01">
+</div>
+
+</div>
+
+<div class="summary">
+<div class="box">
+<h3>Total Layers</h3>
+<p id="layers">0</p>
+</div>
+
+<div class="box">
+<h3>Total Buy Amount</h3>
+<p id="buyTotal">0</p>
+</div>
+
+<div class="box">
+<h3>Total Fee</h3>
+<p id="feeTotal">0</p>
+</div>
+
+<div class="box">
+<h3>Total TDS</h3>
+<p id="tdsTotal">0</p>
+</div>
+
+<div class="box">
+<h3>Other Fee Total</h3>
+<p id="otherTotal">0</p>
+</div>
+
+<div class="box">
+<h3>Total Charges</h3>
+<p id="chargeTotal">0</p>
+</div>
+
+<div class="box">
+<h3>Total Used Amount</h3>
+<p id="usedTotal">0</p>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Drop %</th>
+<th>Buy Amount</th>
+<th>Fee</th>
+<th>TDS</th>
+<th>Other Fee</th>
+<th>Total Charges</th>
+<th>Total Spend</th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<script>
+const inputs = document.querySelectorAll('input');
+inputs.forEach(input => input.addEventListener('input', calculate));
+
+function calculate(){
+
+let firstBuy = parseFloat(document.getElementById('firstBuy').value) || 0;
+let increase = parseFloat(document.getElementById('increase').value) || 0;
+let drop = parseFloat(document.getElementById('drop').value) || 0;
+let crash = parseFloat(document.getElementById('crash').value) || 0;
+let fee = parseFloat(document.getElementById('fee').value) || 0;
+let tds = parseFloat(document.getElementById('tds').value) || 0;
+let otherFee = parseFloat(document.getElementById('otherFee').value) || 0;
+
+let layers = Math.ceil(Math.log((100-crash)/100) / Math.log((100-drop)/100)) + 1;
+
+let tbody = document.getElementById('tableBody');
+tbody.innerHTML = '';
+
+let totalBuy = 0;
+let totalFee = 0;
+let totalTds = 0;
+let totalOther = 0;
+let totalUsed = 0;
+
+for(let i=1;i<=layers;i++){
+
+    let buyAmount = firstBuy * Math.pow((1 + increase/100), (i-1));
+
+    let feeAmt = buyAmount * fee / 100;
+    let tdsAmt = buyAmount * tds / 100;
+    let otherAmt = buyAmount * otherFee / 100;
+
+    let totalCharge = feeAmt + tdsAmt + otherAmt;
+    let totalSpend = buyAmount + totalCharge;
+
+    totalBuy += buyAmount;
+    totalFee += feeAmt;
+    totalTds += tdsAmt;
+    totalOther += otherAmt;
+    totalUsed += totalSpend;
+
+    let currentDrop = ((1 - Math.pow((100-drop)/100, (i-1))) * 100);
+
+    tbody.innerHTML += `
+    <tr>
+        <td>${i}</td>
+        <td>${currentDrop.toFixed(2)}%</td>
+        <td>${buyAmount.toFixed(4)}</td>
+        <td>${feeAmt.toFixed(4)}</td>
+        <td>${tdsAmt.toFixed(4)}</td>
+        <td>${otherAmt.toFixed(4)}</td>
+        <td>${totalCharge.toFixed(4)}</td>
+        <td>${totalSpend.toFixed(4)}</td>
+    </tr>
+    `;
+}
+
+document.getElementById('layers').innerText = layers;
+document.getElementById('buyTotal').innerText = totalBuy.toFixed(4);
+document.getElementById('feeTotal').innerText = totalFee.toFixed(4);
+document.getElementById('tdsTotal').innerText = totalTds.toFixed(4);
+document.getElementById('otherTotal').innerText = totalOther.toFixed(4);
+document.getElementById('chargeTotal').innerText = (totalFee+totalTds+totalOther).toFixed(4);
+document.getElementById('usedTotal').innerText = totalUsed.toFixed(4);
+
+}
+
+calculate();
+</script>
+
+</body>
+</html>

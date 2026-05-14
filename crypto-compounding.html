@@ -4,16 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel='shortcut icon' href='logo.png' type='image/x-icon' />
-<title>Crypto Compounding Goal Calculator</title>
+
+<title>Advanced Crypto DCA Tax Calculator</title>
+
 <style>
 
 body{
     font-family:Arial;
-    background:#ffffff;
+    background:#fff;
     color:#111;
     margin:auto;
     padding:20px;
-    max-width:1400px;
+    max-width:1600px;
 }
 
 h1,h2{
@@ -21,7 +23,7 @@ h1,h2{
 }
 
 .box{
-    background:#f0f0f0;
+    background:#f3f3f3;
     padding:20px;
     border-radius:12px;
     margin-bottom:20px;
@@ -54,7 +56,6 @@ button{
     border:none;
     border-radius:8px;
     cursor:pointer;
-    margin-top:10px;
 }
 
 button:hover{
@@ -72,10 +73,11 @@ th,td{
     border:1px solid #ccc;
     padding:8px;
     text-align:center;
+    font-size:13px;
 }
 
 th{
-    background:#e5e5e5;
+    background:#e6e6e6;
 }
 
 .green{
@@ -94,8 +96,12 @@ th{
 }
 
 .summary{
-    line-height:1.8;
+    line-height:2;
     font-size:18px;
+}
+
+.tableWrap{
+    overflow:auto;
 }
 
 @media(max-width:768px){
@@ -105,7 +111,7 @@ th{
     }
 
     table{
-        font-size:12px;
+        font-size:11px;
     }
 
     th,td{
@@ -116,6 +122,7 @@ th{
 
 </style>
 </head>
+
 <body>
 <center><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
      crossorigin="anonymous"></script>
@@ -135,9 +142,9 @@ th{
     border:none;
     border-radius:8px;
     cursor:pointer;
-    margin-top:10px;">Back to Home</a>   
+    margin-top:10px;text-decoration:none;">Back to Home</a>   
     <hr style="width:100%; height:2px; background-color:blue; border:none;"> 
-<h1>Crypto Compounding Goal Calculator</h1>
+<h1>Advanced Crypto DCA Tax Calculator</h1>
 
 <div class="box">
 
@@ -151,6 +158,26 @@ th{
 <div>
 <label>Goal Amount (₹)</label>
 <input type="number" id="goalAmount" value="10000000">
+</div>
+
+<div>
+<label>Target Profit %</label>
+<select id="targetSelect"></select>
+</div>
+
+<div>
+<label>Next Buy Increment %</label>
+<select id="growthUseSelect"></select>
+</div>
+
+<div>
+<label>Price Drop % Per Layer</label>
+<input type="number" id="dropPercent" value="2" step="0.1">
+</div>
+
+<div>
+<label>DCA Layers Example rows</label>
+<input type="number" id="maxLayers" value="10">
 </div>
 
 <div>
@@ -178,160 +205,621 @@ th{
 <input type="number" id="taxRate" value="31.2" step="0.1">
 </div>
 
-<div>
-<label>Target Profit %</label>
-<select id="targetSelect"></select>
 </div>
 
-</div>
+<br>
 
 <button onclick="calc()">Calculate</button>
+
+</div>
+
+<div class="box">
+
+<h2>Summary</h2>
 
 <div class="summary" id="summary"></div>
 
 </div>
 
 <div class="box">
-<h2>Compounding Table</h2>
+
+<h2>First Trade Details</h2>
+
+<div class="tableWrap">
 
 <table>
+
 <thead>
+
 <tr>
-<th>Cycle</th>
-<th>Start Amount</th>
+
+<th>Buy</th>
+<th>Sell</th>
 <th>Target %</th>
-<th>Immediate +/-</th>
-<th>Immediate +/- %</th>
-<th>End Amount</th>
+<th>Buy Fee</th>
+<th>Sell Fee</th>
+<th>Buy TDS</th>
+<th>Sell TDS</th>
+<th>Total TDS</th>
+<th>Tax</th>
+<th>Refund</th>
+<th>Profit</th>
+<th>Account Growth</th>
+<th>Growth %</th>
+<th>Next Buy %</th>
+<th>Next Buy</th>
+<th>Need Pay Tax</th>
+<th>Tax Covered</th>
+
 </tr>
+
 </thead>
-<tbody id="tableBody"></tbody>
+
+<tbody id="tradeRow"></tbody>
+
 </table>
+
 </div>
+
+</div>
+<div class="box">
+<h2>DCA Layers Example rows Details</h2>
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Layer</th>
+<th>Buy</th>
+<th>Sell</th>
+<th>Target %</th>
+<th>Buy Fee</th>
+<th>Sell Fee</th>
+<th>Buy TDS</th>
+<th>Sell TDS</th>
+<th>Total TDS</th>
+<th>Tax</th>
+<th>Refund</th>
+<th>Profit</th>
+<th>Account Growth</th>
+<th>Growth %</th>
+<th>Next Buy %</th>
+<th>Next Buy</th>
+<th>Need Pay Tax</th>
+<th>Total Used Fund</th>
+
+</tr>
+
+</thead>
+
+<tbody id="layerTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
 
 <script>
 
 function loadTargets(){
 
-    let buyTDS = parseFloat(document.getElementById('buyTDS').value)/100;
-    let sellTDS = parseFloat(document.getElementById('sellTDS').value)/100;
-    let taxRate = parseFloat(document.getElementById('taxRate').value)/100;
+    let buyFee =
+    parseFloat(document.getElementById('buyFee').value);
 
-    // approx max no extra tax
-    let maxRange = ((buyTDS + sellTDS) / taxRate) * 100;
+    let sellFee =
+    parseFloat(document.getElementById('sellFee').value);
 
-    // minimum practical target
-    let buyFee = parseFloat(document.getElementById('buyFee').value);
-    let sellFee = parseFloat(document.getElementById('sellFee').value);
+    let buyTDS =
+    parseFloat(document.getElementById('buyTDS').value);
 
-    let practicalMin = (buyFee + sellFee + (sellTDS*100));
+    let sellTDS =
+    parseFloat(document.getElementById('sellTDS').value);
 
-    let select = document.getElementById('targetSelect');
+    let taxRate =
+    parseFloat(document.getElementById('taxRate').value);
+
+    let select =
+    document.getElementById('targetSelect');
 
     select.innerHTML = '';
 
-    for(let p=practicalMin; p<=maxRange; p+=0.25){
+    for(let p=0.1; p<=15; p+=0.01){
 
-        let option = document.createElement('option');
-        option.value = p.toFixed(2);
-        option.text = p.toFixed(2) + '%';
+        let buyAmount = 100;
 
-        if(Math.abs(p-2.5)<0.1){
+        let sellAmount =
+        buyAmount * (1 + p/100);
+
+        let buyFeeAmt =
+        buyAmount * buyFee/100;
+
+        let sellFeeAmt =
+        sellAmount * sellFee/100;
+
+        let buyTDSAmt =
+        buyAmount * buyTDS/100;
+
+        let sellTDSAmt =
+        sellAmount * sellTDS/100;
+
+        let totalTDS =
+        buyTDSAmt + sellTDSAmt;
+
+        let grossProfit =
+        sellAmount - buyAmount;
+
+        let tax =
+        grossProfit * taxRate/100;
+
+        let finalAccount =
+        sellAmount
+        - buyFeeAmt
+        - sellFeeAmt
+        - totalTDS;
+
+        let realGrowth =
+        finalAccount - buyAmount;
+
+        let needPayTax =
+        tax - totalTDS;
+
+        // only profitable
+        // and no extra tax
+
+        if(
+            realGrowth > 0
+            &&
+            needPayTax <= 0
+        ){
+
+            let option =
+            document.createElement('option');
+
+            option.value =
+            p.toFixed(2);
+
+            option.text =
+            p.toFixed(2) + '%';
+
+            if(
+                p >= 2 &&
+                p <= 3
+            ){
+                option.selected = true;
+            }
+
+            select.appendChild(option);
+
+        }
+
+    }
+
+}
+
+function loadGrowthPercentOptions(growthPercent){
+
+    let select =
+    document.getElementById('growthUseSelect');
+
+    select.innerHTML = '';
+
+    for(let p=0.1; p<=growthPercent; p+=0.1){
+
+        let option =
+        document.createElement('option');
+
+        option.value =
+        p.toFixed(1);
+
+        option.text =
+        p.toFixed(1) + '%';
+
+        if(
+            Math.abs(
+                p - (growthPercent*0.7)
+            ) < 0.05
+        ){
             option.selected = true;
         }
 
         select.appendChild(option);
+
     }
 
 }
 
 function calc(){
 
-    let firstBuy = parseFloat(document.getElementById('firstBuy').value);
-    let goalAmount = parseFloat(document.getElementById('goalAmount').value);
+    let firstBuy =
+    parseFloat(document.getElementById('firstBuy').value);
 
-    let buyFee = parseFloat(document.getElementById('buyFee').value)/100;
-    let sellFee = parseFloat(document.getElementById('sellFee').value)/100;
+    let goalAmount =
+    parseFloat(document.getElementById('goalAmount').value);
 
-    let buyTDS = parseFloat(document.getElementById('buyTDS').value)/100;
-    let sellTDS = parseFloat(document.getElementById('sellTDS').value)/100;
+    let dropPercent =
+    parseFloat(document.getElementById('dropPercent').value);
 
-    let taxRate = parseFloat(document.getElementById('taxRate').value)/100;
+    let maxLayers =
+    parseInt(document.getElementById('maxLayers').value);
 
-    let target = parseFloat(document.getElementById('targetSelect').value)/100;
+    let buyFee =
+    parseFloat(document.getElementById('buyFee').value)/100;
 
-    let cycle = 0;
+    let sellFee =
+    parseFloat(document.getElementById('sellFee').value)/100;
 
-    let amount = firstBuy;
+    let buyTDS =
+    parseFloat(document.getElementById('buyTDS').value)/100;
 
-    let html = '';
+    let sellTDS =
+    parseFloat(document.getElementById('sellTDS').value)/100;
 
-    while(amount < goalAmount && cycle < 10000){
+    let taxRate =
+    parseFloat(document.getElementById('taxRate').value)/100;
 
-        cycle++;
+    let target =
+    parseFloat(document.getElementById('targetSelect').value)/100;
 
-        let startAmount = amount;
+    // FIRST TRADE
 
-        let sellAmount = startAmount * (1 + target);
+    let sellAmount =
+    firstBuy * (1 + target);
 
-        let buyFeeAmt = startAmount * buyFee;
-        let buyTDSAmt = startAmount * buyTDS;
+    let buyFeeAmt =
+    firstBuy * buyFee;
 
-        let sellFeeAmt = sellAmount * sellFee;
-        let sellTDSAmt = sellAmount * sellTDS;
+    let sellFeeAmt =
+    sellAmount * sellFee;
 
-        let grossProfit = sellAmount - startAmount;
+    let buyTDSAmt =
+    firstBuy * buyTDS;
 
-        let totalTax = grossProfit * taxRate;
+    let sellTDSAmt =
+    sellAmount * sellTDS;
 
-        let totalTDS = buyTDSAmt + sellTDSAmt;
+    let totalTDS =
+    buyTDSAmt + sellTDSAmt;
 
-        let refund = Math.max(0,totalTDS-totalTax);
+    let grossProfit =
+    sellAmount - firstBuy;
 
-        let immediateAccount =
-            sellAmount
-            - sellFeeAmt
-            - sellTDSAmt
-            - buyFeeAmt
-            - buyTDSAmt;
+    let tax =
+    grossProfit * taxRate;
 
-        let finalAmount = immediateAccount + refund;
+    let refund =
+    Math.max(0,totalTDS-tax);
 
-        let diff = finalAmount - startAmount;
+    let totalFee =
+    buyFeeAmt + sellFeeAmt;
 
-        let diffPercent = (diff/startAmount)*100;
+    let accountGrowth =
+    sellAmount
+    - totalFee
+    - totalTDS;
 
-        html += `
-        <tr>
-            <td>${cycle}</td>
-            <td>₹${startAmount.toFixed(2)}</td>
-            <td>${(target*100).toFixed(2)}%</td>
-            <td class="${diff>=0?'green':'red'}">
-                ${diff>=0?'+':''}₹${diff.toFixed(2)}
-            </td>
-            <td class="${diff>=0?'green':'red'}">
-                ${diff>=0?'+':''}${diffPercent.toFixed(3)}%
-            </td>
-            <td>₹${finalAmount.toFixed(2)}</td>
-        </tr>
-        `;
+    let pureGrowth =
+    accountGrowth - firstBuy;
 
-        amount = finalAmount;
+    let growthPercent =
+    (pureGrowth/firstBuy)*100;
 
-        if(cycle>2000){
+    if(
+        document.getElementById('growthUseSelect')
+        .options.length == 0
+    ){
+        loadGrowthPercentOptions(growthPercent);
+    }
+
+    let nextBuyPercent =
+    parseFloat(
+        document.getElementById('growthUseSelect').value
+    );
+
+    let nextBuy =
+    firstBuy *
+    (
+        1 +
+        nextBuyPercent/100
+    );
+
+    let needTax =
+    Math.max(0,tax-totalTDS);
+
+    let taxCovered =
+    totalTDS >= tax ? 'YES' : 'NO';
+
+    document.getElementById('tradeRow').innerHTML = `
+
+    <tr>
+
+    <td>₹${firstBuy.toFixed(2)}</td>
+
+    <td>₹${sellAmount.toFixed(2)}</td>
+
+    <td>${(target*100).toFixed(2)}%</td>
+
+    <td>₹${buyFeeAmt.toFixed(2)}</td>
+
+    <td>₹${sellFeeAmt.toFixed(2)}</td>
+
+    <td>₹${buyTDSAmt.toFixed(2)}</td>
+
+    <td>₹${sellTDSAmt.toFixed(2)}</td>
+
+    <td>₹${totalTDS.toFixed(2)}</td>
+
+    <td>₹${tax.toFixed(2)}</td>
+
+    <td class="green">
+    ₹${refund.toFixed(2)}
+    </td>
+
+    <td class="${pureGrowth>=0?'green':'red'}">
+    ₹${pureGrowth.toFixed(2)}
+    </td>
+
+    <td class="${accountGrowth>=firstBuy?'green':'red'}">
+    ₹${accountGrowth.toFixed(2)}
+    </td>
+
+    <td class="${growthPercent>=0?'green':'red'}">
+    ${growthPercent.toFixed(3)}%
+    </td>
+
+    <td>
+    ${nextBuyPercent.toFixed(1)}%
+    </td>
+
+    <td class="orange">
+    ₹${nextBuy.toFixed(2)}
+    </td>
+
+    <td class="${needTax>0?'red':'green'}">
+    ₹${needTax.toFixed(2)}
+    </td>
+
+    <td class="${taxCovered=='YES'?'green':'red'}">
+    ${taxCovered}
+    </td>
+
+    </tr>
+
+    `;
+
+// DCA DETAILS TABLE
+
+let layerHtml = '';
+
+let currentBuy =
+firstBuy;
+
+let totalFund = 0;
+
+for(let i=1; i<=maxLayers; i++){
+
+    let sellAmountLayer =
+    currentBuy * (1 + target);
+
+    let buyFeeLayer =
+    currentBuy * buyFee;
+
+    let sellFeeLayer =
+    sellAmountLayer * sellFee;
+
+    let buyTDSLayer =
+    currentBuy * buyTDS;
+
+    let sellTDSLayer =
+    sellAmountLayer * sellTDS;
+
+    let totalTDSLayer =
+    buyTDSLayer + sellTDSLayer;
+
+    let grossProfitLayer =
+    sellAmountLayer - currentBuy;
+
+    let taxLayer =
+    grossProfitLayer * taxRate;
+
+    let refundLayer =
+    Math.max(0,totalTDSLayer-taxLayer);
+
+    let totalFeeLayer =
+    buyFeeLayer + sellFeeLayer;
+
+    let accountGrowthLayer =
+    sellAmountLayer
+    - totalFeeLayer
+    - totalTDSLayer;
+
+    let pureGrowthLayer =
+    accountGrowthLayer - currentBuy;
+
+    let growthPercentLayer =
+    (pureGrowthLayer/currentBuy)*100;
+
+    let nextBuyLayer =
+    currentBuy *
+    (
+        1 +
+        nextBuyPercent/100
+    );
+
+    let needTaxLayer =
+    Math.max(
+        0,
+        taxLayer-totalTDSLayer
+    );
+
+    totalFund += currentBuy;
+
+    layerHtml += `
+
+    <tr>
+
+    <td>${i}</td>
+
+    <td>₹${currentBuy.toFixed(2)}</td>
+
+    <td>₹${sellAmountLayer.toFixed(2)}</td>
+
+    <td>${(target*100).toFixed(2)}%</td>
+
+    <td>₹${buyFeeLayer.toFixed(2)}</td>
+
+    <td>₹${sellFeeLayer.toFixed(2)}</td>
+
+    <td>₹${buyTDSLayer.toFixed(2)}</td>
+
+    <td>₹${sellTDSLayer.toFixed(2)}</td>
+
+    <td>₹${totalTDSLayer.toFixed(2)}</td>
+
+    <td>₹${taxLayer.toFixed(2)}</td>
+
+    <td class="green">
+    ₹${refundLayer.toFixed(2)}
+    </td>
+
+    <td class="${
+        pureGrowthLayer>=0
+        ? 'green'
+        : 'red'
+    }">
+
+    ₹${pureGrowthLayer.toFixed(2)}
+
+    </td>
+
+    <td class="${
+        accountGrowthLayer>=currentBuy
+        ? 'green'
+        : 'red'
+    }">
+
+    ₹${accountGrowthLayer.toFixed(2)}
+
+    </td>
+
+    <td class="${
+        growthPercentLayer>=0
+        ? 'green'
+        : 'red'
+    }">
+
+    ${growthPercentLayer.toFixed(3)}%
+
+    </td>
+
+    <td>
+    ${nextBuyPercent.toFixed(1)}%
+    </td>
+
+    <td class="orange">
+    ₹${nextBuyLayer.toFixed(2)}
+    </td>
+
+    <td class="${
+        needTaxLayer>0
+        ? 'red'
+        : 'green'
+    }">
+
+    ₹${needTaxLayer.toFixed(2)}
+
+    </td>
+
+    <td class="orange">
+    ₹${totalFund.toFixed(2)}
+    </td>
+
+    </tr>
+
+    `;
+
+    currentBuy = nextBuyLayer;
+
+}
+
+document.getElementById('layerTable').innerHTML =
+layerHtml;
+
+    // COMPOUNDING
+
+    let amount =
+    firstBuy;
+
+    let cycles = 0;
+
+    let totalTaxAll = 0;
+
+    let totalTDSAll = 0;
+
+    let totalRefundAll = 0;
+
+    while(amount < goalAmount && cycles < 100000){
+
+        cycles++;
+
+        let sell =
+        amount * (1 + target);
+
+        let bf =
+        amount * buyFee;
+
+        let sf =
+        sell * sellFee;
+
+        let bt =
+        amount * buyTDS;
+
+        let st =
+        sell * sellTDS;
+
+        let tds =
+        bt + st;
+
+        let gp =
+        sell - amount;
+
+        let tx =
+        gp * taxRate;
+
+        let rf =
+        Math.max(0,tds-tx);
+
+        totalTaxAll += tx;
+
+        totalTDSAll += tds;
+
+        totalRefundAll += rf;
+
+        amount =
+        amount *
+        (
+            1 +
+            nextBuyPercent/100
+        );
+
+        if(amount >= goalAmount){
             break;
         }
 
     }
 
-    document.getElementById('tableBody').innerHTML = html;
-
-    let totalGrowth = ((amount-firstBuy)/firstBuy)*100;
+    let totalGrowth =
+    ((amount-firstBuy)/firstBuy)*100;
 
     document.getElementById('summary').innerHTML = `
 
     <b>Total Cycles Needed:</b>
-    <span class="green">${cycle}</span>
+    <span class="green">${cycles}</span>
 
     <br>
 
@@ -340,7 +828,12 @@ function calc(){
 
     <br>
 
-    <b>Final Amount:</b>
+    <b>Selected Next Buy Increment:</b>
+    <span class="orange">${nextBuyPercent.toFixed(1)}%</span>
+
+    <br>
+
+    <b>Final Buy Amount:</b>
     <span class="green">₹${amount.toFixed(2)}</span>
 
     <br>
@@ -348,50 +841,70 @@ function calc(){
     <b>Total Growth:</b>
     <span class="green">${totalGrowth.toFixed(2)}%</span>
 
+    <br>
+
+    <b>Total Deducted TDS:</b>
+    <span class="red">₹${totalTDSAll.toFixed(2)}</span>
+
+    <br>
+
+    <b>Total Payable Tax:</b>
+    <span class="red">₹${totalTaxAll.toFixed(2)}</span>
+
+    <br>
+
+    <b>Total TDS Refund:</b>
+    <span class="green">₹${totalRefundAll.toFixed(2)}</span>
+
     `;
 
 }
 
-['buyFee','sellFee','buyTDS','sellTDS','taxRate']
+[
+'firstBuy',
+'goalAmount',
+'dropPercent',
+'maxLayers',
+'buyFee',
+'sellFee',
+'buyTDS',
+'sellTDS',
+'taxRate'
+]
 .forEach(id=>{
 
     document.getElementById(id)
-    .addEventListener('input',loadTargets);
+    .addEventListener('input',()=>{
+
+        loadTargets();
+
+        document.getElementById('growthUseSelect')
+        .innerHTML = '';
+
+        calc();
+
+    });
 
 });
 
 loadTargets();
+
 calc();
 
-// auto recalculate on all inputs/select changes
-
 document
-.querySelectorAll('input, select')
-.forEach(el=>{
+.getElementById('targetSelect')
+.addEventListener('change',()=>{
 
-    el.addEventListener('input',()=>{
+    document.getElementById('growthUseSelect')
+    .innerHTML = '';
 
-        if(el.id !== 'targetSelect'){
-            loadTargets();
-        }
-
-        calc();
-
-    });
-
-    el.addEventListener('change',()=>{
-
-        if(el.id !== 'targetSelect'){
-            loadTargets();
-        }
-
-        calc();
-
-    });
+    calc();
 
 });
 
+document
+.getElementById('growthUseSelect')
+.addEventListener('change',calc);
 </script>
-
 </body>
 </html>

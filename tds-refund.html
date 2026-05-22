@@ -224,7 +224,7 @@ function calc(){
     let approxMaxNoTax =
         ((buyTDS + sellTDS) / taxRate) * 100;
 
-    let suggested = breakeven + 0.5;
+    let suggested = breakeven + 0.1;
 
     document.getElementById("summary").innerHTML = `
 

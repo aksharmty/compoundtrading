@@ -169,48 +169,54 @@
 
 <script>
 
-const promoModal = document.getElementById("promoModal");
+document.addEventListener("DOMContentLoaded", function(){
 
-const closeBtn = document.getElementById("promoClose");
+    // current page path
 
-// page check
+    let currentPage = window.location.pathname;
 
-const blockedPage = "kucoin-dca-bot.html";
+    // जिस page पर popup नहीं दिखाना
 
-if(!window.location.pathname.includes(blockedPage)){
+    if(currentPage.indexOf("kucoin-dca-bot.html") === -1){
 
-    function openPromo(){
+        const promoModal = document.getElementById("promoModal");
 
-        promoModal.style.display = "block";
+        const closeBtn = document.getElementById("promoClose");
 
-    }
+        function openPromo(){
 
-    function closePromo(){
-
-        promoModal.style.display = "none";
-
-    }
-
-    closeBtn.onclick = closePromo;
-
-    window.onclick = function(e){
-
-        if(e.target == promoModal){
-
-            closePromo();
+            promoModal.style.display = "block";
 
         }
 
+        function closePromo(){
+
+            promoModal.style.display = "none";
+
+        }
+
+        closeBtn.onclick = closePromo;
+
+        window.onclick = function(e){
+
+            if(e.target == promoModal){
+
+                closePromo();
+
+            }
+
+        }
+
+        // first popup after 5 seconds
+
+        setTimeout(openPromo,5000);
+
+        // repeat every 5 minutes
+
+        setInterval(openPromo,300000);
+
     }
 
-    // first popup after 5 sec
-
-    setTimeout(openPromo,5000);
-
-    // repeat every 5 minutes
-
-    setInterval(openPromo,300000);
-
-}
+});
 
 </script>

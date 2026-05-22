@@ -1,5 +1,3 @@
-<script>
-
 function loadHTML(id, file, callback) {
 
     fetch(file)
@@ -70,7 +68,7 @@ loadHTML("sidebar", "sidebar.html", () => {
 
 loadHTML("footer", "footer.html");
 
-</script>
+
 /*  
 function loadHTML(id, file, callback) {
   fetch(file)

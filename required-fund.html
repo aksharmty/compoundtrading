@@ -23,6 +23,7 @@ body{
 h1{
     text-align:center;
     margin-bottom:20px;
+    color:#000000;    
 }
 .card{
     background:#161b22;
@@ -129,37 +130,37 @@ tr:nth-child(even){
 
 <div>
 <label>First Buy (USDT)</label>
-<input type="number" id="firstBuy" value="1" step="0.01">
+<input type="number" id="firstBuy" value="1" step="0.01" oninput="calculate()">
 </div>
 
 <div>
 <label>Buy Increase %</label>
-<input type="number" id="increase" value="1" step="0.01">
+<input type="number" id="increase" value="1" step="0.01" oninput="calculate()">
 </div>
 
 <div>
 <label>Buy Every Drop %</label>
-<input type="number" id="drop" value="2.5" step="0.1">
+<input type="number" id="drop" value="2.5" step="0.1" oninput="calculate()">
 </div>
 
 <div>
 <label>Crash Coverage %</label>
-<input type="number" id="crash" value="90" step="1">
+<input type="number" id="crash" value="90" step="1" oninput="calculate()">
 </div>
 
 <div>
 <label>Trading Fee %</label>
-<input type="number" id="fee" value="0.1" step="0.01">
+<input type="number" id="fee" value="0.1" step="0.01" oninput="calculate()">
 </div>
 
 <div>
 <label>TDS %</label>
-<input type="number" id="tds" value="1" step="0.01">
+<input type="number" id="tds" value="1" step="0.01" oninput="calculate()">
 </div>
 
 <div>
 <label>Other Fee %</label>
-<input type="number" id="otherFee" value="0" step="0.01">
+<input type="number" id="otherFee" value="0" step="0.01" oninput="calculate()">
 </div>
 
 </div>
@@ -225,9 +226,6 @@ tr:nth-child(even){
 </div>
 
 <script>
-const inputs = document.querySelectorAll('input');
-inputs.forEach(input => input.addEventListener('input', calculate));
-
 function calculate(){
 
 let firstBuy = parseFloat(document.getElementById('firstBuy').value) || 0;
@@ -347,6 +345,7 @@ calculate();
         });
     }   
     </script>
+<script src="https://compoundtrading.adquash.com/js/loader.js"></script>        
 </body>
 
 </html>

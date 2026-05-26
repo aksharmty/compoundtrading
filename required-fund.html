@@ -225,8 +225,6 @@ tr:nth-child(even){
 </div>
 
 <script>
-const inputs = document.querySelectorAll('input');
-inputs.forEach(input => input.addEventListener('input', calculate));
 
 function calculate(){
 
@@ -238,10 +236,12 @@ let fee = parseFloat(document.getElementById('fee').value) || 0;
 let tds = parseFloat(document.getElementById('tds').value) || 0;
 let otherFee = parseFloat(document.getElementById('otherFee').value) || 0;
 
-let layers = Math.ceil(Math.log((100-crash)/100) / Math.log((100-drop)/100)) + 1;
+let layers = Math.ceil(
+    Math.log((100-crash)/100) / Math.log((100-drop)/100)
+) + 1;
 
 let tbody = document.getElementById('tableBody');
-tbody.innerHTML = '';
+let html = '';
 
 let totalBuy = 0;
 let totalFee = 0;
@@ -266,9 +266,11 @@ for(let i=1;i<=layers;i++){
     totalOther += otherAmt;
     totalUsed += totalSpend;
 
-    let currentDrop = ((1 - Math.pow((100-drop)/100, (i-1))) * 100);
+    let currentDrop = (
+        (1 - Math.pow((100-drop)/100, (i-1))) * 100
+    );
 
-    tbody.innerHTML += `
+    html += `
     <tr>
         <td>${i}</td>
         <td>${currentDrop.toFixed(2)}%</td>
@@ -282,17 +284,39 @@ for(let i=1;i<=layers;i++){
     `;
 }
 
+tbody.innerHTML = html;
+
 document.getElementById('layers').innerText = layers;
 document.getElementById('buyTotal').innerText = totalBuy.toFixed(4);
 document.getElementById('feeTotal').innerText = totalFee.toFixed(4);
 document.getElementById('tdsTotal').innerText = totalTds.toFixed(4);
 document.getElementById('otherTotal').innerText = totalOther.toFixed(4);
-document.getElementById('chargeTotal').innerText = (totalFee+totalTds+totalOther).toFixed(4);
-document.getElementById('usedTotal').innerText = totalUsed.toFixed(4);
+document.getElementById('chargeTotal').innerText =
+    (totalFee+totalTds+totalOther).toFixed(4);
+
+document.getElementById('usedTotal').innerText =
+    totalUsed.toFixed(4);
 
 }
 
-calculate();
+document.addEventListener("DOMContentLoaded", function(){
+
+    const inputs = document.querySelectorAll('input');
+
+    inputs.forEach(function(input){
+
+        input.addEventListener('input', calculate);
+
+        input.addEventListener('change', calculate);
+
+        input.addEventListener('keyup', calculate);
+
+    });
+
+    calculate();
+
+});
+
 </script>
 
 </div>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel='shortcut icon' href='//compoundtrading.adquash.com/logo.png' type='image/x-icon' />    
 <title>Required Fund Calculator</title>
-<LINK href="https://compoundtrading.adquash.com/0.css" rel="stylesheet" type="text/css">    
+<LINK href="//compoundtrading.adquash.com/0.css" rel="stylesheet" type="text/css">    
 <style>
 body{
     background:#0d1117;
@@ -23,7 +23,6 @@ body{
 h1{
     text-align:center;
     margin-bottom:20px;
-    color:#000000;    
 }
 .card{
     background:#161b22;
@@ -226,6 +225,8 @@ tr:nth-child(even){
 </div>
 
 <script>
+const inputs = document.querySelectorAll('input');
+inputs.forEach(input => input.addEventListener('input', calculate));
 
 function calculate(){
 
@@ -236,21 +237,18 @@ let crash = parseFloat(document.getElementById('crash').value) || 0;
 let fee = parseFloat(document.getElementById('fee').value) || 0;
 let tds = parseFloat(document.getElementById('tds').value) || 0;
 let otherFee = parseFloat(document.getElementById('otherFee').value) || 0;
-let layers = 0;
-if(drop > 0 && drop < 100 && crash > 0 && crash < 100){
-let layers = Math.ceil(
-    Math.log((100-crash)/100) / Math.log((100-drop)/100)
-) + 1;
-} else { layers = 0; }
+
+let layers = Math.ceil(Math.log((100-crash)/100) / Math.log((100-drop)/100)) + 1;
+
 let tbody = document.getElementById('tableBody');
-let html = '';
+tbody.innerHTML = '';
 
 let totalBuy = 0;
 let totalFee = 0;
 let totalTds = 0;
 let totalOther = 0;
 let totalUsed = 0;
-if(layers > 0){
+
 for(let i=1;i<=layers;i++){
 
     let buyAmount = firstBuy * Math.pow((1 + increase/100), (i-1));
@@ -268,11 +266,9 @@ for(let i=1;i<=layers;i++){
     totalOther += otherAmt;
     totalUsed += totalSpend;
 
-    let currentDrop = (
-        (1 - Math.pow((100-drop)/100, (i-1))) * 100
-    );
+    let currentDrop = ((1 - Math.pow((100-drop)/100, (i-1))) * 100);
 
-    html += `
+    tbody.innerHTML += `
     <tr>
         <td>${i}</td>
         <td>${currentDrop.toFixed(2)}%</td>
@@ -285,40 +281,18 @@ for(let i=1;i<=layers;i++){
     </tr>
     `;
 }
-}
-tbody.innerHTML = html;
 
 document.getElementById('layers').innerText = layers;
 document.getElementById('buyTotal').innerText = totalBuy.toFixed(4);
 document.getElementById('feeTotal').innerText = totalFee.toFixed(4);
 document.getElementById('tdsTotal').innerText = totalTds.toFixed(4);
 document.getElementById('otherTotal').innerText = totalOther.toFixed(4);
-document.getElementById('chargeTotal').innerText =
-    (totalFee+totalTds+totalOther).toFixed(4);
-
-document.getElementById('usedTotal').innerText =
-    totalUsed.toFixed(4);
+document.getElementById('chargeTotal').innerText = (totalFee+totalTds+totalOther).toFixed(4);
+document.getElementById('usedTotal').innerText = totalUsed.toFixed(4);
 
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-
-    const inputs = document.querySelectorAll('input');
-
-    inputs.forEach(function(input){
-
-        input.addEventListener('input', calculate);
-
-        input.addEventListener('change', calculate);
-
-        input.addEventListener('keyup', calculate);
-
-    });
-
-    calculate();
-
-});
-
+calculate();
 </script>
 
 </div>
@@ -371,11 +345,8 @@ document.addEventListener("DOMContentLoaded", function(){
         .catch(error => {
           console.error('Error loading ' + file + ':', error);
         });
-    }
-
-    
+    }   
     </script>
-    <script src="https://compoundtrading.adquash.com/js/loader.js"></script>
 </body>
 
 </html>

@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
-        crossorigin="anonymous"></script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel='shortcut icon' href='//compoundtrading.adquash.com/logo.png' type='image/x-icon' />    
+
 <title>Required Fund Calculator</title>
-<LINK href="//compoundtrading.adquash.com/0.css" rel="stylesheet" type="text/css">    
+
+<link rel="shortcut icon"
+href="https://compoundtrading.adquash.com/logo.png"
+type="image/x-icon">
+
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
+crossorigin="anonymous"></script>
+
 <style>
+
 body{
     background:#0d1117;
     color:#fff;
@@ -16,15 +24,115 @@ body{
     margin:0;
     padding:20px;
 }
+
+/* HEADER */
+
+.header-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:#161b22;
+
+    padding:15px 20px;
+
+    border-radius:12px;
+
+    margin-bottom:20px;
+
+    border:1px solid #30363d;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+}
+
+.home-btn{
+    background:#238636;
+    color:#fff;
+
+    padding:10px 18px;
+
+    border-radius:8px;
+
+    text-decoration:none;
+
+    font-size:14px;
+    font-weight:bold;
+
+    transition:0.3s;
+}
+
+.home-btn:hover{
+    background:#2ea043;
+}
+
+/* LAYOUT */
+
+.layout{
+    display:grid;
+    grid-template-columns:1fr 300px;
+    gap:20px;
+}
+
+.main-content{
+    width:100%;
+    min-width:0;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    background:#161b22;
+
+    border:1px solid #30363d;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    height:fit-content;
+
+    position:sticky;
+
+    top:20px;
+}
+
+.sidebar h3{
+    margin-top:0;
+    color:#58a6ff;
+}
+
+.sidebar a{
+    display:block;
+
+    color:#c9d1d9;
+
+    text-decoration:none;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #30363d;
+
+    transition:0.3s;
+}
+
+.sidebar a:hover{
+    color:#58a6ff;
+}
+
+/* CONTENT */
+
 .container1{
     max-width:1200px;
     margin:auto;
 }
+
 h1{
     text-align:center;
     margin-bottom:20px;
-    color:#000000;    
 }
+
 .card{
     background:#161b22;
     padding:20px;
@@ -32,16 +140,19 @@ h1{
     margin-bottom:20px;
     border:1px solid #30363d;
 }
+
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
     gap:15px;
 }
+
 label{
     font-size:14px;
     display:block;
     margin-bottom:5px;
 }
+
 input{
     width:100%;
     padding:10px;
@@ -51,12 +162,14 @@ input{
     color:white;
     box-sizing:border-box;
 }
+
 .summary{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
     gap:15px;
     margin-top:20px;
 }
+
 .box{
     background:#0d1117;
     padding:15px;
@@ -64,108 +177,215 @@ input{
     border:1px solid #30363d;
     text-align:center;
 }
+
 .box h3{
     margin:0;
     font-size:14px;
     color:#8b949e;
 }
+
 .box p{
     margin-top:10px;
     font-size:22px;
     font-weight:bold;
 }
+
 table{
     width:100%;
     border-collapse:collapse;
     margin-top:20px;
     font-size:14px;
 }
+
 th,td{
     border:1px solid #30363d;
     padding:8px;
     text-align:center;
 }
+
 th{
     background:#21262d;
     position:sticky;
     top:0;
 }
+
 tr:nth-child(even){
     background:#11161d;
 }
+
 .table-wrap{
     overflow:auto;
     max-height:600px;
 }
+
+/* TOP BUTTON */
+
+.top-button{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:9999;
+
+    background:#238636;
+    color:#fff;
+
+    border:none;
+    border-radius:10px;
+
+    padding:12px 18px;
+    cursor:pointer;
+
+    font-size:14px;
+    font-weight:bold;
+
+    box-shadow:0 4px 10px rgba(0,0,0,0.4);
+
+    display:none;
+
+    transition:0.3s;
+}
+
+.top-button:hover{
+    background:#2ea043;
+    transform:translateY(-2px);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        position:relative;
+        top:0;
+    }
+
+}
+
 </style>
+
 </head>
+
 <body>
-    <div class="col-md-12" style="width:100%;">
-        <div id="menu"></div>
-    </div>
-<div class="row">
-        <div class="col-md-12">
-            <div class="left-panel">
-                <div class="col-md-12" style="width:100%;">
-                    <center>
-                        <script async
-                            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4305348743992957"
-                            crossorigin="anonymous"></script>
-                        <!-- sakhiadheader -->
-                        <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px;max-height:100px;"
-                            data-ad-client="ca-pub-4305348743992957" data-ad-slot="1924539816"></ins>
-                        <script>
-                            (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
-                    </center>
-                </div>
-                <div class="col-md-12">
-<div class="container">    
+
+<!-- HEADER -->
+
+<div class="header-bar">
+
+    <h2 style="margin:0;">
+        Required Fund Calculator
+    </h2>
+
+    <a href="https://compoundtrading.adquash.com/"
+    class="home-btn">
+        ⬅ Back To Home
+    </a>
+
+</div>
+
+<!-- LAYOUT -->
+
+<div class="layout">
+
+<!-- MAIN CONTENT -->
+
+<div class="main-content">
+
+<center>
+
+<ins class="adsbygoogle"
+style="display:inline-block;width:728px;height:90px"
+data-ad-client="ca-pub-4305348743992957"
+data-ad-slot="1924539816"></ins>
+
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</center>
+
 <div class="container1">
 
 <h1>Required Fund Calculator</h1>
 
+<!-- INPUTS -->
+
 <div class="card">
+
 <div class="grid">
 
 <div>
 <label>First Buy (USDT)</label>
-<input type="number" id="firstBuy" value="1" step="0.01" oninput="calculate()">
+<input type="number"
+id="firstBuy"
+value="1"
+step="0.01"
+oninput="calculate()">
 </div>
 
 <div>
 <label>Buy Increase %</label>
-<input type="number" id="increase" value="1" step="0.01" oninput="calculate()">
+<input type="number"
+id="increase"
+value="1"
+step="0.01"
+oninput="calculate()">
 </div>
 
 <div>
 <label>Buy Every Drop %</label>
-<input type="number" id="drop" value="2.5" step="0.1" oninput="calculate()">
+<input type="number"
+id="drop"
+value="2.5"
+step="0.1"
+oninput="calculate()">
 </div>
 
 <div>
 <label>Crash Coverage %</label>
-<input type="number" id="crash" value="90" step="1" oninput="calculate()">
+<input type="number"
+id="crash"
+value="90"
+step="1"
+oninput="calculate()">
 </div>
 
 <div>
 <label>Trading Fee %</label>
-<input type="number" id="fee" value="0.1" step="0.01" oninput="calculate()">
+<input type="number"
+id="fee"
+value="0.1"
+step="0.01"
+oninput="calculate()">
 </div>
 
 <div>
 <label>TDS %</label>
-<input type="number" id="tds" value="1" step="0.01" oninput="calculate()">
+<input type="number"
+id="tds"
+value="1"
+step="0.01"
+oninput="calculate()">
 </div>
 
 <div>
 <label>Other Fee %</label>
-<input type="number" id="otherFee" value="0" step="0.01" oninput="calculate()">
+<input type="number"
+id="otherFee"
+value="0"
+step="0.01"
+oninput="calculate()">
 </div>
 
 </div>
+
+<!-- SUMMARY -->
 
 <div class="summary">
+
 <div class="box">
 <h3>Total Layers</h3>
 <p id="layers">0</p>
@@ -200,12 +420,19 @@ tr:nth-child(even){
 <h3>Total Used Amount</h3>
 <p id="usedTotal">0</p>
 </div>
-</div>
+
 </div>
 
+</div>
+
+<!-- TABLE -->
+
 <div class="card">
+
 <div class="table-wrap">
+
 <table>
+
 <thead>
 <tr>
 <th>Layer</th>
@@ -218,28 +445,88 @@ tr:nth-child(even){
 <th>Total Spend</th>
 </tr>
 </thead>
+
 <tbody id="tableBody"></tbody>
+
 </table>
-</div>
+
 </div>
 
 </div>
+
+</div>
+
+</div>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h3>Trading Tools</h3>
+
+<a href="crypto-compounding.html">Compound Calculator</a>
+
+<a href="dca-calculator.html">DCA Calculator</a>
+
+<a href="minimum-sell-target.html">Minimum TP Calculator</a>
+
+<a href="emi-calculator.html">EMI Calculator</a>
+<a href="sip-calculator.html">SIP Calculator</a>
+
+</div>
+
+</div>
+
+<!-- TOP BUTTON -->
+
+<button class="top-button"
+onclick="scrollToTop()">
+Back to Top
+</button>
+
+<!-- JAVASCRIPT -->
 
 <script>
+
 function calculate(){
 
-let firstBuy = parseFloat(document.getElementById('firstBuy').value) || 0;
-let increase = parseFloat(document.getElementById('increase').value) || 0;
-let drop = parseFloat(document.getElementById('drop').value) || 0;
-let crash = parseFloat(document.getElementById('crash').value) || 0;
-let fee = parseFloat(document.getElementById('fee').value) || 0;
-let tds = parseFloat(document.getElementById('tds').value) || 0;
-let otherFee = parseFloat(document.getElementById('otherFee').value) || 0;
+let firstBuy =
+parseFloat(document.getElementById('firstBuy').value) || 0;
 
-let layers = Math.ceil(Math.log((100-crash)/100) / Math.log((100-drop)/100)) + 1;
+let increase =
+parseFloat(document.getElementById('increase').value) || 0;
+
+let drop =
+parseFloat(document.getElementById('drop').value) || 0;
+
+let crash =
+parseFloat(document.getElementById('crash').value) || 0;
+
+let fee =
+parseFloat(document.getElementById('fee').value) || 0;
+
+let tds =
+parseFloat(document.getElementById('tds').value) || 0;
+
+let otherFee =
+parseFloat(document.getElementById('otherFee').value) || 0;
+
+/* SAFE LAYER CALCULATION */
+
+let layers = 0;
+
+if(drop > 0 && drop < 100 && crash > 0 && crash < 100){
+
+    layers = Math.ceil(
+        Math.log((100-crash)/100) /
+        Math.log((100-drop)/100)
+    ) + 1;
+
+}
 
 let tbody = document.getElementById('tableBody');
-tbody.innerHTML = '';
+
+let html = '';
 
 let totalBuy = 0;
 let totalFee = 0;
@@ -247,15 +534,19 @@ let totalTds = 0;
 let totalOther = 0;
 let totalUsed = 0;
 
+if(layers > 0){
+
 for(let i=1;i<=layers;i++){
 
-    let buyAmount = firstBuy * Math.pow((1 + increase/100), (i-1));
+    let buyAmount =
+    firstBuy * Math.pow((1 + increase/100), (i-1));
 
     let feeAmt = buyAmount * fee / 100;
     let tdsAmt = buyAmount * tds / 100;
     let otherAmt = buyAmount * otherFee / 100;
 
     let totalCharge = feeAmt + tdsAmt + otherAmt;
+
     let totalSpend = buyAmount + totalCharge;
 
     totalBuy += buyAmount;
@@ -264,9 +555,10 @@ for(let i=1;i<=layers;i++){
     totalOther += otherAmt;
     totalUsed += totalSpend;
 
-    let currentDrop = ((1 - Math.pow((100-drop)/100, (i-1))) * 100);
+    let currentDrop =
+    ((1 - Math.pow((100-drop)/100, (i-1))) * 100);
 
-    tbody.innerHTML += `
+    html += `
     <tr>
         <td>${i}</td>
         <td>${currentDrop.toFixed(2)}%</td>
@@ -278,74 +570,68 @@ for(let i=1;i<=layers;i++){
         <td>${totalSpend.toFixed(4)}</td>
     </tr>
     `;
+
 }
 
-document.getElementById('layers').innerText = layers;
-document.getElementById('buyTotal').innerText = totalBuy.toFixed(4);
-document.getElementById('feeTotal').innerText = totalFee.toFixed(4);
-document.getElementById('tdsTotal').innerText = totalTds.toFixed(4);
-document.getElementById('otherTotal').innerText = totalOther.toFixed(4);
-document.getElementById('chargeTotal').innerText = (totalFee+totalTds+totalOther).toFixed(4);
-document.getElementById('usedTotal').innerText = totalUsed.toFixed(4);
+}
+
+tbody.innerHTML = html;
+
+document.getElementById('layers').innerText =
+layers;
+
+document.getElementById('buyTotal').innerText =
+totalBuy.toFixed(4);
+
+document.getElementById('feeTotal').innerText =
+totalFee.toFixed(4);
+
+document.getElementById('tdsTotal').innerText =
+totalTds.toFixed(4);
+
+document.getElementById('otherTotal').innerText =
+totalOther.toFixed(4);
+
+document.getElementById('chargeTotal').innerText =
+(totalFee + totalTds + totalOther).toFixed(4);
+
+document.getElementById('usedTotal').innerText =
+totalUsed.toFixed(4);
 
 }
 
 calculate();
+
+/* TOP BUTTON */
+
+function scrollToTop(){
+
+window.scrollTo({
+    top:0,
+    behavior:'smooth'
+});
+
+}
+
+window.onscroll = function(){
+
+var topButton =
+document.querySelector('.top-button');
+
+if(document.body.scrollTop > 100 ||
+document.documentElement.scrollTop > 100){
+
+    topButton.style.display = "block";
+
+}else{
+
+    topButton.style.display = "none";
+
+}
+
+};
+
 </script>
 
-</div>
-        
-</div>
-    </div>
-    <div class="right-panel0">
-        <a href="kucoin-dca-bot.html"><img src="https://aksharhanumandham.in/ads/kucoin.png" style="max-width:300px;height:300px"></a>
-    </div>
-    </div>
-    </div>
-    <div class="footer">
-        <div id="footer"></div>
-    </div>
-    <button class="top-button" onclick="scrollToTop()">Back to Top</button>
-
-    <div id="footer"></div>
-
-    <script>
-        // Toggle menu visibility on smaller screens
-     function toggleMenu() {
-       const menu = document.querySelector('.menu');
-       menu.classList.toggle('show');
-     }
-     // Scroll to top function
-    function scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'  // Smooth scroll effect
-      });
-    }
-
-    // Show or hide the "Back to Top" button based on scroll position
-    window.onscroll = function() {
-      var topButton = document.querySelector('.top-button');
-      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        topButton.style.display = "block";  // Show button
-      } else {
-        topButton.style.display = "none";  // Hide button
-      }
-    };
-   
-    // Function to load external HTML into a specific element
-    function loadHTML(elementId, file) {
-      fetch(file)
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById(elementId).innerHTML = data;
-        })
-        .catch(error => {
-          console.error('Error loading ' + file + ':', error);
-        });
-    }   
-    </script>
-<script src="https://compoundtrading.adquash.com/js/loader.js"></script>        
 </body>
-
 </html>

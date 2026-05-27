@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel='shortcut icon' href='logo.png' type='image/x-icon' />
+  
 <title>
 GRID + DCA Spot Trading Script for KuCoin | FIFO Control | PHP Crypto Automation
 </title>
@@ -285,10 +287,21 @@ Advanced spot trading automation with GRID + DCA strategy support for discipline
 <div class="price-box">
 
 <div class="price">10 USDT</div>
-
-<a href="YOUR_COINPAYMENTS_LINK" class="buy-btn">
-Buy Now
-</a>
+<form action="https://legacy.coinpayments.net/index.php" method="post">
+	<input type="hidden" name="cmd" value="_pay_simple">
+	<input type="hidden" name="reset" value="1">
+	<input type="hidden" name="merchant" value="80fac8e50744f81c50912a923c7a05b2">
+	<input type="hidden" name="item_name" value="GRID + DCA Spot Trading Script for KuCoin">
+	<input type="hidden" name="item_desc" value="Self-hosted PHP + MySQL spot trading script with GRID, DCA and FIFO control support. Instant download after payment.">
+	<input type="hidden" name="item_number" value="KUCOIN-GRID-DCA-10USDT">
+	<input type="hidden" name="currency" value="USDT.TRC20">
+	<input type="hidden" name="amountf" value="10.00000000">
+	<input type="hidden" name="want_shipping" value="0">
+	<input type="hidden" name="success_url" value="https://compoundtrading.adquash.com/download.html?exchange=kucoin">
+	<input type="hidden" name="cancel_url" value="https://compoundtrading.adquash.com/kucoin-grid-dca-trading-script.html">
+	<input type="image" src="https://legacy.coinpayments.net/images/pub/buynow-grey.png" alt="Buy Now with CoinPayments.net">
+<button type="submit" class="buy-btn">Buy Now</button>
+</form>
 
 </div>
 
@@ -480,9 +493,21 @@ Get immediate access to files after successful payment.
 Payments are processed securely through CoinPayments.
 </p>
 
-<a href="YOUR_COINPAYMENTS_LINK" class="buy-btn">
-Pay with Crypto
-</a>
+<form action="https://legacy.coinpayments.net/index.php" method="post">
+	<input type="hidden" name="cmd" value="_pay_simple">
+	<input type="hidden" name="reset" value="1">
+	<input type="hidden" name="merchant" value="80fac8e50744f81c50912a923c7a05b2">
+	<input type="hidden" name="item_name" value="GRID + DCA Spot Trading Script for KuCoin">
+	<input type="hidden" name="item_desc" value="Self-hosted PHP + MySQL spot trading script with GRID, DCA and FIFO control support. Instant download after payment.">
+	<input type="hidden" name="item_number" value="KUCOIN-GRID-DCA-10USDT">
+	<input type="hidden" name="currency" value="USDT.TRC20">
+	<input type="hidden" name="amountf" value="10.00000000">
+	<input type="hidden" name="want_shipping" value="0">
+	<input type="hidden" name="success_url" value="https://compoundtrading.adquash.com/download.html?exchange=kucoin">
+	<input type="hidden" name="cancel_url" value="https://compoundtrading.adquash.com/kucoin-grid-dca-trading-script.html">
+	<input type="image" src="https://legacy.coinpayments.net/images/pub/buynow-grey.png" alt="Buy Now with CoinPayments.net">
+<button type="submit" class="buy-btn">Pay with Crypto</button>
+</form>
 
 <ul class="features-list">
 <li>✔ Instant Access After Payment</li>

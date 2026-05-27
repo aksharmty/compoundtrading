@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Download Script</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#07111f;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.box{
+    width:100%;
+    max-width:700px;
+    background:#0d1b2a;
+    padding:45px;
+    border-radius:18px;
+    border:1px solid #1e3a5f;
+    text-align:center;
+    box-shadow:0 0 25px rgba(0,255,170,.08);
+}
+
+h1{
+    color:#00ffb3;
+    margin-bottom:20px;
+    font-size:34px;
+}
+
+p{
+    color:#d6d6d6;
+    margin:15px 0;
+    line-height:1.7;
+}
+
+.download-btn{
+    display:inline-block;
+    margin-top:25px;
+    background:#00c853;
+    color:#fff;
+    text-decoration:none;
+    padding:16px 38px;
+    border-radius:10px;
+    font-size:18px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.download-btn:hover{
+    background:#00e676;
+    transform:translateY(-2px);
+}
+
+.note{
+    margin-top:30px;
+    background:#10233c;
+    padding:20px;
+    border-radius:12px;
+    border:1px solid #1d3f66;
+}
+
+.email{
+    color:#00ffb3;
+    font-weight:bold;
+}
+
+.footer{
+    margin-top:30px;
+    color:#999;
+    font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>
+Thanks For Your Purchase
+</h1>
+
+<p id="scriptTitle">
+Loading Script...
+</p>
+
+<a id="downloadBtn" href="#" class="download-btn">
+Download ZIP
+</a>
+
+<div class="note">
+
+<p>
+This ZIP file is password protected for security purposes.
+</p>
+
+<p>
+Please send your transaction details to:
+</p>
+
+<p class="email">
+sakhihosting@gmail.com
+</p>
+
+<p>
+After payment confirmation, the ZIP password will be sent to you.
+</p>
+
+</div>
+
+<div class="footer">
+Crypto trading involves market risk.
+</div>
+
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const exchange = params.get("exchange");
+
+const title = document.getElementById("scriptTitle");
+
+const button = document.getElementById("downloadBtn");
+
+if(exchange === "kucoin"){
+
+    title.innerHTML =
+    "Download KuCoin GRID + DCA Spot Trading Script";
+
+    button.href =
+    "files/kucoin-grid-dca-script.zip";
+
+}
+
+else if(exchange === "binance"){
+
+    title.innerHTML =
+    "Download Binance GRID + DCA Spot Trading Script";
+
+    button.href =
+    "files/binance-grid-dca-script.zip";
+
+}
+
+else if(exchange === "wazirx"){
+
+    title.innerHTML =
+    "Download Wazirx GRID + DCA Spot Trading Script";
+
+    button.href =
+    "files/wazirx-grid-dca-script.zip";
+
+}
+
+else{
+
+    title.innerHTML =
+    "Download Trading Script";
+
+    button.href =
+    "#";
+
+}
+
+</script>
+
+</body>
+</html>

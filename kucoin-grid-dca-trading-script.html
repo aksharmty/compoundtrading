@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+GRID + DCA Spot Trading Script for KuCoin | FIFO Control | PHP Crypto Automation
+</title>
+
+<meta name="description" content="GRID + DCA Spot Trading Script for KuCoin with FIFO control, PHP + MySQL support, instant download and self-hosted automation setup.">
+
+<meta name="keywords" content="KuCoin Trading Script, GRID Trading Script, DCA Trading Script, FIFO Trading, PHP Crypto Script, Spot Trading Automation">
+
+<meta name="author" content="Sakhi Hosting">
+
+<meta name="robots" content="index, follow">
+
+<meta name="theme-color" content="#07111f">
+
+<!-- OPEN GRAPH -->
+
+<meta property="og:title" content="GRID + DCA Spot Trading Script for KuCoin">
+
+<meta property="og:description" content="Advanced GRID + DCA spot trading script with FIFO control and self-hosted PHP setup.">
+
+<meta property="og:image" content="https://compoundtrading.adquash.com/kucoin-grid-dca-trading-script.png">
+
+<meta property="og:url" content="https://compoundtrading.adquash.com/kucoin-grid-dca-trading-script.html">
+
+<meta property="og:type" content="website">
+
+<!-- TWITTER -->
+
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="twitter:title" content="GRID + DCA Spot Trading Script for KuCoin">
+
+<meta name="twitter:description" content="Self-hosted GRID + DCA spot trading automation script with FIFO control.">
+
+<meta name="twitter:image" content="https://compoundtrading.adquash.com/kucoin-grid-dca-trading-script.png">
+
+<!-- JSON LD -->
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"GRID + DCA Spot Trading Script for KuCoin",
+  "applicationCategory":"FinanceApplication",
+  "operatingSystem":"Web",
+  "description":"GRID + DCA spot trading automation script with FIFO control and PHP + MySQL support.",
+  "offers":{
+    "@type":"Offer",
+    "price":"10",
+    "priceCurrency":"USDT"
+  },
+  "creator":{
+    "@type":"Organization",
+    "name":"Sakhi Hosting"
+  }
+}
+</script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#07111f;
+    color:#fff;
+    line-height:1.6;
+}
+
+.container{
+    width:95%;
+    max-width:1150px;
+    margin:auto;
+}
+
+.hero{
+    padding:50px 0;
+    text-align:center;
+}
+
+.hero img{
+    width:100%;
+    max-width:950px;
+    border-radius:14px;
+    margin-bottom:30px;
+    box-shadow:0 0 30px rgba(0,255,170,.12);
+}
+
+h1{
+    font-size:42px;
+    color:#00ffb3;
+    margin-bottom:20px;
+}
+
+.subtitle{
+    color:#d4d4d4;
+    font-size:18px;
+    max-width:850px;
+    margin:auto;
+}
+
+.badges{
+    margin-top:25px;
+}
+
+.badge{
+    display:inline-block;
+    margin:8px;
+    padding:10px 18px;
+    background:#10233c;
+    border-radius:30px;
+    border:1px solid #1d3f66;
+    color:#00ffb3;
+    font-size:14px;
+}
+
+.price-box{
+    width:330px;
+    margin:35px auto;
+    background:#0d1b2a;
+    padding:25px;
+    border-radius:16px;
+    border:1px solid #1e3a5f;
+    box-shadow:0 0 25px rgba(0,255,170,.08);
+}
+
+.price{
+    font-size:45px;
+    color:#ffd54f;
+    font-weight:bold;
+}
+
+.buy-btn{
+    display:inline-block;
+    margin-top:20px;
+    background:#00c853;
+    color:#fff;
+    text-decoration:none;
+    padding:16px 40px;
+    border-radius:10px;
+    font-size:20px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.buy-btn:hover{
+    background:#00e676;
+    transform:translateY(-2px);
+}
+
+.section{
+    padding:70px 0;
+}
+
+.section-title{
+    text-align:center;
+    font-size:36px;
+    margin-bottom:50px;
+    color:#00ffb3;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:#0d1b2a;
+    padding:25px;
+    border-radius:15px;
+    border:1px solid #1e3a5f;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 20px rgba(0,255,170,.08);
+}
+
+.card h3{
+    margin-bottom:15px;
+    color:#00ffb3;
+}
+
+.card p{
+    color:#d7d7d7;
+}
+
+.payment-box{
+    background:#0d1b2a;
+    padding:40px;
+    border-radius:15px;
+    text-align:center;
+    border:1px solid #1e3a5f;
+}
+
+.payment-box h2{
+    color:#00ffb3;
+    margin-bottom:15px;
+}
+
+.payment-box p{
+    color:#d7d7d7;
+}
+
+.features-list{
+    list-style:none;
+    margin-top:20px;
+}
+
+.features-list li{
+    margin:10px 0;
+    color:#ddd;
+}
+
+.footer{
+    text-align:center;
+    padding:35px 20px;
+    background:#020913;
+    margin-top:50px;
+    border-top:1px solid #1a2e46;
+}
+
+.footer p{
+    margin:8px 0;
+    color:#bbb;
+}
+
+.email{
+    color:#00ffb3;
+}
+
+@media(max-width:768px){
+
+    h1{
+        font-size:30px;
+    }
+
+    .price{
+        font-size:34px;
+    }
+
+    .price-box{
+        width:95%;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HERO -->
+
+<div class="hero">
+<div class="container">
+
+<img src="https://compoundtrading.adquash.com/kucoin-grid-dca-trading-script.png" alt="GRID + DCA Spot Trading Script">
+
+<h1>GRID + DCA Spot Trading Script for KuCoin</h1>
+
+<p class="subtitle">
+Advanced spot trading automation with GRID + DCA strategy support for disciplined trade management and averaging control.
+</p>
+
+<div class="badges">
+<span class="badge">Instant Download</span>
+<span class="badge">One-Time Payment</span>
+<span class="badge">Self Hosted</span>
+<span class="badge">Source Code Included</span>
+</div>
+
+<div class="price-box">
+
+<div class="price">10 USDT</div>
+
+<a href="YOUR_COINPAYMENTS_LINK" class="buy-btn">
+Buy Now
+</a>
+
+</div>
+
+<p style="color:#999;">
+Crypto trading involves market risk.
+</p>
+
+</div>
+</div>
+
+<!-- FEATURES -->
+
+<div class="section">
+<div class="container">
+
+<h2 class="section-title">Trading Features</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>GRID Trading</h3>
+<p>
+Automatic buy/sell grid execution for range-based spot trading strategies.
+</p>
+</div>
+
+<div class="card">
+<h3>DCA Averaging</h3>
+<p>
+Smart averaging support with better capital distribution and trade management.
+</p>
+</div>
+
+<div class="card">
+<h3>FIFO Control</h3>
+<p>
+FIFO-aware calculations for proper trade tracking and cost management.
+</p>
+</div>
+
+<div class="card">
+<h3>PHP + MySQL</h3>
+<p>
+Simple lightweight setup with full source code access and customization support.
+</p>
+</div>
+
+<div class="card">
+<h3>Self Hosted</h3>
+<p>
+Run the trading system on your own server with complete control.
+</p>
+</div>
+
+<div class="card">
+<h3>Automation Ready</h3>
+<p>
+Supports cron jobs for automatic trading execution and monitoring.
+</p>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- REQUIREMENTS -->
+
+<div class="section" style="background:#081522;">
+<div class="container">
+
+<h2 class="section-title">Server & Exchange Requirements</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>KuCoin Account</h3>
+<p>
+A KuCoin spot trading account is required to use this script.
+</p>
+</div>
+
+<div class="card">
+<h3>KuCoin Trading API</h3>
+<p>
+Enable API access with spot trading permissions from your KuCoin account.
+</p>
+</div>
+
+<div class="card">
+<h3>PHP 8 + MySQLi</h3>
+<p>
+Server must support PHP 8 or higher with MySQLi extension enabled.
+</p>
+</div>
+
+<div class="card">
+<h3>1 GB Hosting Space</h3>
+<p>
+Minimum 1 GB SSD hosting space recommended for logs and database storage.
+</p>
+</div>
+
+<div class="card">
+<h3>Cron Job Support</h3>
+<p>
+Cron jobs are required for automated trade execution and monitoring.
+</p>
+</div>
+
+<div class="card">
+<h3>Shared Hosting / VPS</h3>
+<p>
+Compatible with shared hosting, VPS, or cloud hosting environments.
+</p>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- WHY USE -->
+
+<div class="section">
+<div class="container">
+
+<h2 class="section-title">Why Use This Script</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Beginner Friendly</h3>
+<p>
+Simple structure and easy setup process for developers and traders.
+</p>
+</div>
+
+<div class="card">
+<h3>No Monthly Fees</h3>
+<p>
+One-time payment with full ownership and no recurring subscription.
+</p>
+</div>
+
+<div class="card">
+<h3>Fast Lightweight Setup</h3>
+<p>
+Optimized lightweight architecture with low hosting requirements.
+</p>
+</div>
+
+<div class="card">
+<h3>Educational Purpose</h3>
+<p>
+Useful for learning crypto automation and strategy development.
+</p>
+</div>
+
+<div class="card">
+<h3>Full Source Code</h3>
+<p>
+Modify and customize the script according to your own requirements.
+</p>
+</div>
+
+<div class="card">
+<h3>Instant Download</h3>
+<p>
+Get immediate access to files after successful payment.
+</p>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- PAYMENT -->
+
+<div class="section" style="background:#081522;">
+<div class="container">
+
+<div class="payment-box">
+
+<h2>Secure Crypto Payment</h2>
+
+<p>
+Payments are processed securely through CoinPayments.
+</p>
+
+<a href="YOUR_COINPAYMENTS_LINK" class="buy-btn">
+Pay with Crypto
+</a>
+
+<ul class="features-list">
+<li>✔ Instant Access After Payment</li>
+<li>✔ Download ZIP File</li>
+<li>✔ Includes SQL Database File</li>
+<li>✔ Setup Guide Included</li>
+<li>✔ Full Source Code Access</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+
+<!-- FAQ -->
+
+<div class="section">
+<div class="container">
+
+<h2 class="section-title">Frequently Asked Questions</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Is this a cloud-based service?</h3>
+<p>
+No, this is a self-hosted PHP + MySQL script that runs on your own server.
+</p>
+</div>
+
+<div class="card">
+<h3>Does the script support GRID strategy?</h3>
+<p>
+Yes, the script includes GRID-based spot trading functionality.
+</p>
+</div>
+
+<div class="card">
+<h3>Does it include DCA averaging?</h3>
+<p>
+Yes, smart DCA averaging logic is included for spot trade management.
+</p>
+</div>
+
+<div class="card">
+<h3>Do I need KuCoin API access?</h3>
+<p>
+Yes, you need KuCoin API credentials with spot trading permissions enabled.
+</p>
+</div>
+
+<div class="card">
+<h3>Can I modify the source code?</h3>
+<p>
+Yes, full source code access is included with the purchase.
+</p>
+</div>
+
+<div class="card">
+<h3>Does it work on shared hosting?</h3>
+<p>
+Yes, the script can run on shared hosting if cron jobs and PHP 8 are supported.
+</p>
+</div>
+
+<div class="card">
+<h3>Is technical knowledge required?</h3>
+<p>
+Basic PHP hosting and database knowledge is recommended for setup and management.
+</p>
+</div>
+
+<div class="card">
+<h3>Is this financial advice software?</h3>
+<p>
+No, this software is provided for educational and automation purposes only.
+</p>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+<p>
+Crypto trading involves market risk.
+</p>
+
+<p>
+This software is provided for educational and automation purposes only.
+</p>
+
+<p class="email">
+Contact: sakhihosting@gmail.com
+</p>
+
+</div>
+
+</body>
+</html>

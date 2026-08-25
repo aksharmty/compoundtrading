@@ -58,7 +58,7 @@ loadHTML("sidebar", "sidebar.html", () => {
         setTimeout(openPromo, 5000);
 
         // Check every minute
-        setInterval(openPromo, 60000);
+        setInterval(openPromo, 180000);
     }
 
 });

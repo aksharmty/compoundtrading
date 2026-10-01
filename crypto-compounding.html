@@ -680,50 +680,50 @@ function calc(){
 
     <tr>
 
-    <td>₹${firstBuy.toFixed(2)}</td>
+    <td>₹${firstBuy.toFixed(3)}</td>
 
-    <td>₹${sellAmount.toFixed(2)}</td>
+    <td>₹${sellAmount.toFixed(3)}</td>
 
-    <td>${(target*100).toFixed(2)}%</td>
+    <td>${(target*100).toFixed(3)}%</td>
 
-    <td>₹${buyFeeAmt.toFixed(2)}</td>
+    <td>₹${buyFeeAmt.toFixed(3)}</td>
 
-    <td>₹${sellFeeAmt.toFixed(2)}</td>
+    <td>₹${sellFeeAmt.toFixed(3)}</td>
 
-    <td>₹${buyTDSAmt.toFixed(2)}</td>
+    <td>₹${buyTDSAmt.toFixed(3)}</td>
 
-    <td>₹${sellTDSAmt.toFixed(2)}</td>
+    <td>₹${sellTDSAmt.toFixed(3)}</td>
 
-    <td>₹${totalTDS.toFixed(2)}</td>
+    <td>₹${totalTDS.toFixed(3)}</td>
 
-    <td>₹${tax.toFixed(2)}</td>
+    <td>₹${tax.toFixed(3)}</td>
 
     <td class="green">
-    ₹${refund.toFixed(2)}
+    ₹${refund.toFixed(3)}
     </td>
 
     <td class="${pureGrowth>=0?'green':'red'}">
-    ₹${pureGrowth.toFixed(2)}
+    ₹${pureGrowth.toFixed(3)}
     </td>
 
     <td class="${accountGrowth>=firstBuy?'green':'red'}">
-    ₹${accountGrowth.toFixed(2)}
+    ₹${accountGrowth.toFixed(3)}
     </td>
 
     <td class="${growthPercent>=0?'green':'red'}">
-    ${growthPercent.toFixed(3)}%
+    ${growthPercent.toFixed(4)}%
     </td>
 
     <td>
-    ${nextBuyPercent.toFixed(1)}%
+    ${nextBuyPercent.toFixed(2)}%
     </td>
 
     <td class="orange">
-    ₹${nextBuy.toFixed(2)}
+    ₹${nextBuy.toFixed(3)}
     </td>
 
     <!-- td class="${needTax>0?'red':'green'}">
-    ₹${needTax.toFixed(2)}
+    ₹${needTax.toFixed(3)}
     </td>
 
     <td class="${taxCovered=='YES'?'green':'red'}">

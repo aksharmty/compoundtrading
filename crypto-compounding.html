@@ -205,8 +205,8 @@ Useful for Bitcoin, Ethereum, Altcoin and automated DCA trading strategy.
 </div>
 
 <div>
-<label>Goal Amount (₹)</label>
-<input type="number" id="goalAmount" value="10000000">
+<label>Goal Amount (USDT)</label>
+<input type="number" id="goalAmount" value="100000" min="0.000001" step="0.01">
 </div>
 
  <div>
@@ -267,7 +267,7 @@ Useful for Bitcoin, Ethereum, Altcoin and automated DCA trading strategy.
 <div class="box" style="text-align:center;">
 
 <h2 style="margin-bottom:10px;">
-Automate Your Crypto Grid DCA Strategy
+Automate Your Crypto Spot Trading
 </h2>
 
 <p style="
@@ -278,11 +278,11 @@ font-size:16px;
 color:#444;
 ">
 </p>
-<h2>GRID + DCA Trading Bots for KuCoin, Binance, WazirX & Angel One</h2>
+<h2>GRID + DCA + Compounding Strategy Trading Bots for KuCoin</h2>
 <br>
 
 <h2 style="margin-bottom:10px;">
-Available GRID + DCA Trading Bots
+Available GRID + DCA + Compounding Trading Bots for kucoin spot market
 </h2>
 
 <p style="
@@ -304,13 +304,13 @@ justify-content:center;
 flex-wrap:wrap;
 ">
 
-<a href="https://compoundtrading.adquash.com/kucoin-dca-bot.html"
+<a href="https://gridbot.adquash.com/grid-dca-bot-script.html"
 target="_blank"
 style="background:#00c087;color:#fff;padding:14px 24px;border-radius:10px;text-decoration:none;font-size:16px;font-weight:bold;">
-KuCoin Bot
+Buy KuCoin Bot Script
 </a>
 
-<a href="https://compoundtrading.adquash.com/wazirx-dca-bot.html"
+<!-- a href="https://compoundtrading.adquash.com/wazirx-dca-bot.html"
 target="_blank"
 style="background:#f7931a;color:#fff;padding:14px 24px;border-radius:10px;text-decoration:none;font-size:16px;font-weight:bold;">
 WazirX Bot
@@ -326,7 +326,7 @@ Binance Bot
 target="_blank"
 style="background:#0057ff;color:#fff;padding:14px 24px;border-radius:10px;text-decoration:none;font-size:16px;font-weight:bold;">
 Angel One Bot
-</a>
+</a -->
 
 </div>
 
@@ -385,7 +385,7 @@ Available Trading Platforms
 </h2>
 
 <p style="font-size:17px;line-height:1.9;max-width:900px;margin:auto;">
-Choose your preferred exchange or broker and start using GRID + DCA based trading systems.
+Choose your preferred exchange or broker and start using GRID + DCA + Compounding based trading systems.
 </p>
 
 <br>
@@ -397,13 +397,13 @@ justify-content:center;
 flex-wrap:wrap;
 ">
 
-<a href="https://compoundtrading.adquash.com/kucoin-dca-bot.html"
+<a href="https://gridbot.adquash.com/grid-dca-bot-script.html"
 target="_blank"
 style="background:#00c087;color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-size:17px;font-weight:bold;">
-KuCoin
+Buy KuCoin Bot Script
 </a>
 
-<a href="https://compoundtrading.adquash.com/wazirx-dca-bot.html"
+<!-- a href="https://compoundtrading.adquash.com/wazirx-dca-bot.html"
 target="_blank"
 style="background:#f7931a;color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-size:17px;font-weight:bold;">
 WazirX
@@ -419,7 +419,7 @@ Binance
 target="_blank"
 style="background:#0057ff;color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-size:17px;font-weight:bold;">
 Angel One
-</a>
+</a -->
 
 </div>
 
@@ -472,6 +472,12 @@ GRID → Faster Fund Rotation | DCA → Smarter Accumulation | Compounding → L
 
 
 <script>
+
+function moneyBoth(inrValue, rate, digits=2){
+    const value = Number(inrValue) || 0;
+    const usdt = rate > 0 ? value / rate : 0;
+    return `${usdt.toFixed(digits)} USDT<br>₹${value.toFixed(digits)}`;
+}
 
 function loadTargets(){
 
@@ -535,14 +541,9 @@ function loadTargets(){
         let needPayTax =
         tax - totalTDS;
 
-        // only profitable
-        // and no extra tax
-
-        if(
-            realGrowth > 0
-            &&
-            needPayTax <= 0
-        ){
+        // Keep profitable target options available even when TDS is zero
+        // or does not fully cover the estimated tax.
+        if(realGrowth > 0){
 
             let option =
             document.createElement('option');
@@ -611,8 +612,11 @@ function calc(){
     // Convert the per-pair first buy from USDT into INR for all calculations.
     let firstBuy = firstBuyUsdt * usdtRate;
 
-    let goalAmount =
+    let goalAmountUsdt =
     parseFloat(document.getElementById('goalAmount').value);
+
+    // Goal is entered in USDT; calculations continue internally in INR.
+    let goalAmount = goalAmountUsdt * usdtRate;
 
     let pairCount =
     parseInt(document.getElementById('pairCount').value, 10);
@@ -710,34 +714,34 @@ function calc(){
 
     <tr>
 
-    <td>₹${firstBuy.toFixed(5)}</td>
+    <td>${moneyBoth(firstBuy,usdtRate,5)}</td>
 
-    <td>₹${sellAmount.toFixed(5)}</td>
+    <td>${moneyBoth(sellAmount,usdtRate,5)}</td>
 
     <td>${(target*100).toFixed(5)}%</td>
 
-    <td>₹${buyFeeAmt.toFixed(5)}</td>
+    <td>${moneyBoth(buyFeeAmt,usdtRate,5)}</td>
 
-    <td>₹${sellFeeAmt.toFixed(5)}</td>
+    <td>${moneyBoth(sellFeeAmt,usdtRate,5)}</td>
 
-    <td>₹${buyTDSAmt.toFixed(5)}</td>
+    <td>${moneyBoth(buyTDSAmt,usdtRate,5)}</td>
 
-    <td>₹${sellTDSAmt.toFixed(5)}</td>
+    <td>${moneyBoth(sellTDSAmt,usdtRate,5)}</td>
 
-    <td>₹${totalTDS.toFixed(5)}</td>
+    <td>${moneyBoth(totalTDS,usdtRate,5)}</td>
 
-    <td>₹${tax.toFixed(5)}</td>
+    <td>${moneyBoth(tax,usdtRate,5)}</td>
 
     <td class="green">
-    ₹${refund.toFixed(5)}
+    ${moneyBoth(refund,usdtRate,5)}
     </td>
 
     <td class="${pureGrowth>=0?'green':'red'}">
-    ₹${pureGrowth.toFixed(5)}
+    ${moneyBoth(pureGrowth,usdtRate,5)}
     </td>
 
     <td class="${accountGrowth>=firstBuy?'green':'red'}">
-    ₹${accountGrowth.toFixed(5)}
+    ${moneyBoth(accountGrowth,usdtRate,5)}
     </td>
 
     <td class="${growthPercent>=0?'green':'red'}">
@@ -749,11 +753,11 @@ function calc(){
     </td>
 
     <td class="orange">
-    ₹${nextBuy.toFixed(5)}
+    ${moneyBoth(nextBuy,usdtRate,5)}
     </td>
 
     <!-- td class="${needTax>0?'red':'green'}">
-    ₹${needTax.toFixed(5)}
+    ${moneyBoth(needTax,usdtRate,5)}
     </td>
 
     <td class="${taxCovered=='YES'?'green':'red'}">
@@ -837,26 +841,26 @@ for(let i=1; i<=maxLayers; i++){
 
     <td>${i}</td>
 
-    <td>₹${currentBuy.toFixed(2)}</td>
+    <td>${moneyBoth(currentBuy,usdtRate,2)}</td>
 
-    <td>₹${sellAmountLayer.toFixed(2)}</td>
+    <td>${moneyBoth(sellAmountLayer,usdtRate,2)}</td>
 
     <td>${(target*100).toFixed(2)}%</td>
 
-    <td>₹${buyFeeLayer.toFixed(2)}</td>
+    <td>${moneyBoth(buyFeeLayer,usdtRate,2)}</td>
 
-    <td>₹${sellFeeLayer.toFixed(2)}</td>
+    <td>${moneyBoth(sellFeeLayer,usdtRate,2)}</td>
 
-    <td>₹${buyTDSLayer.toFixed(2)}</td>
+    <td>${moneyBoth(buyTDSLayer,usdtRate,2)}</td>
 
-    <td>₹${sellTDSLayer.toFixed(2)}</td>
+    <td>${moneyBoth(sellTDSLayer,usdtRate,2)}</td>
 
-    <td>₹${totalTDSLayer.toFixed(2)}</td>
+    <td>${moneyBoth(totalTDSLayer,usdtRate,2)}</td>
 
-    <td>₹${taxLayer.toFixed(2)}</td>
+    <td>${moneyBoth(taxLayer,usdtRate,2)}</td>
 
     <td class="green">
-    ₹${refundLayer.toFixed(2)}
+    ${moneyBoth(refundLayer,usdtRate,2)}
     </td>
 
     <td class="${
@@ -865,7 +869,7 @@ for(let i=1; i<=maxLayers; i++){
         : 'red'
     }">
 
-    ₹${pureGrowthLayer.toFixed(2)}
+    ${moneyBoth(pureGrowthLayer,usdtRate,2)}
 
     </td>
 
@@ -875,7 +879,7 @@ for(let i=1; i<=maxLayers; i++){
         : 'red'
     }">
 
-    ₹${accountGrowthLayer.toFixed(2)}
+    ${moneyBoth(accountGrowthLayer,usdtRate,2)}
 
     </td>
 
@@ -894,7 +898,7 @@ for(let i=1; i<=maxLayers; i++){
     </td>
 
     <td class="orange">
-    ₹${nextBuyLayer.toFixed(2)}
+    ${moneyBoth(nextBuyLayer,usdtRate,2)}
     </td>
 
     <!-- td class="${
@@ -903,12 +907,12 @@ for(let i=1; i<=maxLayers; i++){
         : 'green'
     }">
 
-    ₹${needTaxLayer.toFixed(2)}
+    ${moneyBoth(needTaxLayer,usdtRate,2)}
 
     </td -->
 
     <td class="orange">
-    ₹${totalFund.toFixed(2)}
+    ${moneyBoth(totalFund,usdtRate,2)}
     </td>
 
     </tr>
@@ -1001,7 +1005,12 @@ layerHtml;
     <br>
 
     <b>First Buy Amount (Per Pair):</b>
-    <span class="orange">${firstBuyUsdt.toFixed(4)} USDT (₹${firstBuy.toFixed(2)})</span>
+    <span class="orange">${firstBuyUsdt.toFixed(4)} USDT (${moneyBoth(firstBuy,usdtRate,2)})</span>
+
+    <br>
+
+    <b>Goal Amount:</b>
+    <span class="green">${goalAmountUsdt.toFixed(2)} USDT (₹${goalAmount.toFixed(2)})</span>
 
     <br>
 
@@ -1016,7 +1025,7 @@ layerHtml;
     <br>
 
     <b>Initial Capital (All Pairs):</b>
-    <span class="green">₹${initialTotalCapital.toFixed(2)}</span>
+    <span class="green">${moneyBoth(initialTotalCapital,usdtRate,2)}</span>
 
     <br>
 
@@ -1031,12 +1040,12 @@ layerHtml;
     <br>
 
     <b>Final Buy Amount (Per Pair):</b>
-    <span class="green">₹${finalBuyPerPair.toFixed(2)}</span>
+    <span class="green">${moneyBoth(finalBuyPerPair,usdtRate,2)}</span>
 
     <br>
 
     <b>Final Account Value (All Pairs):</b>
-    <span class="green">₹${amount.toFixed(2)}</span>
+    <span class="green">${moneyBoth(amount,usdtRate,2)}</span>
 
     <br>
 
@@ -1046,17 +1055,17 @@ layerHtml;
     <br>
 
     <b>Total Deducted TDS:</b>
-    <span class="red">₹${totalTDSAll.toFixed(2)}</span>
+    <span class="red">${moneyBoth(totalTDSAll,usdtRate,2)}</span>
 
     <!-- br>
 
     <b>Total Payable Tax:</b>
-    <span class="red">₹${totalTaxAll.toFixed(2)}</span -->
+    <span class="red">${moneyBoth(totalTaxAll,usdtRate,2)}</span -->
 
     <br>
 
     <b>Total TDS Refund:</b>
-    <span class="green">₹${totalRefundAll.toFixed(2)}</span>
+    <span class="green">${moneyBoth(totalRefundAll,usdtRate,2)}</span>
 
     `;
 
